@@ -11,25 +11,38 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import br.com.mauro.dao.ClientesDAO;
+import br.com.mauro.model.ClienteModel;
+import javax.swing.DefaultComboBoxModel;
+
 public class ClienteView {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
+	private JTextField txtCodigo;
+	private JTextField txtNome;
+	private JTextField txtCidade;
+	private JTextField txtRua;
+	private JTextField txtCep;
+	private JTextField txtBairro;
+	private JTextField txtNumero;
+	private JTextField tfComplemento;
 	private JTextField textField_8;
+	private JTextField txtCelular;
+	private JTextField txtTelefone;
+	private JTextField txtCpf;
+	private JTextField txtRg;
+	private JTextField txtEmail;
 	private JTable table;
+
+	
+	
 
 	/**
 	 * Launch the application.
@@ -52,12 +65,14 @@ public class ClienteView {
 	 */
 	public ClienteView() {
 		initialize();
+	
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 796, 529);
@@ -82,6 +97,49 @@ public class ClienteView {
 		lblRevenda.setBounds(89, 0, 161, 34);
 		panel.add(lblRevenda);
 		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setBounds(681, 35, 78, 23);
+		panel.add(btnExcluir);
+		
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds(593, 35, 78, 23);
+		panel.add(btnLimpar);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ClienteModel cliente = new ClienteModel();
+				
+					cliente.setNome(txtNome.getText());
+					cliente.setRg(txtRg.getText());
+					cliente.setCpf(txtCpf.getText());
+					cliente.setEmail(txtEmail.getText());
+					cliente.setTelefone(txtTelefone.getText());
+					cliente.setCelular(txtCelular.getText());
+					cliente.setCep(txtCep.getText());
+					cliente.setRua(txtRua.getText());
+					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
+					cliente.setBairro(txtBairro.getText());
+					cliente.setCidade(txtCidade.getText());
+					cliente.setUf("PE");
+					
+					ClientesDAO salvarCliente = new ClientesDAO();
+					
+					salvarCliente.CadastrarCliente(cliente);
+					
+				}catch(Exception erro) {
+					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
+				}
+			}
+		});
+		btnSalvar.setBounds(505, 35, 78, 23);
+		panel.add(btnSalvar);
+		
+		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
+		btnLocalizarCliente.setBounds(334, 35, 161, 23);
+		panel.add(btnLocalizarCliente);
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 83, 760, 396);
 		frame.getContentPane().add(tabbedPane);
@@ -104,20 +162,20 @@ public class ClienteView {
 		lblNewLabel_1.setBounds(10, 11, 49, 21);
 		panel_3.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(64, 12, 154, 20);
-		panel_3.add(textField);
-		textField.setColumns(10);
+		txtCodigo = new JTextField();
+		txtCodigo.setBounds(64, 12, 154, 20);
+		panel_3.add(txtCodigo);
+		txtCodigo.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Nome:");
 		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1.setBounds(18, 40, 41, 21);
 		panel_3.add(lblNewLabel_1_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(64, 41, 388, 20);
-		panel_3.add(textField_1);
+		txtNome = new JTextField();
+		txtNome.setColumns(10);
+		txtNome.setBounds(64, 41, 388, 20);
+		panel_3.add(txtNome);
 		
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setBackground(new Color(255, 255, 255));
@@ -131,50 +189,50 @@ public class ClienteView {
 		lblNewLabel_1_2.setBounds(25, 11, 36, 21);
 		panel_3_1.add(lblNewLabel_1_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(280, 12, 111, 20);
-		panel_3_1.add(textField_2);
+		txtCidade = new JTextField();
+		txtCidade.setColumns(10);
+		txtCidade.setBounds(280, 12, 111, 20);
+		panel_3_1.add(txtCidade);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Endereço:");
-		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1.setBounds(6, 39, 55, 21);
-		panel_3_1.add(lblNewLabel_1_1_1);
+		JLabel lbRua = new JLabel("Rua:");
+		lbRua.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbRua.setBounds(35, 39, 27, 21);
+		panel_3_1.add(lbRua);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(66, 39, 325, 20);
-		panel_3_1.add(textField_3);
+		txtRua = new JTextField();
+		txtRua.setColumns(10);
+		txtRua.setBounds(66, 39, 325, 20);
+		panel_3_1.add(txtRua);
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Cidade:");
 		lblNewLabel_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1.setBounds(230, 12, 44, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(66, 12, 154, 20);
-		panel_3_1.add(textField_4);
+		txtCep = new JTextField();
+		txtCep.setColumns(10);
+		txtCep.setBounds(66, 12, 154, 20);
+		panel_3_1.add(txtCep);
 		
 		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Bairro:");
 		lblNewLabel_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_1.setBounds(412, 12, 44, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_1_1);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(451, 11, 122, 20);
-		panel_3_1.add(textField_5);
+		txtBairro = new JTextField();
+		txtBairro.setColumns(10);
+		txtBairro.setBounds(451, 11, 122, 20);
+		panel_3_1.add(txtBairro);
 		
 		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Numero:");
 		lblNewLabel_1_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_2.setBounds(401, 39, 55, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_1_2);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(451, 39, 41, 20);
-		panel_3_1.add(textField_6);
+		txtNumero = new JTextField();
+		txtNumero.setColumns(10);
+		txtNumero.setBounds(451, 39, 41, 20);
+		panel_3_1.add(txtNumero);
 		
 		JLabel lblNewLabel_1_1_1_1_1_1 = new JLabel("UF:");
 		lblNewLabel_1_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
@@ -196,42 +254,55 @@ public class ClienteView {
 		lblNewLabel_1_1_1_1_4_1.setBounds(35, 129, 27, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_1_4_1);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setToolTipText("");
-		formattedTextField.setHorizontalAlignment(SwingConstants.LEFT);
-		formattedTextField.setBounds(66, 66, 122, 20);
-		panel_3_1.add(formattedTextField);
-		
-		JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-		formattedTextField_1.setBounds(66, 97, 122, 20);
-		panel_3_1.add(formattedTextField_1);
-		
-		JFormattedTextField formattedTextField_1_1 = new JFormattedTextField();
-		formattedTextField_1_1.setBounds(66, 129, 122, 20);
-		panel_3_1.add(formattedTextField_1_1);
-		
 		JLabel lblNewLabel_1_1_1_1_4_1_1 = new JLabel("RG:");
 		lblNewLabel_1_1_1_1_4_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_4_1_1.setBounds(198, 129, 27, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_1_4_1_1);
-		
-		JFormattedTextField formattedTextField_1_1_1 = new JFormattedTextField();
-		formattedTextField_1_1_1.setBounds(229, 129, 122, 20);
-		panel_3_1.add(formattedTextField_1_1_1);
 		
 		JLabel lblNewLabel_1_1_1_2 = new JLabel("Complemento:");
 		lblNewLabel_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_2.setBounds(361, 129, 95, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_2);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(453, 129, 120, 20);
-		panel_3_1.add(textField_7);
+		tfComplemento = new JTextField();
+		tfComplemento.setColumns(10);
+		tfComplemento.setBounds(453, 129, 120, 20);
+		panel_3_1.add(tfComplemento);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(529, 38, 44, 22);
-		panel_3_1.add(comboBox);
+		JComboBox cbUF = new JComboBox();
+		cbUF.setModel(new DefaultComboBoxModel(new String[] {"PE", "SP", "TO"}));
+		cbUF.setBounds(529, 38, 44, 22);
+		panel_3_1.add(cbUF);
+		
+		JLabel lbEmail = new JLabel("Email:");
+		lbEmail.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbEmail.setBounds(25, 161, 36, 21);
+		panel_3_1.add(lbEmail);
+		
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(66, 160, 285, 20);
+		panel_3_1.add(txtEmail);
+		
+		txtCelular = new JTextField();
+		txtCelular.setColumns(10);
+		txtCelular.setBounds(66, 66, 122, 20);
+		panel_3_1.add(txtCelular);
+		
+		txtTelefone = new JTextField();
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(66, 97, 122, 20);
+		panel_3_1.add(txtTelefone);
+		
+		txtCpf = new JTextField();
+		txtCpf.setColumns(10);
+		txtCpf.setBounds(66, 129, 122, 20);
+		panel_3_1.add(txtCpf);
+		
+		txtRg = new JTextField();
+		txtRg.setColumns(10);
+		txtRg.setBounds(218, 129, 133, 20);
+		panel_3_1.add(txtRg);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Consulta Clientes", null, panel_2, null);

@@ -3,6 +3,8 @@ package br.com.mauro.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import javax.swing.JOptionPane;
+
 import br.com.mauro.jdbc.ConnectionFactory;
 import br.com.mauro.model.ClienteModel;
 
@@ -22,8 +24,9 @@ public class ClientesDAO {
 	public void CadastrarCliente(ClienteModel cliente) {
 		
 		try {
-			String sql = "INSERT INTO revenda.tb_clientes(nome, rg, cpf, email, telefone, celular, cep, rua, numero, complemento, bairro, cidade, UF)"+
-												 " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO revenda.tb_clientes(cd_cliente ,nm_cliente, rg_cliente, cpf_cliente, email_cliente, telefone_cliente, celular_cliente, cep_cliente," +
+														" rua_cliente, numero_cliente, complemento_cliente, bairro_cliente, cidade_cliente, estado_cliente)  " +
+			                                     " VALUES(seq_cliente.nextval,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
 			acesso.setString(1,cliente.getNome());
@@ -43,7 +46,11 @@ public class ClientesDAO {
 			acesso.execute();
 			acesso.close();
 			
+			JOptionPane.showInputDialog("Cadastro de " +cliente.getNome() +" realizado com sucesso.");
+			
 		}catch(Exception erro) {
+			
+			JOptionPane.showMessageDialog(null," Erro em Banco de dados: \n " + erro);
 			
 		}
 		finally {
