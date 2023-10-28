@@ -1,13 +1,12 @@
 package br.com.mauro.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
-import javax.swing.JScrollPane;
 
 public class ClienteView {
 
@@ -36,7 +35,7 @@ public class ClienteView {
 	private JTextField txtCep;
 	private JTextField txtBairro;
 	private JTextField txtNumero;
-	private JTextField tfComplemento;
+	private JTextField txtComplemento;
 	private JTextField textField_8;
 	private JTextField txtCelular;
 	private JTextField txtTelefone;
@@ -45,12 +44,6 @@ public class ClienteView {
 	private JTextField txtEmail;
 	private JTable tbClientes;
 
-	
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,13 +57,24 @@ public class ClienteView {
 		});
 	}
 	
+	/**
+	 * @author Mauro Degaspari
+	 * @return O Valor relacionado a linha do JTable tbClientes, caso não 
+	 * 		   tenha valor retorne uma String " ". 
+	 */
+	private String trantandoValor(JTable table, int row, int column) {
+		Object linha = table.getValueAt(row, column);
+		return linha != null ? linha.toString() : "";
+		
+	}
+	
 	public void listarClientes() {
 		
 		ClientesDAO dao = new ClientesDAO();
 		List<ClienteModel> ClienteLista =dao.ListaDeCliente();
 		
 		DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
-		tbDados.setNumRows(0); //limpar o dados e garantir que não tenha nada.
+		tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
 		
 		for(ClienteModel cliente: ClienteLista) {
 			tbDados.addRow(new Object[]{
@@ -80,15 +84,22 @@ public class ClienteView {
 				cliente.getCpf(),
 				cliente.getEmail(),
 				cliente.getTelefone(),
-				cliente.getCelular()
-				
+				cliente.getCelular(),
+				cliente.getCep(),
+				cliente.getRua(),
+				cliente.getNumero(),
+				cliente.getComplemento(),
+				cliente.getBairro(),
+				cliente.getCidade(),
+				cliente.getUf()				
 			});
 		}
 		
 	}
 
 	/**
-	 * Create the application.
+	 * @author Mauro Degaspari
+	 * @return Inicialização da tela Cadastro clientes
 	 */
 	public ClienteView() {
 		initialize();
@@ -96,18 +107,11 @@ public class ClienteView {
 	
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated(WindowEvent e) {
-				
-			}
-		});
+	
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 796, 529);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,7 +160,7 @@ public class ClienteView {
 					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
 					cliente.setBairro(txtBairro.getText());
 					cliente.setCidade(txtCidade.getText());
-					cliente.setUf("PE");
+					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
 					
 					ClientesDAO salvarCliente = new ClientesDAO();
 					
@@ -174,15 +178,15 @@ public class ClienteView {
 		btnLocalizarCliente.setBounds(334, 35, 161, 23);
 		panel.add(btnLocalizarCliente);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 83, 760, 396);
-		frame.getContentPane().add(tabbedPane);
+		JTabbedPane PainelPrincipal = new JTabbedPane(JTabbedPane.TOP);
+		PainelPrincipal.setBounds(10, 83, 760, 396);
+		frame.getContentPane().add(PainelPrincipal);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(204, 204, 204));
-		tabbedPane.addTab("Dados pessoais", null, panel_1, null);
-		tabbedPane.setForegroundAt(0, new Color(51, 153, 153));
-		tabbedPane.setBackgroundAt(0, new Color(255, 255, 255));
+		PainelPrincipal.addTab("Dados pessoais", null, panel_1, null);
+		PainelPrincipal.setForegroundAt(0, new Color(51, 153, 153));
+		PainelPrincipal.setBackgroundAt(0, new Color(255, 255, 255));
 		panel_1.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
@@ -298,10 +302,10 @@ public class ClienteView {
 		lblNewLabel_1_1_1_2.setBounds(361, 129, 95, 21);
 		panel_3_1.add(lblNewLabel_1_1_1_2);
 		
-		tfComplemento = new JTextField();
-		tfComplemento.setColumns(10);
-		tfComplemento.setBounds(453, 129, 120, 20);
-		panel_3_1.add(tfComplemento);
+		txtComplemento = new JTextField();
+		txtComplemento.setColumns(10);
+		txtComplemento.setBounds(453, 129, 120, 20);
+		panel_3_1.add(txtComplemento);
 		
 		JComboBox cbUF = new JComboBox();
 		cbUF.setModel(new DefaultComboBoxModel(new String[] {"PE", "SP", "TO"}));
@@ -339,15 +343,15 @@ public class ClienteView {
 		panel_3_1.add(txtRg);
 		
 		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Consulta Clientes", null, panel_2, null);
-		tabbedPane.setBackgroundAt(1, new Color(255, 255, 255));
-		tabbedPane.setForegroundAt(1, new Color(0, 153, 153));
+		PainelPrincipal.addTab("Consulta Clientes", null, panel_2, null);
+		PainelPrincipal.setBackgroundAt(1, new Color(255, 255, 255));
+		PainelPrincipal.setForegroundAt(1, new Color(0, 153, 153));
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("Nome:");
-		lblNewLabel_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_2.setBounds(10, 11, 41, 21);
-		panel_2.add(lblNewLabel_1_1_2);
+		JLabel lbNome = new JLabel("Nome:");
+		lbNome.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbNome.setBounds(10, 11, 41, 21);
+		panel_2.add(lbNome);
 		
 		textField_8 = new JTextField();
 		textField_8.setColumns(10);
@@ -365,27 +369,54 @@ public class ClienteView {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 43, 735, 253);
 		panel_2.add(scrollPane);
-		
+			
 		tbClientes = new JTable();
+		tbClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			
+				PainelPrincipal.setSelectedIndex(0);
+			
+			//	txtCodigo.setText(tbClientes.getValueAt(tbClientes.getSelectedRow(), 0).toString());
+				
+				txtCodigo.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 0));
+				txtNome.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 1));
+				txtRg.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 2));
+				txtCpf.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 3));
+				txtEmail.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 4));
+				txtTelefone.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 5));
+				txtCelular.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 6));
+				txtCep.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 7));
+				txtRua.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 8));
+				txtNumero.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 9));
+				txtComplemento.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 10));
+				txtBairro.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 11));
+				txtCidade.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 12));
+				cbUF.setToolTipText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 13));
+			}
+		});
 		scrollPane.setViewportView(tbClientes);
 		tbClientes.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular"
+				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "UF"
 			}
 		) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-				false, false, true, true, true, true, true
+				false, true, true, true, true, true, true, false, true, true, true, true, true, true
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		tbClientes.getColumnModel().getColumn(6).setPreferredWidth(81);
+		tbClientes.getColumnModel().getColumn(7).setPreferredWidth(50);
+		tbClientes.getColumnModel().getColumn(8).setPreferredWidth(87);
+		tbClientes.getColumnModel().getColumn(9).setPreferredWidth(37);
+		tbClientes.getColumnModel().getColumn(10).setPreferredWidth(110);
 	}
 }
