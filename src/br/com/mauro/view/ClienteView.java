@@ -21,6 +21,8 @@ import javax.swing.SwingConstants;
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.Dimension;
 
 public class ClienteView {
 
@@ -329,7 +331,23 @@ public class ClienteView {
 		panel_2.add(btnNewButton);
 		
 		table = new JTable();
-		table.setBounds(10, 70, 735, 226);
+		table.setSize(new Dimension(1, 1));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, true, true, true, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.setBounds(10, 43, 735, 253);
 		panel_2.add(table);
 	}
 }
