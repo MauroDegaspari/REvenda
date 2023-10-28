@@ -64,7 +64,10 @@ public class ClientesDAO {
 			
 			List<ClienteModel> listaCliente = new ArrayList<>();
 			
-			String sql = "SELECT cd_cliente ,nm_cliente, rg_cliente, cpf_cliente, email_cliente, telefone_cliente, celular_cliente FROM revenda.tb_clientes ORDER BY 1 ASC";
+			String sql = "SELECT cd_cliente ,nm_cliente, rg_cliente, cpf_cliente, email_cliente, telefone_cliente, celular_cliente, "
+					+    "       cep_cliente, rua_cliente, numero_cliente, complemento_cliente, bairro_cliente, cidade_cliente, estado_cliente"
+					+    "  FROM revenda.tb_clientes"
+					+    " ORDER BY 1 ASC";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
 			
@@ -80,6 +83,13 @@ public class ClientesDAO {
 				cliente.setEmail(rs.getString("email_cliente"));
 				cliente.setTelefone(rs.getString("telefone_cliente"));
 				cliente.setCelular(rs.getString("celular_cliente"));
+				cliente.setCep(rs.getString("cep_cliente"));
+				cliente.setRua(rs.getString("rua_cliente"));
+				cliente.setNumero(rs.getInt("numero_cliente"));
+				cliente.setComplemento(rs.getString("complemento_cliente"));
+				cliente.setBairro(rs.getString("bairro_cliente"));
+				cliente.setCidade(rs.getString("cidade_cliente"));
+				cliente.setUf(rs.getString("estado_cliente"));
 				
 				listaCliente.add(cliente);
 								
