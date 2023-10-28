@@ -1,14 +1,18 @@
 package br.com.mauro.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,13 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.DefaultTableModel;
-import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 public class ClienteView {
 
@@ -41,7 +43,7 @@ public class ClienteView {
 	private JTextField txtCpf;
 	private JTextField txtRg;
 	private JTextField txtEmail;
-	private JTable table;
+	private JTable tbClientes;
 
 	
 	
@@ -61,12 +63,36 @@ public class ClienteView {
 			}
 		});
 	}
+	
+	public void listarClientes() {
+		
+		ClientesDAO dao = new ClientesDAO();
+		List<ClienteModel> ClienteLista =dao.ListaDeCliente();
+		
+		DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
+		tbDados.setNumRows(0); //limpar o dados e garantir que não tenha nada.
+		
+		for(ClienteModel cliente: ClienteLista) {
+			tbDados.addRow(new Object[]{
+				cliente.getCodigo(),
+				cliente.getNome(),
+				cliente.getRg(),
+				cliente.getCpf(),
+				cliente.getEmail(),
+				cliente.getTelefone(),
+				cliente.getCelular()
+				
+			});
+		}
+		
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public ClienteView() {
 		initialize();
+		listarClientes(); 
 	
 	}
 
@@ -76,6 +102,12 @@ public class ClienteView {
 	private void initialize() {
 		
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				
+			}
+		});
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 796, 529);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -330,9 +362,13 @@ public class ClienteView {
 		btnNewButton.setBounds(459, 10, 89, 23);
 		panel_2.add(btnNewButton);
 		
-		table = new JTable();
-		table.setSize(new Dimension(1, 1));
-		table.setModel(new DefaultTableModel(
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 43, 735, 253);
+		panel_2.add(scrollPane);
+		
+		tbClientes = new JTable();
+		scrollPane.setViewportView(tbClientes);
+		tbClientes.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
 			},
@@ -340,6 +376,10 @@ public class ClienteView {
 				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, true, true, true, true, true
 			};
@@ -347,7 +387,5 @@ public class ClienteView {
 				return columnEditables[column];
 			}
 		});
-		table.setBounds(10, 43, 735, 253);
-		panel_2.add(table);
 	}
 }

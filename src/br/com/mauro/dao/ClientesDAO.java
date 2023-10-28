@@ -14,7 +14,7 @@ import br.com.mauro.model.ClienteModel;
 /**
  * @author Mauro Degaspari
  * @Note Classe para execução
- * 		de CRUD com banco de dados ORACLE 
+ * 		de CRUD da TABLE tb_cliente com banco de dados ORACLE 
  */
 public class ClientesDAO {
 
@@ -64,7 +64,7 @@ public class ClientesDAO {
 			
 			List<ClienteModel> listaCliente = new ArrayList<>();
 			
-			String sql = "SELECT cd_cliente ,nm_cliente, rg_cliente, cpf_cliente, email_cliente, telefone_cliente, celular_cliente FROM revenda.tb_clientes";
+			String sql = "SELECT cd_cliente ,nm_cliente, rg_cliente, cpf_cliente, email_cliente, telefone_cliente, celular_cliente FROM revenda.tb_clientes ORDER BY 1 ASC";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
 			
