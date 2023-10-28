@@ -1,7 +1,6 @@
 package br.com.mauro.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
-import javax.swing.JScrollPane;
 
 public class ClienteView {
 
@@ -156,7 +155,7 @@ public class ClienteView {
 					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
 					cliente.setBairro(txtBairro.getText());
 					cliente.setCidade(txtCidade.getText());
-					cliente.setUf("PE");
+					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
 					
 					ClientesDAO salvarCliente = new ClientesDAO();
 					
