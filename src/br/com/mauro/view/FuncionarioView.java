@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -24,33 +26,38 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import javax.swing.JPasswordField;
 
-public class ClienteView {
+public class FuncionarioView {
 
 	private JFrame frame;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
-	private JTextField txtCidade;
-	private JTextField txtRua;
 	private JTextField txtCep;
-	private JTextField txtBairro;
-	private JTextField txtNumero;
-	private JTextField txtComplemento;
-	private JTextField txtPesquisarNome;
+	private JTextField txtRua;
 	private JTextField txtCelular;
 	private JTextField txtTelefone;
 	private JTextField txtCpf;
-	private JTextField txtRg;
 	private JTextField txtEmail;
-	private JTable tbClientes;
+	private JTextField txtRg;
+	private JTextField txtComplemento;
+	private JTextField txtCidade;
+	private JTextField txtBairro;
+	private JTextField txtNumero;
+	private JTextField txtPesquisarNome;
+	private JTable tbFuncionarios;
+	private JTable tbFuncionarios_1;
+	private JPasswordField pswSenha;
+	private JTextField txtCargo;
 
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClienteView window = new ClienteView();
+					FuncionarioView window = new FuncionarioView();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,68 +74,38 @@ public class ClienteView {
 	private String trantandoValor(JTable table, int row, int column) {
 		Object linha = table.getValueAt(row, column);
 		return linha != null ? linha.toString() : "";
-		
-	}
-	
-	public void listarClientes() {
-		
-		ClientesDAO dao = new ClientesDAO();
-		List<ClienteModel> ClienteLista =dao.ListaDeCliente();
-		
-		DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
-		tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
-		
-		for(ClienteModel cliente: ClienteLista) {
-			tbDados.addRow(new Object[]{
-				cliente.getCodigo(),
-				cliente.getNome(),
-				cliente.getRg(),
-				cliente.getCpf(),
-				cliente.getEmail(),
-				cliente.getTelefone(),
-				cliente.getCelular(),
-				cliente.getCep(),
-				cliente.getRua(),
-				cliente.getNumero(),
-				cliente.getComplemento(),
-				cliente.getBairro(),
-				cliente.getCidade(),
-				cliente.getUf()				
-			});
-		}
 	}
 
 	/**
-	 * @author Mauro Degaspari
-	 * @return Inicialização da tela Cadastro clientes
+	 * Create the application.
 	 */
-	public ClienteView() {
+	public FuncionarioView() {
 		initialize();
-		listarClientes(); 
-	
 	}
 
-
+	/**
+	 * Initialize the contents of the frame.
+	 */
 	private void initialize() {
 		
 		frame = new JFrame();
 	
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
-		frame.setBounds(100, 100, 796, 529);
+		frame.setBounds(100, 100, 922, 529);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 153, 153));
-		panel.setBounds(0, 0, 780, 72);
+		panel.setBounds(0, 0, 906, 72);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Cadastro de Clientes");
-		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 13));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(89, 27, 161, 34);
-		panel.add(lblNewLabel);
+		JLabel lblFuncionario = new JLabel("Cadastro de Funcionarios");
+		lblFuncionario.setFont(new Font("Verdana", Font.BOLD, 13));
+		lblFuncionario.setForeground(new Color(255, 255, 255));
+		lblFuncionario.setBounds(89, 27, 195, 34);
+		panel.add(lblFuncionario);
 		
 		JLabel lblRevenda = new JLabel("Sistema REVENDA");
 		lblRevenda.setForeground(Color.WHITE);
@@ -224,11 +201,11 @@ public class ClienteView {
 		panel.add(btnSalvar);
 		
 		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
-		btnLocalizarCliente.setBounds(260, 35, 161, 23);
+		btnLocalizarCliente.setBounds(334, 35, 161, 23);
 		panel.add(btnLocalizarCliente);
 		
 		JTabbedPane PainelPrincipal = new JTabbedPane(JTabbedPane.TOP);
-		PainelPrincipal.setBounds(10, 83, 760, 396);
+		PainelPrincipal.setBounds(10, 83, 886, 396);
 		frame.getContentPane().add(PainelPrincipal);
 		
 		JPanel pnDadosPessoais = new JPanel();
@@ -240,7 +217,7 @@ public class ClienteView {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
-		panel_3.setBounds(10, 11, 735, 72);
+		panel_3.setBounds(10, 11, 861, 72);
 		pnDadosPessoais.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -249,116 +226,117 @@ public class ClienteView {
 		lblNewLabel_1.setBounds(10, 11, 49, 21);
 		panel_3.add(lblNewLabel_1);
 		
-		txtCodigo = new JTextField();
-		txtCodigo.setBounds(64, 12, 154, 20);
-		panel_3.add(txtCodigo);
-		txtCodigo.setColumns(10);
-		
 		JLabel lblNewLabel_1_1 = new JLabel("Nome:");
 		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1.setBounds(18, 40, 41, 21);
 		panel_3.add(lblNewLabel_1_1);
 		
+		txtCodigo = new JTextField();
+		txtCodigo.setBounds(56, 11, 140, 20);
+		panel_3.add(txtCodigo);
+		txtCodigo.setColumns(10);
+		
 		txtNome = new JTextField();
-		txtNome.setColumns(10);
-		txtNome.setBounds(64, 41, 388, 20);
+		txtNome.setBounds(56, 43, 247, 20);
 		panel_3.add(txtNome);
+		txtNome.setColumns(10);
+		
+		JLabel lbSenha = new JLabel("Senha:");
+		lbSenha.setBounds(645, 11, 41, 14);
+		panel_3.add(lbSenha);
+		
+		pswSenha = new JPasswordField();
+		pswSenha.setBounds(690, 11, 120, 20);
+		panel_3.add(pswSenha);
+		
+		JLabel lbCargo = new JLabel("Cargo:");
+		lbCargo.setBounds(471, 14, 34, 14);
+		panel_3.add(lbCargo);
+		
+		txtCargo = new JTextField();
+		txtCargo.setBounds(515, 11, 120, 20);
+		panel_3.add(txtCargo);
+		txtCargo.setColumns(10);
+		
+		JLabel lbNivelAcesso = new JLabel("Nivel De Acesso:");
+		lbNivelAcesso.setBounds(416, 43, 101, 14);
+		panel_3.add(lbNivelAcesso);
+		
+		JComboBox cbNivel = new JComboBox();
+		cbNivel.setModel(new DefaultComboBoxModel(new String[] {"Funcionario", "Administrador"}));
+		cbNivel.setBounds(515, 39, 295, 22);
+		panel_3.add(cbNivel);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(255, 255, 255));
-		panel_4.setBounds(10, 94, 735, 193);
+		panel_4.setBounds(10, 94, 861, 193);
 		pnDadosPessoais.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("CEP:");
-		lblNewLabel_1_2.setForeground(new Color(51, 51, 255));
-		lblNewLabel_1_2.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 12));
-		lblNewLabel_1_2.setBounds(25, 11, 36, 21);
-		panel_4.add(lblNewLabel_1_2);
-		
-		txtCidade = new JTextField();
-		txtCidade.setColumns(10);
-		txtCidade.setBounds(280, 12, 111, 20);
-		panel_4.add(txtCidade);
+		JLabel lbCep = new JLabel("CEP:");
+		lbCep.setForeground(new Color(51, 51, 255));
+		lbCep.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 12));
+		lbCep.setBounds(25, 11, 36, 21);
+		panel_4.add(lbCep);
 		
 		JLabel lbRua = new JLabel("Rua:");
 		lbRua.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lbRua.setBounds(35, 39, 27, 21);
+		lbRua.setBounds(25, 39, 27, 21);
 		panel_4.add(lbRua);
 		
-		txtRua = new JTextField();
-		txtRua.setColumns(10);
-		txtRua.setBounds(66, 39, 325, 20);
-		panel_4.add(txtRua);
+		JLabel lbCidade = new JLabel("Cidade:");
+		lbCidade.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbCidade.setBounds(198, 12, 44, 21);
+		panel_4.add(lbCidade);
 		
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Cidade:");
-		lblNewLabel_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1.setBounds(230, 12, 44, 21);
-		panel_4.add(lblNewLabel_1_1_1_1);
+		JLabel lbBairro = new JLabel("Bairro:");
+		lbBairro.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbBairro.setBounds(372, 12, 44, 21);
+		panel_4.add(lbBairro);
 		
-		txtCep = new JTextField();
-		txtCep.setColumns(10);
-		txtCep.setBounds(66, 12, 154, 20);
-		panel_4.add(txtCep);
-		
-		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Bairro:");
-		lblNewLabel_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_1.setBounds(412, 12, 44, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_1);
-		
-		txtBairro = new JTextField();
-		txtBairro.setColumns(10);
-		txtBairro.setBounds(451, 11, 122, 20);
-		panel_4.add(txtBairro);
-		
-		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Numero:");
-		lblNewLabel_1_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_2.setBounds(401, 39, 55, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_2);
-		
-		txtNumero = new JTextField();
-		txtNumero.setColumns(10);
-		txtNumero.setBounds(451, 39, 41, 20);
-		panel_4.add(txtNumero);
+		JLabel lbNumero = new JLabel("Numero:");
+		lbNumero.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbNumero.setBounds(361, 39, 55, 21);
+		panel_4.add(lbNumero);
 		
 		JLabel lblNewLabel_1_1_1_1_1_1 = new JLabel("UF:");
 		lblNewLabel_1_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_1_1.setBounds(502, 39, 27, 21);
+		lblNewLabel_1_1_1_1_1_1.setBounds(479, 40, 27, 21);
 		panel_4.add(lblNewLabel_1_1_1_1_1_1);
 		
-		JLabel lblNewLabel_1_1_1_1_3 = new JLabel("Celular:");
-		lblNewLabel_1_1_1_1_3.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_3.setBounds(17, 66, 44, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_3);
+		JLabel lbCelular = new JLabel("Celular:");
+		lbCelular.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbCelular.setBounds(17, 66, 44, 21);
+		panel_4.add(lbCelular);
 		
-		JLabel lblNewLabel_1_1_1_1_4 = new JLabel("Telefone:");
-		lblNewLabel_1_1_1_1_4.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_4.setBounds(6, 97, 55, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_4);
+		JLabel lbTelefone = new JLabel("Telefone:");
+		lbTelefone.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbTelefone.setBounds(6, 97, 55, 21);
+		panel_4.add(lbTelefone);
 		
-		JLabel lblNewLabel_1_1_1_1_4_1 = new JLabel("CPF:");
-		lblNewLabel_1_1_1_1_4_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_4_1.setBounds(35, 129, 27, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_4_1);
+		JLabel lbCpf = new JLabel("CPF:");
+		lbCpf.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbCpf.setBounds(35, 129, 27, 21);
+		panel_4.add(lbCpf);
 		
-		JLabel lblNewLabel_1_1_1_1_4_1_1 = new JLabel("RG:");
-		lblNewLabel_1_1_1_1_4_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_4_1_1.setBounds(198, 129, 27, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_4_1_1);
+		JLabel lbRg = new JLabel("RG:");
+		lbRg.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbRg.setBounds(198, 129, 27, 21);
+		panel_4.add(lbRg);
 		
-		JLabel lblNewLabel_1_1_1_2 = new JLabel("Complemento:");
-		lblNewLabel_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_2.setBounds(361, 129, 95, 21);
-		panel_4.add(lblNewLabel_1_1_1_2);
+		JLabel lbComplemento = new JLabel("Complemento:");
+		lbComplemento.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbComplemento.setBounds(361, 129, 84, 21);
+		panel_4.add(lbComplemento);
 		
 		txtComplemento = new JTextField();
 		txtComplemento.setColumns(10);
-		txtComplemento.setBounds(453, 129, 120, 20);
+		txtComplemento.setBounds(453, 129, 97, 20);
 		panel_4.add(txtComplemento);
 		
 		JComboBox cbUF = new JComboBox();
 		cbUF.setModel(new DefaultComboBoxModel(new String[] {"PE", "SP", "TO"}));
-		cbUF.setBounds(529, 38, 44, 22);
+		cbUF.setBounds(506, 39, 44, 22);
 		panel_4.add(cbUF);
 		
 		JLabel lbEmail = new JLabel("Email:");
@@ -366,78 +344,71 @@ public class ClienteView {
 		lbEmail.setBounds(25, 161, 36, 21);
 		panel_4.add(lbEmail);
 		
-		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
-		txtEmail.setBounds(66, 160, 285, 20);
-		panel_4.add(txtEmail);
-		
-		txtCelular = new JTextField();
-		txtCelular.setColumns(10);
-		txtCelular.setBounds(66, 66, 122, 20);
-		panel_4.add(txtCelular);
-		
-		txtTelefone = new JTextField();
-		txtTelefone.setColumns(10);
-		txtTelefone.setBounds(66, 97, 122, 20);
-		panel_4.add(txtTelefone);
-		
-		txtCpf = new JTextField();
-		txtCpf.setColumns(10);
-		txtCpf.setBounds(66, 129, 122, 20);
-		panel_4.add(txtCpf);
-		
 		txtRg = new JTextField();
 		txtRg.setColumns(10);
-		txtRg.setBounds(218, 129, 133, 20);
+		txtRg.setBounds(227, 129, 128, 20);
 		panel_4.add(txtRg);
 		
+		txtCep = new JTextField();
+		txtCep.setBounds(61, 12, 128, 20);
+		panel_4.add(txtCep);
+		txtCep.setColumns(10);
+		
+		txtRua = new JTextField();
+		txtRua.setBounds(61, 39, 293, 20);
+		panel_4.add(txtRua);
+		txtRua.setColumns(10);
+		
+		txtCelular = new JTextField();
+		txtCelular.setBounds(61, 66, 163, 20);
+		panel_4.add(txtCelular);
+		txtCelular.setColumns(10);
+		
+		txtTelefone = new JTextField();
+		txtTelefone.setBounds(61, 97, 164, 20);
+		panel_4.add(txtTelefone);
+		txtTelefone.setColumns(10);
+		
+		txtCpf = new JTextField();
+		txtCpf.setBounds(61, 129, 127, 20);
+		panel_4.add(txtCpf);
+		txtCpf.setColumns(10);
+		
+		txtEmail = new JTextField();
+		txtEmail.setBounds(61, 161, 235, 20);
+		panel_4.add(txtEmail);
+		txtEmail.setColumns(10);
+		
+		txtRg = new JTextField();
+		txtRg.setBounds(227, 129, 124, 20);
+		panel_4.add(txtRg);
+		txtRg.setColumns(10);
+		
+		txtCidade = new JTextField();
+		txtCidade.setBounds(246, 12, 109, 20);
+		panel_4.add(txtCidade);
+		txtCidade.setColumns(10);
+		
+		txtBairro = new JTextField();
+		txtBairro.setBounds(420, 12, 130, 20);
+		panel_4.add(txtBairro);
+		txtBairro.setColumns(10);
+		
+		txtNumero = new JTextField();
+		txtNumero.setBounds(420, 39, 49, 20);
+		panel_4.add(txtNumero);
+		txtNumero.setColumns(10);
+		
 		JPanel pnConsultaClientes = new JPanel();
-		PainelPrincipal.addTab("Consulta Clientes", null, pnConsultaClientes, null);
+		PainelPrincipal.addTab("Consulta Funcionarios", null, pnConsultaClientes, null);
 		PainelPrincipal.setBackgroundAt(1, new Color(255, 255, 255));
 		PainelPrincipal.setForegroundAt(1, new Color(0, 153, 153));
 		pnConsultaClientes.setLayout(null);
 		
 		JLabel lbNome = new JLabel("Nome:");
 		lbNome.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lbNome.setBounds(10, 11, 41, 21);
+		lbNome.setBounds(333, 12, 41, 21);
 		pnConsultaClientes.add(lbNome);
-		
-		txtPesquisarNome = new JTextField();
-		txtPesquisarNome.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-	String nome = "%"+txtPesquisarNome.getText()+"%";
-				
-				ClientesDAO dao = new ClientesDAO();
-				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
-				
-				DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
-				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
-				
-				for(ClienteModel cliente: Lista) {
-					tbDados.addRow(new Object[]{
-						cliente.getCodigo(),
-						cliente.getNome(),
-						cliente.getRg(),
-						cliente.getCpf(),
-						cliente.getEmail(),
-						cliente.getTelefone(),
-						cliente.getCelular(),
-						cliente.getCep(),
-						cliente.getRua(),
-						cliente.getNumero(),
-						cliente.getComplemento(),
-						cliente.getBairro(),
-						cliente.getCidade(),
-						cliente.getUf()				
-					});
-				}
-				
-			}
-		});
-		txtPesquisarNome.setColumns(10);
-		txtPesquisarNome.setBounds(56, 12, 388, 20);
-		pnConsultaClientes.add(txtPesquisarNome);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
@@ -448,7 +419,7 @@ public class ClienteView {
 				ClientesDAO dao = new ClientesDAO();
 				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
 				
-				DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
+				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios.getModel();
 				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
 				
 				for(ClienteModel cliente: Lista) {
@@ -472,41 +443,61 @@ public class ClienteView {
 				
 			}
 		});
-		btnPesquisar.setBounds(459, 10, 89, 23);
+		btnPesquisar.setBounds(782, 11, 89, 23);
 		pnConsultaClientes.add(btnPesquisar);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 43, 735, 253);
-		pnConsultaClientes.add(scrollPane);
 			
-		tbClientes = new JTable();
-		tbClientes.addMouseListener(new MouseAdapter() {
+		tbFuncionarios = new JTable();
+		tbFuncionarios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 			
 				PainelPrincipal.setSelectedIndex(0);
 			
-			//	txtCodigo.setText(tbClientes.getValueAt(tbClientes.getSelectedRow(), 0).toString());
+			//	txtCodigo.setText(tbFuncionarios.getValueAt(tbFuncionarios.getSelectedRow(), 0).toString());
 				
-				txtCodigo.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 0));
-				txtNome.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 1));
-				txtRg.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 2));
-				txtCpf.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 3));
-				txtEmail.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 4));
-				txtTelefone.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 5));
-				txtCelular.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 6));
-				txtCep.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 7));
-				txtRua.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 8));
-				txtNumero.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 9));
-				txtComplemento.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 10));
-				txtBairro.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 11));
-				txtCidade.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 12));
-				cbUF.setToolTipText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 13));
+				txtCodigo.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 0));
+				txtNome.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 1));
+				txtRg.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 2));
+				txtCpf.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 3));
+				txtEmail.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 4));
+				txtTelefone.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 5));
+				txtCelular.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 6));
+				txtCep.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 7));
+				txtRua.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 8));
+				txtNumero.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 9));
+				txtComplemento.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 10));
+				txtBairro.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 11));
+				txtCidade.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 12));
+				cbUF.setToolTipText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 13));
 			}
 		});
-		scrollPane.setViewportView(tbClientes);
-		tbClientes.setModel(new DefaultTableModel(
+		
+		txtPesquisarNome = new JTextField();
+		txtPesquisarNome.setBounds(375, 12, 160, 20);
+		pnConsultaClientes.add(txtPesquisarNome);
+		txtPesquisarNome.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 100, 861, 241);
+		pnConsultaClientes.add(scrollPane);
+		
+		tbFuncionarios_1 = new JTable();
+		tbFuncionarios_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Senha", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "UF"
+			}
+		));
+		tbFuncionarios_1.getColumnModel().getColumn(10).setPreferredWidth(81);
+		tbFuncionarios_1.getColumnModel().getColumn(11).setPreferredWidth(50);
+		tbFuncionarios_1.getColumnModel().getColumn(12).setPreferredWidth(87);
+		tbFuncionarios_1.getColumnModel().getColumn(13).setPreferredWidth(37);
+		tbFuncionarios_1.getColumnModel().getColumn(14).setPreferredWidth(110);
+		scrollPane.setViewportView(tbFuncionarios_1);
+		tbFuncionarios_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 			},
@@ -522,10 +513,5 @@ public class ClienteView {
 				return columnEditables[column];
 			}
 		});
-		tbClientes.getColumnModel().getColumn(6).setPreferredWidth(81);
-		tbClientes.getColumnModel().getColumn(7).setPreferredWidth(50);
-		tbClientes.getColumnModel().getColumn(8).setPreferredWidth(87);
-		tbClientes.getColumnModel().getColumn(9).setPreferredWidth(37);
-		tbClientes.getColumnModel().getColumn(10).setPreferredWidth(110);
 	}
 }
