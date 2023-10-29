@@ -36,7 +36,7 @@ public class ClienteView {
 	private JTextField txtBairro;
 	private JTextField txtNumero;
 	private JTextField txtComplemento;
-	private JTextField textField_8;
+	private JTextField txtPesquisarNome;
 	private JTextField txtCelular;
 	private JTextField txtTelefone;
 	private JTextField txtCpf;
@@ -94,7 +94,6 @@ public class ClienteView {
 				cliente.getUf()				
 			});
 		}
-		
 	}
 
 	/**
@@ -136,12 +135,60 @@ public class ClienteView {
 		panel.add(lblRevenda);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ClienteModel cliente = new ClienteModel();
+				
+					cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
+					
+					ClientesDAO excluirCliente = new ClientesDAO();
+					excluirCliente.ExcluirCliente(cliente);				
+					
+					JOptionPane.showMessageDialog(btnExcluir, "Cliente "+cliente.getNome()+" Excluido",null, 0);
+					
+				} catch (Exception e2) {
+					// TODO: Criar exception
+				
+				}
+			}
+		});
 		btnExcluir.setBounds(681, 35, 78, 23);
 		panel.add(btnExcluir);
 		
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(593, 35, 78, 23);
-		panel.add(btnLimpar);
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ClienteModel cliente = new ClienteModel();
+				
+					cliente.setNome(txtNome.getText());
+					cliente.setRg(txtRg.getText());
+					cliente.setCpf(txtCpf.getText());
+					cliente.setEmail(txtEmail.getText());
+					cliente.setTelefone(txtTelefone.getText());
+					cliente.setCelular(txtCelular.getText());
+					cliente.setCep(txtCep.getText());
+					cliente.setRua(txtRua.getText());
+					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
+					cliente.setBairro(txtBairro.getText());
+					cliente.setCidade(txtCidade.getText());
+					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
+					
+					cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
+					
+					ClientesDAO editarCliente = new ClientesDAO();
+					
+					editarCliente.AlterarCliente(cliente);
+					
+				}catch(Exception erro) {
+					JOptionPane.showMessageDialog(btnEditar,"Erro: Botão SAlvar \n" + erro );
+				}
+			
+			}
+		});
+		btnEditar.setBounds(593, 35, 78, 23);
+		panel.add(btnEditar);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -175,24 +222,24 @@ public class ClienteView {
 		panel.add(btnSalvar);
 		
 		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
-		btnLocalizarCliente.setBounds(334, 35, 161, 23);
+		btnLocalizarCliente.setBounds(260, 35, 161, 23);
 		panel.add(btnLocalizarCliente);
 		
 		JTabbedPane PainelPrincipal = new JTabbedPane(JTabbedPane.TOP);
 		PainelPrincipal.setBounds(10, 83, 760, 396);
 		frame.getContentPane().add(PainelPrincipal);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(204, 204, 204));
-		PainelPrincipal.addTab("Dados pessoais", null, panel_1, null);
+		JPanel pnDadosPessoais = new JPanel();
+		pnDadosPessoais.setBackground(new Color(204, 204, 204));
+		PainelPrincipal.addTab("Dados pessoais", null, pnDadosPessoais, null);
 		PainelPrincipal.setForegroundAt(0, new Color(51, 153, 153));
 		PainelPrincipal.setBackgroundAt(0, new Color(255, 255, 255));
-		panel_1.setLayout(null);
+		pnDadosPessoais.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
 		panel_3.setBounds(10, 11, 735, 72);
-		panel_1.add(panel_3);
+		pnDadosPessoais.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Código:");
@@ -215,160 +262,188 @@ public class ClienteView {
 		txtNome.setBounds(64, 41, 388, 20);
 		panel_3.add(txtNome);
 		
-		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setBackground(new Color(255, 255, 255));
-		panel_3_1.setBounds(10, 94, 735, 193);
-		panel_1.add(panel_3_1);
-		panel_3_1.setLayout(null);
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(new Color(255, 255, 255));
+		panel_4.setBounds(10, 94, 735, 193);
+		pnDadosPessoais.add(panel_4);
+		panel_4.setLayout(null);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("CEP:");
 		lblNewLabel_1_2.setForeground(new Color(51, 51, 255));
 		lblNewLabel_1_2.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabel_1_2.setBounds(25, 11, 36, 21);
-		panel_3_1.add(lblNewLabel_1_2);
+		panel_4.add(lblNewLabel_1_2);
 		
 		txtCidade = new JTextField();
 		txtCidade.setColumns(10);
 		txtCidade.setBounds(280, 12, 111, 20);
-		panel_3_1.add(txtCidade);
+		panel_4.add(txtCidade);
 		
 		JLabel lbRua = new JLabel("Rua:");
 		lbRua.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lbRua.setBounds(35, 39, 27, 21);
-		panel_3_1.add(lbRua);
+		panel_4.add(lbRua);
 		
 		txtRua = new JTextField();
 		txtRua.setColumns(10);
 		txtRua.setBounds(66, 39, 325, 20);
-		panel_3_1.add(txtRua);
+		panel_4.add(txtRua);
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Cidade:");
 		lblNewLabel_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1.setBounds(230, 12, 44, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1);
+		panel_4.add(lblNewLabel_1_1_1_1);
 		
 		txtCep = new JTextField();
 		txtCep.setColumns(10);
 		txtCep.setBounds(66, 12, 154, 20);
-		panel_3_1.add(txtCep);
+		panel_4.add(txtCep);
 		
 		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Bairro:");
 		lblNewLabel_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_1.setBounds(412, 12, 44, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_1);
+		panel_4.add(lblNewLabel_1_1_1_1_1);
 		
 		txtBairro = new JTextField();
 		txtBairro.setColumns(10);
 		txtBairro.setBounds(451, 11, 122, 20);
-		panel_3_1.add(txtBairro);
+		panel_4.add(txtBairro);
 		
 		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Numero:");
 		lblNewLabel_1_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_2.setBounds(401, 39, 55, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_2);
+		panel_4.add(lblNewLabel_1_1_1_1_2);
 		
 		txtNumero = new JTextField();
 		txtNumero.setColumns(10);
 		txtNumero.setBounds(451, 39, 41, 20);
-		panel_3_1.add(txtNumero);
+		panel_4.add(txtNumero);
 		
 		JLabel lblNewLabel_1_1_1_1_1_1 = new JLabel("UF:");
 		lblNewLabel_1_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_1_1.setBounds(502, 39, 27, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_1_1);
+		panel_4.add(lblNewLabel_1_1_1_1_1_1);
 		
 		JLabel lblNewLabel_1_1_1_1_3 = new JLabel("Celular:");
 		lblNewLabel_1_1_1_1_3.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_3.setBounds(17, 66, 44, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_3);
+		panel_4.add(lblNewLabel_1_1_1_1_3);
 		
 		JLabel lblNewLabel_1_1_1_1_4 = new JLabel("Telefone:");
 		lblNewLabel_1_1_1_1_4.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_4.setBounds(6, 97, 55, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_4);
+		panel_4.add(lblNewLabel_1_1_1_1_4);
 		
 		JLabel lblNewLabel_1_1_1_1_4_1 = new JLabel("CPF:");
 		lblNewLabel_1_1_1_1_4_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_4_1.setBounds(35, 129, 27, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_4_1);
+		panel_4.add(lblNewLabel_1_1_1_1_4_1);
 		
 		JLabel lblNewLabel_1_1_1_1_4_1_1 = new JLabel("RG:");
 		lblNewLabel_1_1_1_1_4_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_1_4_1_1.setBounds(198, 129, 27, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_1_4_1_1);
+		panel_4.add(lblNewLabel_1_1_1_1_4_1_1);
 		
 		JLabel lblNewLabel_1_1_1_2 = new JLabel("Complemento:");
 		lblNewLabel_1_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1_2.setBounds(361, 129, 95, 21);
-		panel_3_1.add(lblNewLabel_1_1_1_2);
+		panel_4.add(lblNewLabel_1_1_1_2);
 		
 		txtComplemento = new JTextField();
 		txtComplemento.setColumns(10);
 		txtComplemento.setBounds(453, 129, 120, 20);
-		panel_3_1.add(txtComplemento);
+		panel_4.add(txtComplemento);
 		
 		JComboBox cbUF = new JComboBox();
 		cbUF.setModel(new DefaultComboBoxModel(new String[] {"PE", "SP", "TO"}));
 		cbUF.setBounds(529, 38, 44, 22);
-		panel_3_1.add(cbUF);
+		panel_4.add(cbUF);
 		
 		JLabel lbEmail = new JLabel("Email:");
 		lbEmail.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lbEmail.setBounds(25, 161, 36, 21);
-		panel_3_1.add(lbEmail);
+		panel_4.add(lbEmail);
 		
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(66, 160, 285, 20);
-		panel_3_1.add(txtEmail);
+		panel_4.add(txtEmail);
 		
 		txtCelular = new JTextField();
 		txtCelular.setColumns(10);
 		txtCelular.setBounds(66, 66, 122, 20);
-		panel_3_1.add(txtCelular);
+		panel_4.add(txtCelular);
 		
 		txtTelefone = new JTextField();
 		txtTelefone.setColumns(10);
 		txtTelefone.setBounds(66, 97, 122, 20);
-		panel_3_1.add(txtTelefone);
+		panel_4.add(txtTelefone);
 		
 		txtCpf = new JTextField();
 		txtCpf.setColumns(10);
 		txtCpf.setBounds(66, 129, 122, 20);
-		panel_3_1.add(txtCpf);
+		panel_4.add(txtCpf);
 		
 		txtRg = new JTextField();
 		txtRg.setColumns(10);
 		txtRg.setBounds(218, 129, 133, 20);
-		panel_3_1.add(txtRg);
+		panel_4.add(txtRg);
 		
-		JPanel panel_2 = new JPanel();
-		PainelPrincipal.addTab("Consulta Clientes", null, panel_2, null);
+		JPanel pnConsultaClientes = new JPanel();
+		PainelPrincipal.addTab("Consulta Clientes", null, pnConsultaClientes, null);
 		PainelPrincipal.setBackgroundAt(1, new Color(255, 255, 255));
 		PainelPrincipal.setForegroundAt(1, new Color(0, 153, 153));
-		panel_2.setLayout(null);
+		pnConsultaClientes.setLayout(null);
 		
 		JLabel lbNome = new JLabel("Nome:");
 		lbNome.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lbNome.setBounds(10, 11, 41, 21);
-		panel_2.add(lbNome);
+		pnConsultaClientes.add(lbNome);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(56, 12, 388, 20);
-		panel_2.add(textField_8);
+		txtPesquisarNome = new JTextField();
+		txtPesquisarNome.setColumns(10);
+		txtPesquisarNome.setBounds(56, 12, 388, 20);
+		pnConsultaClientes.add(txtPesquisarNome);
 		
-		JButton btnNewButton = new JButton("Pesquisa");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String nome = "%"+txtPesquisarNome.getText()+"%";
+				
+				ClientesDAO dao = new ClientesDAO();
+				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
+				
+				DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
+				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+				
+				for(ClienteModel cliente: Lista) {
+					tbDados.addRow(new Object[]{
+						cliente.getCodigo(),
+						cliente.getNome(),
+						cliente.getRg(),
+						cliente.getCpf(),
+						cliente.getEmail(),
+						cliente.getTelefone(),
+						cliente.getCelular(),
+						cliente.getCep(),
+						cliente.getRua(),
+						cliente.getNumero(),
+						cliente.getComplemento(),
+						cliente.getBairro(),
+						cliente.getCidade(),
+						cliente.getUf()				
+					});
+				}
+				
 			}
 		});
-		btnNewButton.setBounds(459, 10, 89, 23);
-		panel_2.add(btnNewButton);
+		btnPesquisar.setBounds(459, 10, 89, 23);
+		pnConsultaClientes.add(btnPesquisar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 43, 735, 253);
-		panel_2.add(scrollPane);
+		pnConsultaClientes.add(scrollPane);
 			
 		tbClientes = new JTable();
 		tbClientes.addMouseListener(new MouseAdapter() {
