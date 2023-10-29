@@ -24,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ClienteView {
 
@@ -401,6 +403,38 @@ public class ClienteView {
 		pnConsultaClientes.add(lbNome);
 		
 		txtPesquisarNome = new JTextField();
+		txtPesquisarNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+	String nome = "%"+txtPesquisarNome.getText()+"%";
+				
+				ClientesDAO dao = new ClientesDAO();
+				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
+				
+				DefaultTableModel tbDados = (DefaultTableModel) tbClientes.getModel();
+				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+				
+				for(ClienteModel cliente: Lista) {
+					tbDados.addRow(new Object[]{
+						cliente.getCodigo(),
+						cliente.getNome(),
+						cliente.getRg(),
+						cliente.getCpf(),
+						cliente.getEmail(),
+						cliente.getTelefone(),
+						cliente.getCelular(),
+						cliente.getCep(),
+						cliente.getRua(),
+						cliente.getNumero(),
+						cliente.getComplemento(),
+						cliente.getBairro(),
+						cliente.getCidade(),
+						cliente.getUf()				
+					});
+				}
+				
+			}
+		});
 		txtPesquisarNome.setColumns(10);
 		txtPesquisarNome.setBounds(56, 12, 388, 20);
 		pnConsultaClientes.add(txtPesquisarNome);
