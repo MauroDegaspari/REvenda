@@ -2,11 +2,13 @@ package br.com.mauro.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
 import br.com.mauro.jdbc.ConnectionFactory;
 import br.com.mauro.model.FuncionarioModel;
+import br.com.mauro.view.IndexView;
 
 /**
  * @author Mauro Degaspari
@@ -60,5 +62,33 @@ public class FuncionarioDAO {
 		}
 		
 	
+	}
+	
+	public void LoginFuncionario(String senha, String email) {
+		try {
+			
+			String sql = "SELECT *                         "
+					+    "  FROM revenda.tb_funcionarios  "
+					+    " WHERE nm_funcionario = ?        "
+					+    "   AND sh_funcionario = ?        ";
+			
+			PreparedStatement acesso = conn.prepareStatement(sql);
+			acesso.setString(1, email );
+			acesso.setString(2, senha );
+			
+			ResultSet rs = acesso.executeQuery(); 
+			
+			if (rs.next()) {
+				JOptionPane.showMessageDialog(null, "Bem Vindo: ");
+				IndexView index = new IndexView();
+				index.main(null);
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Senha ou Email errado", sql, 0);
+			}
+			
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, "Erro no banco de dados" + erro);
+		}
 	}
 }
