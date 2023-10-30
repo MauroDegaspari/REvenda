@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -25,8 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
+import br.com.mauro.dao.FuncionarioDAO;
 import br.com.mauro.model.ClienteModel;
-import javax.swing.JPasswordField;
+import br.com.mauro.model.FuncionarioModel;
 
 public class FuncionarioView {
 
@@ -173,24 +173,29 @@ public class FuncionarioView {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ClienteModel cliente = new ClienteModel();
+					FuncionarioModel Funcionario = new FuncionarioModel();
 				
-					cliente.setNome(txtNome.getText());
-					cliente.setRg(txtRg.getText());
-					cliente.setCpf(txtCpf.getText());
-					cliente.setEmail(txtEmail.getText());
-					cliente.setTelefone(txtTelefone.getText());
-					cliente.setCelular(txtCelular.getText());
-					cliente.setCep(txtCep.getText());
-					cliente.setRua(txtRua.getText());
-					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
-					cliente.setBairro(txtBairro.getText());
-					cliente.setCidade(txtCidade.getText());
-					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
+					Funcionario.setNome(txtNome.getText());
+					Funcionario.setRg(txtRg.getText());
+					Funcionario.setCpf(txtCpf.getText());
+					Funcionario.setEmail(txtEmail.getText());
+					Funcionario.setSenha(pswSenha.getText());
+					Funcionario.setCargo(txtCargo.getText());
+					Funcionario.setNivel("N");//TODO NIVEL DE FUNCIONARIO, fazer tratativa
+					Funcionario.setTelefone(txtTelefone.getText());
+					Funcionario.setCelular(txtCelular.getText());
+					Funcionario.setCep(txtCep.getText());
+					Funcionario.setRua(txtRua.getText());
+					Funcionario.setNumero(Integer.parseInt(txtNumero.getText()));
+					Funcionario.setBairro(txtBairro.getText());
+					Funcionario.setCidade(txtCidade.getText());
+					Funcionario.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
 					
-					ClientesDAO salvarCliente = new ClientesDAO();
+					FuncionarioDAO CadastraFuncionario = new FuncionarioDAO();
 					
-					salvarCliente.CadastrarCliente(cliente);
+					CadastraFuncionario.cadastroFuncionario(Funcionario);
+					
+					JOptionPane.showMessageDialog(btnSalvar, "Funcionario: "+ Funcionario.getNome() +" Cadastrado Com Sucesso!");
 					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
