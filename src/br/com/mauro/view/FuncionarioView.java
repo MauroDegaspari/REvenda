@@ -45,7 +45,6 @@ public class FuncionarioView {
 	private JTextField txtBairro;
 	private JTextField txtNumero;
 	private JTextField txtPesquisarNome;
-	private JTable tbFuncionarios;
 	private JTable tbFuncionarios_1;
 	private JPasswordField pswSenha;
 	private JTextField txtCargo;
@@ -75,12 +74,46 @@ public class FuncionarioView {
 		Object linha = table.getValueAt(row, column);
 		return linha != null ? linha.toString() : "";
 	}
+	
+	public void listarFuncionarios() {
+		FuncionarioDAO dao = new FuncionarioDAO(); 
+		
+		List<FuncionarioModel> listaFunc = dao.ListarFuncionarios();
+		
+		DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios_1.getModel();
+		tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+		
+		for(FuncionarioModel func: listaFunc) {
+			tbDados.addRow(new Object[]{
+				func.getCodigo(),
+				func.getNome(),
+				func.getRg(),
+				func.getCpf(),
+				func.getEmail(),
+				func.getSenha(),
+				func.getCargo(),
+				func.getNivel(),
+				func.getTelefone(),
+				func.getCelular(),
+				func.getCep(),
+				func.getRua(),
+				func.getNumero(),
+				func.getComplemento(),
+				func.getBairro(),
+				func.getCidade(),
+				func.getUf()
+			
+			
+			});
+		}
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public FuncionarioView() {
 		initialize();
+		listarFuncionarios();
 	}
 
 	/**
@@ -424,7 +457,7 @@ public class FuncionarioView {
 				ClientesDAO dao = new ClientesDAO();
 				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
 				
-				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios.getModel();
+				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios_1.getModel();
 				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
 				
 				for(ClienteModel cliente: Lista) {
@@ -450,33 +483,6 @@ public class FuncionarioView {
 		});
 		btnPesquisar.setBounds(782, 11, 89, 23);
 		pnConsultaClientes.add(btnPesquisar);
-			
-		tbFuncionarios = new JTable();
-		tbFuncionarios.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			
-				PainelPrincipal.setSelectedIndex(0);
-			
-			//	txtCodigo.setText(tbFuncionarios.getValueAt(tbFuncionarios.getSelectedRow(), 0).toString());
-				
-				txtCodigo.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 0));
-				txtNome.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 1));
-				txtRg.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 2));
-				txtCpf.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 3));
-				txtEmail.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 4));
-				txtTelefone.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 5));
-				txtCelular.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 6));
-				txtCep.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 7));
-				txtRua.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 8));
-				txtNumero.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 9));
-				txtComplemento.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 10));
-				txtBairro.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 11));
-				txtCidade.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 12));
-				cbUF.setToolTipText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 13));
-			}
-		});
 		
 		txtPesquisarNome = new JTextField();
 		txtPesquisarNome.setBounds(375, 12, 160, 20);
@@ -488,19 +494,42 @@ public class FuncionarioView {
 		pnConsultaClientes.add(scrollPane);
 		
 		tbFuncionarios_1 = new JTable();
+		tbFuncionarios_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				PainelPrincipal.setSelectedIndex(0);
+				
+				//	txtCodigo.setText(tbFuncionarios_1.getValueAt(tbFuncionarios_1.getSelectedRow(), 0).toString());
+					
+					txtCodigo.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 0));
+					txtNome.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 1));
+					txtRg.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 2));
+					txtCpf.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 3));
+					txtEmail.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 4));
+					txtTelefone.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 5));
+					txtCelular.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 6));
+					txtCep.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 7));
+					txtRua.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 8));
+					txtNumero.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 9));
+					txtComplemento.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 10));
+					txtBairro.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 11));
+					txtCidade.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 12));
+					cbUF.setToolTipText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 13));
+			}
+		});
 		tbFuncionarios_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Senha", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "UF"
+				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "TEste", "UF"
 			}
 		));
 		tbFuncionarios_1.getColumnModel().getColumn(10).setPreferredWidth(81);
 		tbFuncionarios_1.getColumnModel().getColumn(11).setPreferredWidth(50);
 		tbFuncionarios_1.getColumnModel().getColumn(12).setPreferredWidth(87);
-		tbFuncionarios_1.getColumnModel().getColumn(13).setPreferredWidth(37);
-		tbFuncionarios_1.getColumnModel().getColumn(14).setPreferredWidth(110);
+		tbFuncionarios_1.getColumnModel().getColumn(14).setPreferredWidth(37);
 		scrollPane.setViewportView(tbFuncionarios_1);
 		tbFuncionarios_1.setModel(new DefaultTableModel(
 			new Object[][] {
