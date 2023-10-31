@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -25,8 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
+import br.com.mauro.dao.FuncionarioDAO;
 import br.com.mauro.model.ClienteModel;
-import javax.swing.JPasswordField;
+import br.com.mauro.model.FuncionarioModel;
 
 public class FuncionarioView {
 
@@ -45,7 +45,6 @@ public class FuncionarioView {
 	private JTextField txtBairro;
 	private JTextField txtNumero;
 	private JTextField txtPesquisarNome;
-	private JTable tbFuncionarios;
 	private JTable tbFuncionarios_1;
 	private JPasswordField pswSenha;
 	private JTextField txtCargo;
@@ -75,12 +74,46 @@ public class FuncionarioView {
 		Object linha = table.getValueAt(row, column);
 		return linha != null ? linha.toString() : "";
 	}
+	
+	public void listarFuncionarios() {
+		FuncionarioDAO dao = new FuncionarioDAO(); 
+		
+		List<FuncionarioModel> listaFunc = dao.ListarFuncionarios();
+		
+		DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios_1.getModel();
+		tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+		
+		for(FuncionarioModel func: listaFunc) {
+			tbDados.addRow(new Object[]{
+				func.getCodigo(),
+				func.getNome(),
+				func.getRg(),
+				func.getCpf(),
+				func.getEmail(),
+				func.getSenha(),
+				func.getCargo(),
+				func.getNivel(),
+				func.getTelefone(),
+				func.getCelular(),
+				func.getCep(),
+				func.getRua(),
+				func.getNumero(),
+				func.getComplemento(),
+				func.getBairro(),
+				func.getCidade(),
+				func.getUf()
+			
+			
+			});
+		}
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public FuncionarioView() {
 		initialize();
+		listarFuncionarios();
 	}
 
 	/**
@@ -173,24 +206,29 @@ public class FuncionarioView {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ClienteModel cliente = new ClienteModel();
+					FuncionarioModel Funcionario = new FuncionarioModel();
 				
-					cliente.setNome(txtNome.getText());
-					cliente.setRg(txtRg.getText());
-					cliente.setCpf(txtCpf.getText());
-					cliente.setEmail(txtEmail.getText());
-					cliente.setTelefone(txtTelefone.getText());
-					cliente.setCelular(txtCelular.getText());
-					cliente.setCep(txtCep.getText());
-					cliente.setRua(txtRua.getText());
-					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
-					cliente.setBairro(txtBairro.getText());
-					cliente.setCidade(txtCidade.getText());
-					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
+					Funcionario.setNome(txtNome.getText());
+					Funcionario.setRg(txtRg.getText());
+					Funcionario.setCpf(txtCpf.getText());
+					Funcionario.setEmail(txtEmail.getText());
+					Funcionario.setSenha(pswSenha.getText());
+					Funcionario.setCargo(txtCargo.getText());
+					Funcionario.setNivel("N");//TODO NIVEL DE FUNCIONARIO, fazer tratativa
+					Funcionario.setTelefone(txtTelefone.getText());
+					Funcionario.setCelular(txtCelular.getText());
+					Funcionario.setCep(txtCep.getText());
+					Funcionario.setRua(txtRua.getText());
+					Funcionario.setNumero(Integer.parseInt(txtNumero.getText()));
+					Funcionario.setBairro(txtBairro.getText());
+					Funcionario.setCidade(txtCidade.getText());
+					Funcionario.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
 					
-					ClientesDAO salvarCliente = new ClientesDAO();
+					FuncionarioDAO CadastraFuncionario = new FuncionarioDAO();
 					
-					salvarCliente.CadastrarCliente(cliente);
+					CadastraFuncionario.cadastroFuncionario(Funcionario);
+					
+					JOptionPane.showMessageDialog(btnSalvar, "Funcionario: "+ Funcionario.getNome() +" Cadastrado Com Sucesso!");
 					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
@@ -419,7 +457,7 @@ public class FuncionarioView {
 				ClientesDAO dao = new ClientesDAO();
 				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
 				
-				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios.getModel();
+				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios_1.getModel();
 				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
 				
 				for(ClienteModel cliente: Lista) {
@@ -445,33 +483,6 @@ public class FuncionarioView {
 		});
 		btnPesquisar.setBounds(782, 11, 89, 23);
 		pnConsultaClientes.add(btnPesquisar);
-			
-		tbFuncionarios = new JTable();
-		tbFuncionarios.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			
-				PainelPrincipal.setSelectedIndex(0);
-			
-			//	txtCodigo.setText(tbFuncionarios.getValueAt(tbFuncionarios.getSelectedRow(), 0).toString());
-				
-				txtCodigo.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 0));
-				txtNome.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 1));
-				txtRg.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 2));
-				txtCpf.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 3));
-				txtEmail.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 4));
-				txtTelefone.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 5));
-				txtCelular.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 6));
-				txtCep.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 7));
-				txtRua.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 8));
-				txtNumero.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 9));
-				txtComplemento.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 10));
-				txtBairro.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 11));
-				txtCidade.setText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 12));
-				cbUF.setToolTipText(trantandoValor(tbFuncionarios, tbFuncionarios.getSelectedRow(), 13));
-			}
-		});
 		
 		txtPesquisarNome = new JTextField();
 		txtPesquisarNome.setBounds(375, 12, 160, 20);
@@ -483,19 +494,42 @@ public class FuncionarioView {
 		pnConsultaClientes.add(scrollPane);
 		
 		tbFuncionarios_1 = new JTable();
+		tbFuncionarios_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				PainelPrincipal.setSelectedIndex(0);
+				
+				//	txtCodigo.setText(tbFuncionarios_1.getValueAt(tbFuncionarios_1.getSelectedRow(), 0).toString());
+					
+					txtCodigo.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 0));
+					txtNome.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 1));
+					txtRg.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 2));
+					txtCpf.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 3));
+					txtEmail.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 4));
+					txtTelefone.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 5));
+					txtCelular.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 6));
+					txtCep.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 7));
+					txtRua.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 8));
+					txtNumero.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 9));
+					txtComplemento.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 10));
+					txtBairro.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 11));
+					txtCidade.setText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 12));
+					cbUF.setToolTipText(trantandoValor(tbFuncionarios_1, tbFuncionarios_1.getSelectedRow(), 13));
+			}
+		});
 		tbFuncionarios_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Senha", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "UF"
+				"C\u00F3digo", "Nome", "RG", "CPF", "Email", "Telefone", "Celular", "Cep", "Rua", "Numero", "Complemento", "Bairro", "Cidade", "TEste", "UF"
 			}
 		));
 		tbFuncionarios_1.getColumnModel().getColumn(10).setPreferredWidth(81);
 		tbFuncionarios_1.getColumnModel().getColumn(11).setPreferredWidth(50);
 		tbFuncionarios_1.getColumnModel().getColumn(12).setPreferredWidth(87);
-		tbFuncionarios_1.getColumnModel().getColumn(13).setPreferredWidth(37);
-		tbFuncionarios_1.getColumnModel().getColumn(14).setPreferredWidth(110);
+		tbFuncionarios_1.getColumnModel().getColumn(14).setPreferredWidth(37);
 		scrollPane.setViewportView(tbFuncionarios_1);
 		tbFuncionarios_1.setModel(new DefaultTableModel(
 			new Object[][] {

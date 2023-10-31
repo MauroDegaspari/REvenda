@@ -2,6 +2,11 @@ package br.com.mauro.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+import br.com.mauro.model.ClienteModel;
 
 /**
  * @author Mauro Degaspari
@@ -22,5 +27,4 @@ public class ConnectionFactory {
 			
 		}
 	}
-	
 }
