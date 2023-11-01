@@ -178,10 +178,9 @@ public class FuncionarioDAO {
 			
 			ResultSet rs = acesso.executeQuery(); 
 			
-			if (rs.next()) {
+			if (rs.next()) { //TODO Criar validação de senha e email.
 				JOptionPane.showMessageDialog(null, "Bem Vindo: ");
-				IndexView index = new IndexView();
-				index.main(null);
+				IndexView.main(null);
 				
 			}else {
 				JOptionPane.showMessageDialog(null, "Senha ou Email errado", sql, 0);

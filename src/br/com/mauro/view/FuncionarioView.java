@@ -230,6 +230,8 @@ public class FuncionarioView {
 					
 					JOptionPane.showMessageDialog(btnSalvar, "Funcionario: "+ Funcionario.getNome() +" Cadastrado Com Sucesso!");
 					
+					listarFuncionarios();
+					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
 				}

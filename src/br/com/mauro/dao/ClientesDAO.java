@@ -16,7 +16,7 @@ import br.com.mauro.model.ClienteModel;
  * @Note Classe para execução
  * 		de CRUD da TABLE tb_cliente com banco de dados ORACLE 
  */
-public class ClientesDAO {
+public class ClientesDAO{
 
 	private Connection conn;
 	
