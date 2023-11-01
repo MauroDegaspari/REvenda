@@ -51,17 +51,17 @@ public class LoginView {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 204, 204));
-		frame.setBounds(100, 100, 645, 565);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 423, 469);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(51, 255, 153));
-		panel.setBounds(79, 48, 424, 142);
+		panel.setBounds(0, 0, 407, 142);
 		frame.getContentPane().add(panel);
 		
 		JPanel pnPrincipal = new JPanel();
-		pnPrincipal.setBounds(79, 48, 424, 438);
+		pnPrincipal.setBounds(0, 0, 424, 438);
 		frame.getContentPane().add(pnPrincipal);
 		pnPrincipal.setLayout(null);
 		
@@ -89,6 +89,7 @@ public class LoginView {
 		lblSenha.setBounds(126, 270, 85, 14);
 		pnPrincipal.add(lblSenha);
 		
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,7 +100,10 @@ public class LoginView {
 					senha = pswSenha.getText();
 					
 					FuncionarioDAO func = new FuncionarioDAO();
+					frame.dispose();
 					func.LoginFuncionario(senha, email);
+					
+				
 					
 				}catch(Exception erro ){
 					JOptionPane.showMessageDialog(null, "erro em acesso:  " + erro);
