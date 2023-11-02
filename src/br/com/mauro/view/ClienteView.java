@@ -47,6 +47,7 @@ public class ClienteView {
 	private JTextField txtCpf;
 	private JTextField txtRg;
 	private JTextField txtEmail;
+	private JComboBox<?> cbUf;
 	private JTable tbClientes;
 
 	public static void main(String[] args) {
@@ -220,6 +221,7 @@ public class ClienteView {
 					ClientesDAO salvarCliente = new ClientesDAO();
 					
 					salvarCliente.CadastrarCliente(cliente);
+					listarClientes();
 					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
@@ -309,6 +311,23 @@ public class ClienteView {
 		panel_4.add(lblNewLabel_1_1_1_1);
 		
 		txtCep = new JTextField();
+		txtCep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_TAB) { 
+			         ClienteModel obj =  new ClienteModel();
+			         ClientesDAO dao = new ClientesDAO();
+			         obj = dao.buscaCep(txtCep.getText());
+			         
+			         txtRua.setText(obj.getRua());
+			         txtBairro.setText(obj.getBairro());
+			         txtCidade.setText(obj.getCidade());
+			         cbUf.setSelectedItem(obj.getUf());               
+			         System.out.println(obj.getUf());
+			         
+			     }
+			}
+		});
 		txtCep.setColumns(10);
 		txtCep.setBounds(66, 12, 154, 20);
 		panel_4.add(txtCep);
@@ -333,10 +352,10 @@ public class ClienteView {
 		txtNumero.setBounds(451, 39, 41, 20);
 		panel_4.add(txtNumero);
 		
-		JLabel lblNewLabel_1_1_1_1_1_1 = new JLabel("UF:");
-		lblNewLabel_1_1_1_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1_1_1_1.setBounds(502, 39, 27, 21);
-		panel_4.add(lblNewLabel_1_1_1_1_1_1);
+		JLabel lbUf = new JLabel("UF:");
+		lbUf.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbUf.setBounds(502, 39, 27, 21);
+		panel_4.add(lbUf);
 		
 		JLabel lblNewLabel_1_1_1_1_3 = new JLabel("Celular:");
 		lblNewLabel_1_1_1_1_3.setFont(new Font("Verdana", Font.PLAIN, 10));
@@ -369,7 +388,7 @@ public class ClienteView {
 		panel_4.add(txtComplemento);
 		
 		JComboBox cbUF = new JComboBox();
-		cbUF.setModel(new DefaultComboBoxModel(new String[] {"PE", "SP", "TO"}));
+		cbUF.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
 		cbUF.setBounds(529, 38, 44, 22);
 		panel_4.add(cbUF);
 		
