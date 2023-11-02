@@ -18,7 +18,8 @@ import java.awt.Toolkit;
 public class IndexView {
 
 	private JFrame frmIndex;
-	public String logado;
+	LoginView login = new LoginView();
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,7 +75,7 @@ public class IndexView {
 		lbLogado.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lbLogado.setBounds(888, 68, 116, 14);
 		pnSuperior.add(lbLogado);
-		lbLogado.setText(logado);
+		lbLogado.setText(login.logado);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(10, 25, 55, 46);
@@ -191,6 +192,12 @@ public class IndexView {
 		pnSideBarInferior.add(lbImgFuncionario_2);
 		
 		JLabel lbClientes = new JLabel("Clientes");
+		lbClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClienteView.main(null);
+			}
+		});
 		lbClientes.setFont(new Font("Verdana", Font.PLAIN, 14));
 		lbClientes.setBounds(61, 112, 99, 29);
 		pnSideBar.add(lbClientes);

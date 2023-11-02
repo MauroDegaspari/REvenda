@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import br.com.mauro.jdbc.ConnectionFactory;
 import br.com.mauro.model.ClienteModel;
+import br.com.mauro.utils.WebServiceCep;
 
 /**
  * @author Mauro Degaspari
@@ -215,5 +216,27 @@ public class ClientesDAO{
 		}
 		
 	}
+	
+
+	  public ClienteModel buscaCep(String cep) {
+     
+      WebServiceCep webServiceCep = WebServiceCep.searchCep(cep);
+     
+
+      ClienteModel obj = new ClienteModel();
+
+      if (webServiceCep.wasSuccessful()) {
+          obj.setRua(webServiceCep.getLogradouroFull());
+          obj.setCidade(webServiceCep.getCidade());
+          obj.setBairro(webServiceCep.getBairro());
+          obj.setUf(webServiceCep.getUf());
+          return obj;
+      } else {
+          JOptionPane.showMessageDialog(null, "Erro numero: " + webServiceCep.getResulCode());
+          JOptionPane.showMessageDialog(null, "Descrição do erro: " + webServiceCep.getResultText());
+          return null;
+      }
+
+  }
 	
 }

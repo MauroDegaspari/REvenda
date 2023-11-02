@@ -23,6 +23,7 @@ public class LoginView {
 	private JFrame frmRevendaLogin;
 	private JTextField txtFuncionario;
 	private JPasswordField pswSenha;
+	public String logado;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -47,42 +48,42 @@ public class LoginView {
 		frmRevendaLogin.setResizable(false);
 		frmRevendaLogin.setTitle("REvenda Login");
 		frmRevendaLogin.getContentPane().setBackground(new Color(204, 204, 204));
-		frmRevendaLogin.setBounds(100, 100, 423, 469);
+		frmRevendaLogin.setBounds(100, 100, 445, 519);
 		frmRevendaLogin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRevendaLogin.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(51, 255, 153));
-		panel.setBounds(0, 0, 407, 142);
+		panel.setBackground(new Color(0, 128, 128));
+		panel.setBounds(0, 0, 429, 173);
 		frmRevendaLogin.getContentPane().add(panel);
 		
 		JPanel pnPrincipal = new JPanel();
-		pnPrincipal.setBounds(0, 0, 424, 438);
+		pnPrincipal.setBounds(0, 0, 429, 480);
 		frmRevendaLogin.getContentPane().add(pnPrincipal);
 		pnPrincipal.setLayout(null);
 		
 		txtFuncionario = new JTextField();
-		txtFuncionario.setBounds(126, 239, 163, 20);
+		txtFuncionario.setBounds(133, 273, 163, 20);
 		pnPrincipal.add(txtFuncionario);
 		txtFuncionario.setColumns(10);
 		
 		pswSenha = new JPasswordField();
-		pswSenha.setBounds(126, 283, 163, 20);
+		pswSenha.setBounds(133, 317, 163, 20);
 		pnPrincipal.add(pswSenha);
 		
 		JLabel lbUser = new JLabel("Login de Funcionario");
-		lbUser.setFont(new Font("Verdana", Font.PLAIN, 18));
-		lbUser.setBounds(115, 169, 213, 37);
+		lbUser.setFont(new Font("Verdana", Font.PLAIN, 20));
+		lbUser.setBounds(105, 210, 223, 37);
 		pnPrincipal.add(lbUser);
 		
 		JLabel lbFuncionario = new JLabel("Funcionario");
 		lbFuncionario.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbFuncionario.setBounds(126, 224, 85, 14);
+		lbFuncionario.setBounds(133, 258, 85, 14);
 		pnPrincipal.add(lbFuncionario);
 		
 		JLabel lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblSenha.setBounds(126, 270, 85, 14);
+		lblSenha.setBounds(133, 304, 85, 14);
 		pnPrincipal.add(lblSenha);
 		
 		
@@ -96,8 +97,8 @@ public class LoginView {
 					senha = pswSenha.getText();
 					
 					FuncionarioDAO func = new FuncionarioDAO();
-					frmRevendaLogin.dispose();
 					func.LoginFuncionario(senha, email);
+					frmRevendaLogin.dispose();
 					
 				
 					
@@ -107,7 +108,7 @@ public class LoginView {
 				
 			}
 		});
-		btnLogin.setBounds(158, 332, 89, 23);
+		btnLogin.setBounds(165, 366, 89, 23);
 		pnPrincipal.add(btnLogin);
 	}
 }

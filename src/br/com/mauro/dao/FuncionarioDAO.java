@@ -9,9 +9,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import br.com.mauro.jdbc.ConnectionFactory;
-import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FuncionarioModel;
 import br.com.mauro.view.IndexView;
+import br.com.mauro.view.LoginView;
 
 /**
  * @author Mauro Degaspari
@@ -180,9 +180,9 @@ public class FuncionarioDAO {
 			
 			
 			if (rs.next()) { //TODO Criar validação de senha e email.
-				IndexView index = new IndexView();
-				index.logado = rs.getString("nm_funcionario");
-				JOptionPane.showMessageDialog(null, "Bem Vindo: " + index.logado);
+				LoginView login = new LoginView();
+				login.logado = rs.getString("nm_funcionario");
+				JOptionPane.showMessageDialog(null, "Bem Vindo: " + login.logado);
 				IndexView.main(null);
 				
 			}else {
