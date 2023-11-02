@@ -12,14 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.Window.Type;
+import java.awt.Toolkit;
 
 public class IndexView {
 
 	private JFrame frmIndex;
-
-	/**
-	 * Launch the application.
-	 */
+	public String logado;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -33,18 +33,15 @@ public class IndexView {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public IndexView() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frmIndex = new JFrame();
+		frmIndex.setIconImage(Toolkit.getDefaultToolkit().getImage(IndexView.class.getResource("/icons/r.png")));
+		frmIndex.setTitle("Dashboard");
+		frmIndex.setType(Type.POPUP);
 		frmIndex.getContentPane().setBackground(SystemColor.controlHighlight);
 		frmIndex.setBounds(100, 100, 1092, 648);
 		frmIndex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,12 +49,12 @@ public class IndexView {
 		
 		JPanel pnSuperior = new JPanel();
 		pnSuperior.setBackground(new Color(95, 158, 160));
-		pnSuperior.setBounds(0, 0, 1076, 76);
+		pnSuperior.setBounds(0, 0, 1076, 93);
 		frmIndex.getContentPane().add(pnSuperior);
 		pnSuperior.setLayout(null);
 		
 		JPanel pnSideBar = new JPanel();
-		pnSideBar.setBackground(new Color(230, 230, 250));
+		pnSideBar.setBackground(new Color(240, 248, 255));
 		pnSideBar.setBounds(0, 0, 210, 609);
 		frmIndex.getContentPane().add(pnSideBar);
 		pnSideBar.setLayout(null);
@@ -68,7 +65,21 @@ public class IndexView {
 		pnSideBar.add(pnSideBarInferior);
 		pnSideBarInferior.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lbFuncionario = new JLabel("Funcionario Logado:");
+		lbFuncionario.setBounds(787, 68, 116, 14);
+		pnSuperior.add(lbFuncionario);
+		
+		JLabel lbLogado = new JLabel();
+		lbLogado.setForeground(new Color(0, 0, 139));
+		lbLogado.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lbLogado.setBounds(888, 68, 116, 14);
+		pnSuperior.add(lbLogado);
+		lbLogado.setText(logado);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(10, 25, 55, 46);
+		pnSuperior.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon(IndexView.class.getResource("/icons/options.png")));
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			
 			/**
@@ -124,8 +135,6 @@ public class IndexView {
 				}
 			}
 		});
-		lblNewLabel.setBounds(10, 26, 46, 14);
-		pnSuperior.add(lblNewLabel);
 		
 		
 		JLabel lbImgCliente = new JLabel("");

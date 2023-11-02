@@ -15,22 +15,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import br.com.mauro.dao.FuncionarioDAO;
+import java.awt.Window.Type;
+import java.awt.Toolkit;
 
 public class LoginView {
 
-	private JFrame frame;
+	private JFrame frmRevendaLogin;
 	private JTextField txtFuncionario;
 	private JPasswordField pswSenha;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					LoginView window = new LoginView();
-					window.frame.setVisible(true);
+					window.frmRevendaLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,31 +37,28 @@ public class LoginView {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public LoginView() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 204, 204));
-		frame.setBounds(100, 100, 423, 469);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmRevendaLogin = new JFrame();
+		frmRevendaLogin.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginView.class.getResource("/icons/r.png")));
+		frmRevendaLogin.setResizable(false);
+		frmRevendaLogin.setTitle("REvenda Login");
+		frmRevendaLogin.getContentPane().setBackground(new Color(204, 204, 204));
+		frmRevendaLogin.setBounds(100, 100, 423, 469);
+		frmRevendaLogin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmRevendaLogin.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(51, 255, 153));
 		panel.setBounds(0, 0, 407, 142);
-		frame.getContentPane().add(panel);
+		frmRevendaLogin.getContentPane().add(panel);
 		
 		JPanel pnPrincipal = new JPanel();
 		pnPrincipal.setBounds(0, 0, 424, 438);
-		frame.getContentPane().add(pnPrincipal);
+		frmRevendaLogin.getContentPane().add(pnPrincipal);
 		pnPrincipal.setLayout(null);
 		
 		txtFuncionario = new JTextField();
@@ -100,7 +96,7 @@ public class LoginView {
 					senha = pswSenha.getText();
 					
 					FuncionarioDAO func = new FuncionarioDAO();
-					frame.dispose();
+					frmRevendaLogin.dispose();
 					func.LoginFuncionario(senha, email);
 					
 				
