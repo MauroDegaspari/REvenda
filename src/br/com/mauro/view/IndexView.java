@@ -175,6 +175,12 @@ public class IndexView {
 		pnSideBarInferior.add(lbImgFuncionario);
 		
 		JLabel lbImgFornecedor = new JLabel("");
+		lbImgFornecedor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FornecedorView.main(null);
+			}
+		});
 		lbImgFornecedor.setIcon(new ImageIcon(IndexView.class.getResource("/icons/fornecedores.png")));
 		lbImgFornecedor.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lbImgFornecedor.setBounds(0, 218, 46, 48);
@@ -232,6 +238,12 @@ public class IndexView {
 		pnSideBar.add(lb_Fucionarios);
 		
 		JLabel lbFornecedores = new JLabel("Fornecedores");
+		lbFornecedores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FornecedorView.main(null);
+			}
+		});
 		lbFornecedores.setFont(new Font("Verdana", Font.PLAIN, 14));
 		lbFornecedores.setBounds(61, 227, 99, 29);
 		pnSideBar.add(lbFornecedores);

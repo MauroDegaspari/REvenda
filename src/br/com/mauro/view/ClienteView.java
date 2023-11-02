@@ -125,23 +125,23 @@ public class ClienteView {
 		frmClientes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmClientes.getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 128));
-		panel.setBounds(0, 0, 780, 72);
-		frmClientes.getContentPane().add(panel);
-		panel.setLayout(null);
+		JPanel panelSuperior = new JPanel();
+		panelSuperior.setBackground(new Color(0, 128, 128));
+		panelSuperior.setBounds(0, 0, 780, 72);
+		frmClientes.getContentPane().add(panelSuperior);
+		panelSuperior.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Clientes");
 		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(89, 27, 161, 34);
-		panel.add(lblNewLabel);
+		panelSuperior.add(lblNewLabel);
 		
 		JLabel lblRevenda = new JLabel("Sistema REVENDA");
 		lblRevenda.setForeground(Color.WHITE);
 		lblRevenda.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblRevenda.setBounds(89, 0, 161, 34);
-		panel.add(lblRevenda);
+		panelSuperior.add(lblRevenda);
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
@@ -163,7 +163,7 @@ public class ClienteView {
 			}
 		});
 		btnExcluir.setBounds(681, 35, 78, 23);
-		panel.add(btnExcluir);
+		panelSuperior.add(btnExcluir);
 		
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
@@ -197,7 +197,7 @@ public class ClienteView {
 			}
 		});
 		btnEditar.setBounds(593, 35, 78, 23);
-		panel.add(btnEditar);
+		panelSuperior.add(btnEditar);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -229,27 +229,27 @@ public class ClienteView {
 			}
 		});
 		btnSalvar.setBounds(505, 35, 78, 23);
-		panel.add(btnSalvar);
+		panelSuperior.add(btnSalvar);
 		
 		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
 		btnLocalizarCliente.setBounds(260, 35, 161, 23);
-		panel.add(btnLocalizarCliente);
+		panelSuperior.add(btnLocalizarCliente);
 		
 		JLabel lbLogo = new JLabel("");
 		lbLogo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lbLogo.setIcon(new ImageIcon(ClienteView.class.getResource("/icons/r.png")));
 		lbLogo.setBounds(23, 11, 69, 50);
-		panel.add(lbLogo);
+		panelSuperior.add(lbLogo);
 		
-		JTabbedPane PainelPrincipal = new JTabbedPane(JTabbedPane.TOP);
-		PainelPrincipal.setBounds(10, 83, 760, 396);
-		frmClientes.getContentPane().add(PainelPrincipal);
+		JTabbedPane tabbedPanePrincipal = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPanePrincipal.setBounds(10, 83, 760, 396);
+		frmClientes.getContentPane().add(tabbedPanePrincipal);
 		
 		JPanel pnDadosPessoais = new JPanel();
 		pnDadosPessoais.setBackground(new Color(204, 204, 204));
-		PainelPrincipal.addTab("Dados pessoais", null, pnDadosPessoais, null);
-		PainelPrincipal.setForegroundAt(0, new Color(51, 153, 153));
-		PainelPrincipal.setBackgroundAt(0, new Color(255, 255, 255));
+		tabbedPanePrincipal.addTab("Dados pessoais", null, pnDadosPessoais, null);
+		tabbedPanePrincipal.setForegroundAt(0, new Color(51, 153, 153));
+		tabbedPanePrincipal.setBackgroundAt(0, new Color(255, 255, 255));
 		pnDadosPessoais.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
@@ -423,9 +423,9 @@ public class ClienteView {
 		panel_4.add(txtRg);
 		
 		JPanel pnConsultaClientes = new JPanel();
-		PainelPrincipal.addTab("Consulta Clientes", null, pnConsultaClientes, null);
-		PainelPrincipal.setBackgroundAt(1, new Color(255, 255, 255));
-		PainelPrincipal.setForegroundAt(1, new Color(0, 153, 153));
+		tabbedPanePrincipal.addTab("Consulta Clientes", null, pnConsultaClientes, null);
+		tabbedPanePrincipal.setBackgroundAt(1, new Color(255, 255, 255));
+		tabbedPanePrincipal.setForegroundAt(1, new Color(0, 153, 153));
 		pnConsultaClientes.setLayout(null);
 		
 		JLabel lbNome = new JLabel("Nome:");
@@ -516,7 +516,7 @@ public class ClienteView {
 			public void mouseClicked(MouseEvent e) {
 				
 			
-				PainelPrincipal.setSelectedIndex(0);
+				tabbedPanePrincipal.setSelectedIndex(0);
 			
 			//	txtCodigo.setText(tbClientes.getValueAt(tbClientes.getSelectedRow(), 0).toString());
 				
