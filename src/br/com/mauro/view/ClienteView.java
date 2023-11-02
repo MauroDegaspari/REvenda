@@ -26,10 +26,13 @@ import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Window.Type;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class ClienteView {
 
-	private JFrame frame;
+	private JFrame frmClientes;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtCidade;
@@ -51,7 +54,7 @@ public class ClienteView {
 			public void run() {
 				try {
 					ClienteView window = new ClienteView();
-					window.frame.setVisible(true);
+					window.frmClientes.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -111,17 +114,20 @@ public class ClienteView {
 
 	private void initialize() {
 		
-		frame = new JFrame();
+		frmClientes = new JFrame();
+		frmClientes.setIconImage(Toolkit.getDefaultToolkit().getImage(ClienteView.class.getResource("/icons/clientes.png")));
+		frmClientes.setTitle("Clientes");
+		frmClientes.setType(Type.POPUP);
 	
-		frame.getContentPane().setBackground(new Color(255, 255, 255));
-		frame.setBounds(100, 100, 796, 529);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmClientes.getContentPane().setBackground(new Color(255, 255, 255));
+		frmClientes.setBounds(100, 100, 796, 529);
+		frmClientes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmClientes.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 153, 153));
+		panel.setBackground(new Color(0, 128, 128));
 		panel.setBounds(0, 0, 780, 72);
-		frame.getContentPane().add(panel);
+		frmClientes.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Clientes");
@@ -227,9 +233,15 @@ public class ClienteView {
 		btnLocalizarCliente.setBounds(260, 35, 161, 23);
 		panel.add(btnLocalizarCliente);
 		
+		JLabel lbLogo = new JLabel("");
+		lbLogo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lbLogo.setIcon(new ImageIcon(ClienteView.class.getResource("/icons/r.png")));
+		lbLogo.setBounds(23, 11, 69, 50);
+		panel.add(lbLogo);
+		
 		JTabbedPane PainelPrincipal = new JTabbedPane(JTabbedPane.TOP);
 		PainelPrincipal.setBounds(10, 83, 760, 396);
-		frame.getContentPane().add(PainelPrincipal);
+		frmClientes.getContentPane().add(PainelPrincipal);
 		
 		JPanel pnDadosPessoais = new JPanel();
 		pnDadosPessoais.setBackground(new Color(204, 204, 204));

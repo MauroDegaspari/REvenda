@@ -176,10 +176,13 @@ public class FuncionarioDAO {
 			acesso.setString(1, email );
 			acesso.setString(2, senha );
 			
-			ResultSet rs = acesso.executeQuery(); 
+			ResultSet rs = acesso.executeQuery(); 			
+			
 			
 			if (rs.next()) { //TODO Criar validação de senha e email.
-				JOptionPane.showMessageDialog(null, "Bem Vindo: ");
+				IndexView index = new IndexView();
+				index.logado = rs.getString("nm_funcionario");
+				JOptionPane.showMessageDialog(null, "Bem Vindo: " + index.logado);
 				IndexView.main(null);
 				
 			}else {
