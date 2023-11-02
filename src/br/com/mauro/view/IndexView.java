@@ -1,17 +1,17 @@
 package br.com.mauro.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class IndexView {
 
@@ -58,7 +58,7 @@ public class IndexView {
 		
 		JPanel pnSideBar = new JPanel();
 		pnSideBar.setBackground(new Color(230, 230, 250));
-		pnSideBar.setBounds(0, 0, 187, 609);
+		pnSideBar.setBounds(0, 0, 210, 609);
 		frmIndex.getContentPane().add(pnSideBar);
 		pnSideBar.setLayout(null);
 		
@@ -67,6 +67,66 @@ public class IndexView {
 		pnSideBarInferior.setBounds(0, 0, 51, 609);
 		pnSideBar.add(pnSideBarInferior);
 		pnSideBarInferior.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			
+			/**
+			 * @author Mauro Degaspari
+			 * @since 01/11/2023
+			 * @apiNote Lógica para a barra lateral vertical, onde a barra lateral é encurtada até o limite da imagem.
+			 * 
+			 */
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int  condicao;
+				int x = pnSideBar.getWidth();
+				condicao = x == 210 ? 1 : 2;
+				switch (condicao) {
+				case 1 :
+					Thread th = new Thread(){
+						@Override
+						public void run(){
+							try{
+								for(int i = pnSideBar.getWidth(); i >= 50 ; i-- ){
+									Thread.sleep(3);
+									pnSideBar.setSize(i,609);
+							}
+						}
+							catch(Exception e){
+							JOptionPane.showMessageDialog(null,e);
+							}
+						}
+					};
+					th.start();
+				
+					break;
+				case 2 :
+					Thread th2 = new Thread(){
+						@Override
+						public void run(){
+							try{
+								for(int i = pnSideBar.getWidth(); i <= 210 ; i++ ){
+									Thread.sleep(3);
+									pnSideBar.setSize(i,609);
+							}
+						}
+							catch(Exception e){
+							JOptionPane.showMessageDialog(null,e);
+							}
+						}
+					};
+					th2.start();
+					break;
+
+				default:
+					break;
+				}
+			}
+		});
+		lblNewLabel.setBounds(10, 26, 46, 14);
+		pnSuperior.add(lblNewLabel);
+		
 		
 		JLabel lbImgCliente = new JLabel("");
 		lbImgCliente.addMouseListener(new MouseAdapter() {
