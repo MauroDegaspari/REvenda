@@ -23,7 +23,7 @@ public class LoginView {
 	private JFrame frmRevendaLogin;
 	private JTextField txtFuncionario;
 	private JPasswordField pswSenha;
-	public String logado;
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -97,7 +97,7 @@ public class LoginView {
 					senha = pswSenha.getText();
 					
 					FuncionarioDAO func = new FuncionarioDAO();
-					func.LoginFuncionario(senha, email);
+					func.LoginFuncionario(email,senha);
 					frmRevendaLogin.dispose();
 					
 				

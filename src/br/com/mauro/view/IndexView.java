@@ -18,7 +18,8 @@ import java.awt.Toolkit;
 public class IndexView {
 
 	private JFrame frmIndex;
-	LoginView login = new LoginView();
+	public static String logado;
+	public static String cargo;
 	
 	
 	public static void main(String[] args) {
@@ -66,21 +67,32 @@ public class IndexView {
 		pnSideBar.add(pnSideBarInferior);
 		pnSideBarInferior.setLayout(null);
 		
-		JLabel lbFuncionario = new JLabel("Funcionario Logado:");
-		lbFuncionario.setBounds(787, 68, 116, 14);
+		JLabel lbFuncionario = new JLabel("Funcionario:");
+		lbFuncionario.setBounds(876, 11, 75, 14);
 		pnSuperior.add(lbFuncionario);
 		
 		JLabel lbLogado = new JLabel();
 		lbLogado.setForeground(new Color(0, 0, 139));
 		lbLogado.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbLogado.setBounds(888, 68, 116, 14);
+		lbLogado.setBounds(950, 11, 116, 14);
 		pnSuperior.add(lbLogado);
-		lbLogado.setText(login.logado);
+		lbLogado.setText(logado);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(10, 25, 55, 46);
 		pnSuperior.add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon(IndexView.class.getResource("/icons/options.png")));
+		
+		JLabel lbCargo = new JLabel("Função:");
+		lbCargo.setBounds(902, 25, 49, 14);
+		pnSuperior.add(lbCargo);
+		
+		JLabel lbLogadoCardo = new JLabel();
+		lbLogadoCardo.setText(cargo);
+		lbLogadoCardo.setForeground(new Color(0, 0, 139));
+		lbLogadoCardo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lbLogadoCardo.setBounds(950, 25, 116, 14);
+		pnSuperior.add(lbLogadoCardo);
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			
 			/**
@@ -151,6 +163,12 @@ public class IndexView {
 		pnSideBarInferior.add(lbImgCliente);
 		
 		JLabel lbImgFuncionario = new JLabel("");
+		lbImgFuncionario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FuncionarioView.main(null);
+			}
+		});
 		lbImgFuncionario.setIcon(new ImageIcon(IndexView.class.getResource("/icons/funcionarios.png")));
 		lbImgFuncionario.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lbImgFuncionario.setBounds(2, 159, 41, 48);
@@ -203,6 +221,12 @@ public class IndexView {
 		pnSideBar.add(lbClientes);
 		
 		JLabel lb_Fucionarios = new JLabel("Fucionarios");
+		lb_Fucionarios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FuncionarioView.main(null);
+			}
+		});
 		lb_Fucionarios.setFont(new Font("Verdana", Font.PLAIN, 14));
 		lb_Fucionarios.setBounds(61, 173, 99, 29);
 		pnSideBar.add(lb_Fucionarios);
