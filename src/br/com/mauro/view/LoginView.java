@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import br.com.mauro.dao.FuncionarioDAO;
 import java.awt.Window.Type;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class LoginView {
 
@@ -53,9 +54,15 @@ public class LoginView {
 		frmRevendaLogin.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 128));
+		panel.setBackground(new Color(97, 171, 164));
 		panel.setBounds(0, 0, 429, 173);
 		frmRevendaLogin.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(LoginView.class.getResource("/icons/REVENDA300.png")));
+		lblNewLabel.setBounds(52, 11, 310, 151);
+		panel.add(lblNewLabel);
 		
 		JPanel pnPrincipal = new JPanel();
 		pnPrincipal.setBounds(0, 0, 429, 480);
