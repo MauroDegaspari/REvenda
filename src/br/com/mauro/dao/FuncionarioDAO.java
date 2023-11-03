@@ -164,12 +164,12 @@ public class FuncionarioDAO {
 		
 	}
 	
-	public void LoginFuncionario(String senha, String email) {
+	public void LoginFuncionario(String email, String senha ) {
 		try {
 			
 			String sql = "SELECT *                         "
 					+    "  FROM revenda.tb_funcionarios  "
-					+    " WHERE nm_funcionario = ?        "
+					+    " WHERE email_funcionario = ?        "
 					+    "   AND sh_funcionario = ?        ";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
@@ -180,13 +180,15 @@ public class FuncionarioDAO {
 			
 			
 			if (rs.next()) { //TODO Criar validação de senha e email.
-				LoginView login = new LoginView();
-				login.logado = rs.getString("nm_funcionario");
-				JOptionPane.showMessageDialog(null, "Bem Vindo: " + login.logado);
+								
+				IndexView.logado = rs.getString("nm_funcionario");
+				IndexView.cargo = rs.getNString("cargo_funcionario"); 
+				JOptionPane.showMessageDialog(null, "Bem Vindo: " + IndexView.logado);
 				IndexView.main(null);
 				
 			}else {
-				JOptionPane.showMessageDialog(null, "Senha ou Email errado", sql, 0);
+				JOptionPane.showMessageDialog(null, "SEnha ou Email errado", "erro no acesso: ",0, null);
+				LoginView.main(null);
 			}
 			
 		} catch (Exception erro) {
