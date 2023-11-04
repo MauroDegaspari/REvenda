@@ -4,26 +4,38 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.Window.Type;
-import java.awt.Toolkit;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.table.DefaultTableModel;
+
+import br.com.mauro.utils.FuncionalidadesUtils;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class IndexView {
 
 	private JFrame frmIndex;
 	public static String logado;
 	public static String cargo;
+	public static String data;
+	private JTable table;
+	private JTextField textField;
+	
+	FuncionalidadesUtils util = new FuncionalidadesUtils();
 	
 	
 	public static void main(String[] args) {
@@ -41,10 +53,12 @@ public class IndexView {
 
 	public IndexView() {
 		initialize();
+		util.DataHoraAtual();
 	}
 
 	private void initialize() {
 		frmIndex = new JFrame();
+	
 		frmIndex.setIconImage(Toolkit.getDefaultToolkit().getImage(IndexView.class.getResource("/icons/r.png")));
 		frmIndex.setTitle("Dashboard");
 		frmIndex.setType(Type.POPUP);
@@ -53,11 +67,72 @@ public class IndexView {
 		frmIndex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmIndex.getContentPane().setLayout(null);
 		
-		JPanel pnSuperior = new JPanel();
-		pnSuperior.setBackground(new Color(95, 158, 160));
-		pnSuperior.setBounds(0, 0, 1167, 68);
-		frmIndex.getContentPane().add(pnSuperior);
-		pnSuperior.setLayout(null);
+		JPanel pnVendas = new JPanel();
+		pnVendas.setBounds(220, 79, 937, 642);
+		frmIndex.getContentPane().add(pnVendas);
+		pnVendas.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(605, 11, 322, 108);
+		panel.setLayout(null);
+		panel.setBackground(new Color(95, 158, 160));
+		pnVendas.add(panel);
+		
+		JLabel lblNewLabel_1 = new JLabel("R$");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Verdana", Font.PLAIN, 22));
+		lblNewLabel_1.setBounds(10, 46, 46, 51);
+		panel.add(lblNewLabel_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(0, 139, 139));
+		panel_1.setBounds(0, 0, 210, 34);
+		panel.add(panel_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 11, 578, 54);
+		panel_2.setLayout(null);
+		panel_2.setBackground(new Color(97, 171, 164));
+		pnVendas.add(panel_2);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Dedscrição do Produto");
+		lblNewLabel_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lblNewLabel_1_1.setBounds(123, 0, 203, 19);
+		panel_2.add(lblNewLabel_1_1);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBackground(new Color(0, 139, 139));
+		panel_3.setBounds(0, 0, 116, 54);
+		panel_2.add(panel_3);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Quantidade");
+		lblNewLabel_1_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lblNewLabel_1_1_1.setBounds(10, 0, 72, 19);
+		panel_3.add(lblNewLabel_1_1_1);
+		
+		textField = new JTextField();
+		textField.setBackground(new Color(97, 171, 164));
+		textField.setBounds(175, 23, 347, 20);
+		panel_2.add(textField);
+		textField.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 76, 577, 393);
+		pnVendas.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Quantidade", "Item/Descri\u00E7\u00E3o", "Valor Unit\u00E1rio", "Desconto", "TOTAL"
+			}
+		));
+		table.getColumnModel().getColumn(1).setPreferredWidth(386);
+		scrollPane.setViewportView(table);
 		
 		JPanel pnIndex = new JPanel();
 		pnIndex.setBackground(Color.WHITE);
@@ -69,6 +144,12 @@ public class IndexView {
 		lblNewLabel_2.setIcon(new ImageIcon(IndexView.class.getResource("/icons/REVENDA300.png")));
 		lblNewLabel_2.setBounds(600, 0, 337, 332);
 		pnIndex.add(lblNewLabel_2);
+		
+		JPanel pnSuperior = new JPanel();
+		pnSuperior.setBackground(new Color(95, 158, 160));
+		pnSuperior.setBounds(0, 0, 1167, 68);
+		frmIndex.getContentPane().add(pnSuperior);
+		pnSuperior.setLayout(null);
 		
 		JPanel pnSideBar = new JPanel();
 		pnSideBar.setBackground(new Color(240, 248, 255));
@@ -87,37 +168,27 @@ public class IndexView {
 		
 		JPanel pnSideBarInferior = new JPanel();
 		pnSideBarInferior.setBackground(new Color(240, 248, 255));
-		pnSideBarInferior.setBounds(0, 0, 51, 721);
+		pnSideBarInferior.setBounds(0, 1, 55, 720);
 		pnSideBar.add(pnSideBarInferior);
 		pnSideBarInferior.setLayout(null);
 		
 		JLabel lbFuncionario = new JLabel("Funcionario:");
-		lbFuncionario.setBounds(967, 11, 75, 14);
+		lbFuncionario.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbFuncionario.setBounds(831, 7, 75, 14);
 		pnSuperior.add(lbFuncionario);
 		
 		JLabel lbLogado = new JLabel();
 		lbLogado.setForeground(new Color(0, 0, 139));
 		lbLogado.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbLogado.setBounds(1041, 11, 116, 14);
+		lbLogado.setBounds(905, 7, 116, 14);
 		pnSuperior.add(lbLogado);
 		lbLogado.setText(logado);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(10, 25, 55, 46);
-		pnSuperior.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(IndexView.class.getResource("/icons/options.png")));
-		
-		JLabel lbCargo = new JLabel("Função:");
-		lbCargo.setBounds(993, 25, 49, 14);
-		pnSuperior.add(lbCargo);
-		
-		JLabel lbLogadoCardo = new JLabel();
-		lbLogadoCardo.setText(cargo);
-		lbLogadoCardo.setForeground(new Color(0, 0, 139));
-		lbLogadoCardo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbLogadoCardo.setBounds(1041, 25, 116, 14);
-		pnSuperior.add(lbLogadoCardo);
-		lblNewLabel.addMouseListener(new MouseAdapter() {
+		JLabel lbOcultaMenu = new JLabel("");
+		lbOcultaMenu.setBounds(10, 10, 55, 46);
+		pnSuperior.add(lbOcultaMenu);
+		lbOcultaMenu.setIcon(new ImageIcon(IndexView.class.getResource("/icons/options.png")));
+		lbOcultaMenu.addMouseListener(new MouseAdapter() {
 			
 			/**
 			 * @author Mauro Degaspari
@@ -137,7 +208,7 @@ public class IndexView {
 						public void run(){
 							try{
 								for(int i = pnSideBar.getWidth(); i >= 50 ; i-- ){
-									Thread.sleep(3);
+									Thread.sleep(1);
 									pnSideBar.setSize(i,pnSideBar.getHeight());
 							}
 						}
@@ -173,6 +244,28 @@ public class IndexView {
 			}
 		});
 		
+		
+		JLabel lbCargo = new JLabel("Função:");
+		lbCargo.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbCargo.setBounds(857, 21, 49, 14);
+		pnSuperior.add(lbCargo);
+		
+		JLabel lbLogadoCardo = new JLabel();
+		lbLogadoCardo.setText(cargo);
+		lbLogadoCardo.setForeground(new Color(0, 0, 139));
+		lbLogadoCardo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lbLogadoCardo.setBounds(905, 21, 116, 14);
+		pnSuperior.add(lbLogadoCardo);
+		
+		JLabel lbData = new JLabel("Data:");
+		lbData.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbData.setBounds(867, 42, 49, 14);
+		pnSuperior.add(lbData);
+		
+		JLabel lbDataHora = new JLabel("");
+		lbDataHora.setFont(new Font("Verdana", Font.PLAIN, 13));
+		lbDataHora.setBounds(907, 25, 233, 36);
+		pnSuperior.add(lbDataHora);		
 		
 		JLabel lbImgCliente = new JLabel("");
 		lbImgCliente.addMouseListener(new MouseAdapter() {
@@ -224,13 +317,13 @@ public class IndexView {
 			}
 		});
 		lbImgFuncionario_3.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lbImgFuncionario_3.setBounds(0, 395, 49, 48);
+		lbImgFuncionario_3.setBounds(3, 98, 49, 48);
 		pnSideBarInferior.add(lbImgFuncionario_3);
 		
 		JLabel lbImgVendas = new JLabel("");
 		lbImgVendas.setIcon(new ImageIcon(IndexView.class.getResource("/icons/vendas.png")));
 		lbImgVendas.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lbImgVendas.setBounds(9, 385, 41, 48);
+		lbImgVendas.setBounds(4, 393, 50, 48);
 		pnSideBarInferior.add(lbImgVendas);
 		
 		JLabel lbImgConfiguracao = new JLabel("");
@@ -303,51 +396,13 @@ public class IndexView {
 		lblSair.setFont(new Font("Verdana", Font.PLAIN, 19));
 		lblSair.setBounds(61, 678, 99, 29);
 		pnSideBar.add(lblSair);
+		frmIndex.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				lbDataHora.setText(data);
+			}
+		});
 		
-		JPanel pnVendas = new JPanel();
-		pnVendas.setBounds(220, 79, 937, 642);
-		frmIndex.getContentPane().add(pnVendas);
-		pnVendas.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(605, 11, 322, 108);
-		panel.setLayout(null);
-		panel.setBackground(new Color(95, 158, 160));
-		pnVendas.add(panel);
-		
-		JLabel lblNewLabel_1 = new JLabel("R$");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Verdana", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(10, 46, 46, 51);
-		panel.add(lblNewLabel_1);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(0, 139, 139));
-		panel_1.setBounds(0, 0, 210, 34);
-		panel.add(panel_1);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 11, 578, 54);
-		panel_2.setLayout(null);
-		panel_2.setBackground(new Color(95, 158, 160));
-		pnVendas.add(panel_2);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Dedscrição do Produto");
-		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1.setBounds(123, 0, 203, 19);
-		panel_2.add(lblNewLabel_1_1);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setLayout(null);
-		panel_3.setBackground(new Color(0, 139, 139));
-		panel_3.setBounds(0, 0, 116, 54);
-		panel_2.add(panel_3);
-		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Quantidade");
-		lblNewLabel_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1_1.setBounds(10, 0, 72, 19);
-		panel_3.add(lblNewLabel_1_1_1);
+	
 	}
 }
