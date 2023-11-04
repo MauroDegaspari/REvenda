@@ -8,8 +8,13 @@ import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,9 +27,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.mauro.dao.ClientesDAO;
+import br.com.mauro.model.ClienteModel;
 import br.com.mauro.utils.FuncionalidadesUtils;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class IndexView {
 
@@ -36,6 +41,7 @@ public class IndexView {
 	private JTextField textField;
 	
 	FuncionalidadesUtils util = new FuncionalidadesUtils();
+	private JTextField txtClienteCpf;
 	
 	
 	public static void main(String[] args) {
@@ -73,7 +79,7 @@ public class IndexView {
 		pnVendas.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(605, 11, 322, 108);
+		panel.setBounds(598, 87, 329, 108);
 		panel.setLayout(null);
 		panel.setBackground(new Color(95, 158, 160));
 		pnVendas.add(panel);
@@ -90,7 +96,7 @@ public class IndexView {
 		panel.add(panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 11, 578, 54);
+		panel_2.setBounds(10, 87, 578, 54);
 		panel_2.setLayout(null);
 		panel_2.setBackground(new Color(97, 171, 164));
 		pnVendas.add(panel_2);
@@ -120,7 +126,7 @@ public class IndexView {
 		textField.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 76, 577, 393);
+		scrollPane.setBounds(10, 152, 577, 393);
 		pnVendas.add(scrollPane);
 		
 		table = new JTable();
@@ -133,6 +139,77 @@ public class IndexView {
 		));
 		table.getColumnModel().getColumn(1).setPreferredWidth(386);
 		scrollPane.setViewportView(table);
+		
+		JPanel pnProdutoCliente = new JPanel();
+		pnProdutoCliente.setBackground(new Color(51, 51, 51));
+		pnProdutoCliente.setBounds(10, 11, 917, 70);
+		pnVendas.add(pnProdutoCliente);
+		pnProdutoCliente.setLayout(null);
+		
+		JPanel pnQtd = new JPanel();
+		pnQtd.setLayout(null);
+		pnQtd.setBackground(new Color(102, 102, 102));
+		pnQtd.setBounds(0, 0, 142, 70);
+		pnProdutoCliente.add(pnQtd);
+		
+		JLabel lbQunatidade = new JLabel("QUANTIDADE");
+		lbQunatidade.setForeground(Color.WHITE);
+		lbQunatidade.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbQunatidade.setBounds(21, 8, 98, 19);
+		pnQtd.add(lbQunatidade);
+		
+		JPanel pnQtd_1 = new JPanel();
+		pnQtd_1.setLayout(null);
+		pnQtd_1.setBackground(new Color(102, 102, 102));
+		pnQtd_1.setBounds(584, -1, 333, 70);
+		pnProdutoCliente.add(pnQtd_1);
+		
+		JLabel lbCliente = new JLabel("Cliente CPF:");
+		lbCliente.setForeground(Color.WHITE);
+		lbCliente.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbCliente.setBounds(10, 11, 76, 19);
+		pnQtd_1.add(lbCliente);
+
+		JLabel lbClienteCpf = new JLabel("");
+		lbClienteCpf.setFont(new Font("Verdana", Font.BOLD, 16));
+		lbClienteCpf.setForeground(new Color(255, 255, 255));
+		lbClienteCpf.setBounds(56, 28, 235, 42);
+		pnQtd_1.add(lbClienteCpf);
+		
+		txtClienteCpf = new JTextField();
+		txtClienteCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evento) {
+			    if(evento.getKeyCode() == KeyEvent.VK_ENTER) {
+			        ClienteModel cliente = new ClienteModel();
+			        ClientesDAO dao = new ClientesDAO();
+			        
+			        ArrayList<ClienteModel> resultados = (ArrayList<ClienteModel>) dao.PesquisaClienteCpf(txtClienteCpf.getText());
+			        
+			        if (!resultados.isEmpty()) {
+			            cliente = resultados.get(0); // Obtém o primeiro cliente da lista
+			            lbClienteCpf.setText(cliente.getNome());
+			        } else {
+			            lbClienteCpf.setText("Cliente não encontrado");
+			        }
+			    }
+			}
+		});
+		txtClienteCpf.setBounds(96, 11, 153, 20);
+		pnQtd_1.add(txtClienteCpf);
+		txtClienteCpf.setColumns(10);
+		
+		JLabel lbPesquisaCliente = new JLabel("");
+		lbPesquisaCliente.setIcon(new ImageIcon(IndexView.class.getResource("/icons/buscar.png")));
+		lbPesquisaCliente.setBounds(264, 8, 23, 27);
+		pnQtd_1.add(lbPesquisaCliente);
+		
+		JLabel lb = new JLabel("-->");
+		lb.setFont(new Font("Verdana", Font.BOLD, 14));
+		lb.setForeground(new Color(255, 255, 255));
+		lb.setBounds(20, 41, 46, 14);
+		pnQtd_1.add(lb);
+		
 		
 		JPanel pnIndex = new JPanel();
 		pnIndex.setBackground(Color.WHITE);
@@ -174,13 +251,13 @@ public class IndexView {
 		
 		JLabel lbFuncionario = new JLabel("Funcionario:");
 		lbFuncionario.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbFuncionario.setBounds(831, 7, 75, 14);
+		lbFuncionario.setBounds(956, 7, 75, 14);
 		pnSuperior.add(lbFuncionario);
 		
 		JLabel lbLogado = new JLabel();
 		lbLogado.setForeground(new Color(0, 0, 139));
 		lbLogado.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbLogado.setBounds(905, 7, 116, 14);
+		lbLogado.setBounds(1030, 7, 116, 14);
 		pnSuperior.add(lbLogado);
 		lbLogado.setText(logado);
 		
@@ -247,24 +324,19 @@ public class IndexView {
 		
 		JLabel lbCargo = new JLabel("Função:");
 		lbCargo.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbCargo.setBounds(857, 21, 49, 14);
+		lbCargo.setBounds(982, 21, 49, 14);
 		pnSuperior.add(lbCargo);
 		
 		JLabel lbLogadoCardo = new JLabel();
 		lbLogadoCardo.setText(cargo);
 		lbLogadoCardo.setForeground(new Color(0, 0, 139));
 		lbLogadoCardo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbLogadoCardo.setBounds(905, 21, 116, 14);
+		lbLogadoCardo.setBounds(1030, 21, 116, 14);
 		pnSuperior.add(lbLogadoCardo);
-		
-		JLabel lbData = new JLabel("Data:");
-		lbData.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbData.setBounds(867, 42, 49, 14);
-		pnSuperior.add(lbData);
 		
 		JLabel lbDataHora = new JLabel("");
 		lbDataHora.setFont(new Font("Verdana", Font.PLAIN, 13));
-		lbDataHora.setBounds(907, 25, 233, 36);
+		lbDataHora.setBounds(982, 36, 175, 24);
 		pnSuperior.add(lbDataHora);		
 		
 		JLabel lbImgCliente = new JLabel("");
@@ -335,7 +407,7 @@ public class IndexView {
 		JLabel lbImgFuncionario_2 = new JLabel("");
 		lbImgFuncionario_2.setIcon(new ImageIcon(IndexView.class.getResource("/icons/sair.png")));
 		lbImgFuncionario_2.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lbImgFuncionario_2.setBounds(3, 673, 41, 48);
+		lbImgFuncionario_2.setBounds(5, 667, 41, 48);
 		pnSideBarInferior.add(lbImgFuncionario_2);
 		
 		JLabel lbClientes = new JLabel("Clientes");
