@@ -1,6 +1,7 @@
 package br.com.mauro.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -25,10 +26,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
+import br.com.mauro.dao.ProdutoDAO;
 import br.com.mauro.model.ClienteModel;
+import br.com.mauro.model.ProdutoModel;
 import br.com.mauro.utils.FuncionalidadesUtils;
 
 public class IndexView {
@@ -38,10 +42,10 @@ public class IndexView {
 	public static String cargo;
 	public static String data;
 	private JTable table;
-	private JTextField textField;
 	
 	FuncionalidadesUtils util = new FuncionalidadesUtils();
 	private JTextField txtClienteCpf;
+	private JTextField txtCodigoProduto;
 	
 	
 	public static void main(String[] args) {
@@ -101,16 +105,16 @@ public class IndexView {
 		panel_2.setBackground(new Color(97, 171, 164));
 		pnVendas.add(panel_2);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Dedscrição do Produto");
-		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lblNewLabel_1_1.setBounds(123, 0, 203, 19);
-		panel_2.add(lblNewLabel_1_1);
+		JLabel lbDescricao = new JLabel("Descrição do Produto");
+		lbDescricao.setForeground(Color.WHITE);
+		lbDescricao.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbDescricao.setBounds(106, 0, 143, 19);
+		panel_2.add(lbDescricao);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(new Color(0, 139, 139));
-		panel_3.setBounds(0, 0, 116, 54);
+		panel_3.setBounds(0, 0, 96, 54);
 		panel_2.add(panel_3);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Quantidade");
@@ -119,11 +123,34 @@ public class IndexView {
 		lblNewLabel_1_1_1.setBounds(10, 0, 72, 19);
 		panel_3.add(lblNewLabel_1_1_1);
 		
-		textField = new JTextField();
-		textField.setBackground(new Color(97, 171, 164));
-		textField.setBounds(175, 23, 347, 20);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		JLabel lblNewLabel_1_1_2 = new JLabel("Preço Und:");
+		lblNewLabel_1_1_2.setForeground(Color.WHITE);
+		lblNewLabel_1_1_2.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lblNewLabel_1_1_2.setBounds(416, 2, 69, 19);
+		panel_2.add(lblNewLabel_1_1_2);
+		
+		JLabel lbPreco = new JLabel("");
+		lbPreco.setForeground(new Color(255, 255, 255));
+		lbPreco.setFont(new Font("Verdana", Font.ITALIC, 15));
+		lbPreco.setBounds(442, 23, 69, 14);
+		panel_2.add(lbPreco);
+		
+		JLabel lbProdutoDescricao = new JLabel("");
+		lbProdutoDescricao.setForeground(new Color(255, 255, 255));
+		lbProdutoDescricao.setFont(new Font("Verdana", Font.BOLD, 25));
+		lbProdutoDescricao.setBounds(114, 17, 302, 31);
+		panel_2.add(lbProdutoDescricao);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("R$");
+		lblNewLabel_1_2.setForeground(Color.WHITE);
+		lblNewLabel_1_2.setFont(new Font("Verdana", Font.PLAIN, 16));
+		lblNewLabel_1_2.setBounds(415, 11, 27, 40);
+		panel_2.add(lblNewLabel_1_2);
+		
+		JLabel lblAddCarrinho = new JLabel("");
+		lblAddCarrinho.setIcon(new ImageIcon(IndexView.class.getResource("/icons/cart shopping.png")));
+		lblAddCarrinho.setBounds(517, 0, 61, 53);
+		panel_2.add(lblAddCarrinho);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 152, 577, 393);
@@ -199,16 +226,64 @@ public class IndexView {
 		pnQtd_1.add(txtClienteCpf);
 		txtClienteCpf.setColumns(10);
 		
-		JLabel lbPesquisaCliente = new JLabel("");
-		lbPesquisaCliente.setIcon(new ImageIcon(IndexView.class.getResource("/icons/buscar.png")));
-		lbPesquisaCliente.setBounds(264, 8, 23, 27);
-		pnQtd_1.add(lbPesquisaCliente);
-		
 		JLabel lb = new JLabel("-->");
 		lb.setFont(new Font("Verdana", Font.BOLD, 14));
 		lb.setForeground(new Color(255, 255, 255));
 		lb.setBounds(20, 41, 46, 14);
 		pnQtd_1.add(lb);
+		
+		JButton btnPesquisaCliente = new JButton("");
+		btnPesquisaCliente.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		btnPesquisaCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evento) {
+				
+				        ClienteModel cliente = new ClienteModel();
+				        ClientesDAO dao = new ClientesDAO();
+				        
+				        ArrayList<ClienteModel> resultados = (ArrayList<ClienteModel>) dao.PesquisaClienteCpf(txtClienteCpf.getText());
+				        
+				        if (!resultados.isEmpty()) {
+				            cliente = resultados.get(0); // Obtém o primeiro cliente da lista
+				            lbClienteCpf.setText(cliente.getNome());
+				        } else {
+				            lbClienteCpf.setText("Cliente não encontrado");
+				        }
+				    }
+		});
+		btnPesquisaCliente.setIcon(new ImageIcon(IndexView.class.getResource("/icons/buscar.png")));
+		btnPesquisaCliente.setBounds(262, 11, 46, 25);
+		pnQtd_1.add(btnPesquisaCliente);
+		
+		JButton btnPesquisaProduto = new JButton("Pesquisar Produto");
+		btnPesquisaProduto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  ProdutoModel produto  = new ProdutoModel();
+			      ProdutoDAO dao = new ProdutoDAO();
+			        
+			        ArrayList<ProdutoModel> resultados = (ArrayList<ProdutoModel>) dao.PesquisaProdutoCodigo(Integer.parseInt(txtCodigoProduto.getText()));
+			        
+			        if (!resultados.isEmpty()) {
+			            produto = resultados.get(0); // Obtém o primeiro cliente da lista
+			            lbProdutoDescricao.setText(produto.getNomeProduto());
+			            lbPreco.setText(String.valueOf(produto.getPrecoProduto()));
+			        } else {
+			        	lbProdutoDescricao.setText("Produto não encontrado");
+			        	lbPreco.setText(String.valueOf("0,00"));
+			        }
+			}
+		});
+		btnPesquisaProduto.setBounds(486, 22, 89, 23);
+		pnProdutoCliente.add(btnPesquisaProduto);
+		
+		txtCodigoProduto = new JTextField();
+		txtCodigoProduto.setText("Cibs");
+		txtCodigoProduto.setName("\r\n");
+		txtCodigoProduto.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		txtCodigoProduto.setToolTipText("");
+		txtCodigoProduto.setFont(new Font("Verdana", Font.BOLD, 22));
+		txtCodigoProduto.setBounds(159, 11, 297, 48);
+		pnProdutoCliente.add(txtCodigoProduto);
+		txtCodigoProduto.setColumns(10);
 		
 		
 		JPanel pnIndex = new JPanel();
@@ -262,7 +337,7 @@ public class IndexView {
 		lbLogado.setText(logado);
 		
 		JLabel lbOcultaMenu = new JLabel("");
-		lbOcultaMenu.setBounds(10, 10, 55, 46);
+		lbOcultaMenu.setBounds(4, 12, 55, 46);
 		pnSuperior.add(lbOcultaMenu);
 		lbOcultaMenu.setIcon(new ImageIcon(IndexView.class.getResource("/icons/options.png")));
 		lbOcultaMenu.addMouseListener(new MouseAdapter() {
