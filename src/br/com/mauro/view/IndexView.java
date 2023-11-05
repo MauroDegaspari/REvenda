@@ -17,6 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import javax.management.StringValueExp;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,6 +35,7 @@ import br.com.mauro.dao.ProdutoDAO;
 import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.ProdutoModel;
 import br.com.mauro.utils.FuncionalidadesUtils;
+import javax.swing.JSpinner;
 
 public class IndexView {
 
@@ -41,7 +43,12 @@ public class IndexView {
 	public static String logado;
 	public static String cargo;
 	public static String data;
-	private JTable table;
+	
+	private JTable tbCarrinho;
+	
+	double total,preco,subtotal,desconto;
+	int qtd;
+	DefaultTableModel carrinho; 
 	
 	FuncionalidadesUtils util = new FuncionalidadesUtils();
 	private JTextField txtClienteCpf;
@@ -88,9 +95,9 @@ public class IndexView {
 		panel.setBackground(new Color(95, 158, 160));
 		pnVendas.add(panel);
 		
-		JLabel lblNewLabel_1 = new JLabel("R$");
+		JLabel lblNewLabel_1 = new JLabel("R$:");
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Verdana", Font.PLAIN, 22));
+		lblNewLabel_1.setFont(new Font("Verdana", Font.PLAIN, 25));
 		lblNewLabel_1.setBounds(10, 46, 46, 51);
 		panel.add(lblNewLabel_1);
 		
@@ -98,6 +105,12 @@ public class IndexView {
 		panel_1.setBackground(new Color(0, 139, 139));
 		panel_1.setBounds(0, 0, 210, 34);
 		panel.add(panel_1);
+		
+		JLabel lblValorTotal = new JLabel("");
+		lblValorTotal.setForeground(Color.WHITE);
+		lblValorTotal.setFont(new Font("Verdana", Font.PLAIN, 25));
+		lblValorTotal.setBounds(52, 46, 246, 51);
+		panel.add(lblValorTotal);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 87, 578, 54);
@@ -111,17 +124,22 @@ public class IndexView {
 		lbDescricao.setBounds(106, 0, 143, 19);
 		panel_2.add(lbDescricao);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setLayout(null);
-		panel_3.setBackground(new Color(0, 139, 139));
-		panel_3.setBounds(0, 0, 96, 54);
-		panel_2.add(panel_3);
+		JPanel pnQtdd = new JPanel();
+		pnQtdd.setLayout(null);
+		pnQtdd.setBackground(new Color(0, 139, 139));
+		pnQtdd.setBounds(0, 0, 96, 54);
+		panel_2.add(pnQtdd);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Quantidade");
 		lblNewLabel_1_1_1.setForeground(Color.WHITE);
 		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lblNewLabel_1_1_1.setBounds(10, 0, 72, 19);
-		panel_3.add(lblNewLabel_1_1_1);
+		pnQtdd.add(lblNewLabel_1_1_1);
+		
+		JSpinner spnQtd = new JSpinner();
+		spnQtd.setFont(new Font("Verdana", Font.PLAIN, 12));
+		spnQtd.setBounds(14, 26, 52, 20);
+		pnQtdd.add(spnQtd);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("Preço Und:");
 		lblNewLabel_1_1_2.setForeground(Color.WHITE);
@@ -138,7 +156,7 @@ public class IndexView {
 		JLabel lbProdutoDescricao = new JLabel("");
 		lbProdutoDescricao.setForeground(new Color(255, 255, 255));
 		lbProdutoDescricao.setFont(new Font("Verdana", Font.BOLD, 25));
-		lbProdutoDescricao.setBounds(114, 17, 302, 31);
+		lbProdutoDescricao.setBounds(114, 17, 296, 31);
 		panel_2.add(lbProdutoDescricao);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("R$");
@@ -148,6 +166,35 @@ public class IndexView {
 		panel_2.add(lblNewLabel_1_2);
 		
 		JLabel lblAddCarrinho = new JLabel("");
+		lblAddCarrinho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				qtd = (int) spnQtd.getValue();
+				preco = Double.parseDouble(lbPreco.getText());
+				
+				subtotal = (qtd * preco);
+				
+				total += subtotal;
+				
+				lblValorTotal.setText(String.valueOf(total));
+				
+				carrinho = (DefaultTableModel)tbCarrinho.getModel();
+				carrinho.addRow(new Object[]{
+				 spnQtd.getValue(),
+				 lbProdutoDescricao.getText(),
+				 lbPreco.getText(),
+				 desconto = 0.00,
+				 subtotal,
+				 		 
+				 
+				
+					
+				});
+				
+			
+			 
+			}
+		});
 		lblAddCarrinho.setIcon(new ImageIcon(IndexView.class.getResource("/icons/cart shopping.png")));
 		lblAddCarrinho.setBounds(517, 0, 61, 53);
 		panel_2.add(lblAddCarrinho);
@@ -156,16 +203,17 @@ public class IndexView {
 		scrollPane.setBounds(10, 152, 577, 393);
 		pnVendas.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tbCarrinho = new JTable();
+		tbCarrinho.setFont(new Font("Verdana", Font.PLAIN, 11));
+		tbCarrinho.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Quantidade", "Item/Descri\u00E7\u00E3o", "Valor Unit\u00E1rio", "Desconto", "TOTAL"
 			}
 		));
-		table.getColumnModel().getColumn(1).setPreferredWidth(386);
-		scrollPane.setViewportView(table);
+		tbCarrinho.getColumnModel().getColumn(1).setPreferredWidth(386);
+		scrollPane.setViewportView(tbCarrinho);
 		
 		JPanel pnProdutoCliente = new JPanel();
 		pnProdutoCliente.setBackground(new Color(51, 51, 51));
@@ -179,10 +227,10 @@ public class IndexView {
 		pnQtd.setBounds(0, 0, 142, 70);
 		pnProdutoCliente.add(pnQtd);
 		
-		JLabel lbQunatidade = new JLabel("QUANTIDADE");
+		JLabel lbQunatidade = new JLabel("Pesquisa por codigo");
 		lbQunatidade.setForeground(Color.WHITE);
 		lbQunatidade.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbQunatidade.setBounds(21, 8, 98, 19);
+		lbQunatidade.setBounds(21, 8, 145, 19);
 		pnQtd.add(lbQunatidade);
 		
 		JPanel pnQtd_1 = new JPanel();
