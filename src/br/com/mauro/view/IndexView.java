@@ -80,7 +80,7 @@ public class IndexView {
 		frmIndex.setTitle("Dashboard");
 		frmIndex.setType(Type.POPUP);
 		frmIndex.getContentPane().setBackground(SystemColor.controlHighlight);
-		frmIndex.setBounds(100, 100, 1183, 771);
+		frmIndex.setBounds(100, 100, 1183, 803);
 		frmIndex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmIndex.getContentPane().setLayout(null);
 		
@@ -109,7 +109,7 @@ public class IndexView {
 		JLabel lblValorTotal = new JLabel("");
 		lblValorTotal.setForeground(Color.WHITE);
 		lblValorTotal.setFont(new Font("Verdana", Font.PLAIN, 25));
-		lblValorTotal.setBounds(52, 46, 246, 51);
+		lblValorTotal.setBounds(53, 46, 170, 51);
 		panel.add(lblValorTotal);
 		
 		JPanel panel_2 = new JPanel();
@@ -281,7 +281,7 @@ public class IndexView {
 		pnQtd_1.add(lb);
 		
 		JButton btnPesquisaCliente = new JButton("");
-		btnPesquisaCliente.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		btnPesquisaCliente.setBackground(new Color(240, 248, 255));
 		btnPesquisaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evento) {
 				
@@ -299,7 +299,7 @@ public class IndexView {
 				    }
 		});
 		btnPesquisaCliente.setIcon(new ImageIcon(IndexView.class.getResource("/icons/buscar.png")));
-		btnPesquisaCliente.setBounds(262, 11, 46, 25);
+		btnPesquisaCliente.setBounds(262, 11, 46, 44);
 		pnQtd_1.add(btnPesquisaCliente);
 		
 		JButton btnPesquisaProduto = new JButton("Pesquisar Produto");
@@ -324,7 +324,6 @@ public class IndexView {
 		pnProdutoCliente.add(btnPesquisaProduto);
 		
 		txtCodigoProduto = new JTextField();
-		txtCodigoProduto.setText("Cibs");
 		txtCodigoProduto.setName("\r\n");
 		txtCodigoProduto.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtCodigoProduto.setToolTipText("");
@@ -332,6 +331,80 @@ public class IndexView {
 		txtCodigoProduto.setBounds(159, 11, 297, 48);
 		pnProdutoCliente.add(txtCodigoProduto);
 		txtCodigoProduto.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBackground(new Color(95, 158, 160));
+		panel_3.setBounds(598, 561, 329, 70);
+		pnVendas.add(panel_3);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("R$:");
+		lblNewLabel_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1.setFont(new Font("Verdana", Font.PLAIN, 19));
+		lblNewLabel_1_1.setBounds(10, 11, 122, 51);
+		panel_3.add(lblNewLabel_1_1);
+		
+		JButton btnNewButton_1 = new JButton("PAGAR");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				FinalizarCompraView.main(null);
+				FinalizarCompraView finalizar = new FinalizarCompraView();
+				finalizar.txtFCTotal.setText("teste");
+				
+			}
+		});
+		btnNewButton_1.setForeground(new Color(248, 248, 255));
+		btnNewButton_1.setFont(new Font("Verdana", Font.BOLD, 14));
+		btnNewButton_1.setBackground(new Color(60, 179, 113));
+		btnNewButton_1.setBounds(209, 0, 120, 70);
+		panel_3.add(btnNewButton_1);
+		
+		JButton btnNewButton_1_2 = new JButton("New button");
+		btnNewButton_1_2.setBounds(826, 206, 101, 92);
+		pnVendas.add(btnNewButton_1_2);
+		
+		JButton btnDinheiro = new JButton("DINHEIRO");
+		btnDinheiro.setBackground(new Color(102, 205, 170));
+		btnDinheiro.setFont(new Font("Verdana", Font.PLAIN, 12));
+		btnDinheiro.setSelectedIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
+		btnDinheiro.setBounds(598, 206, 101, 92);
+		pnVendas.add(btnDinheiro);
+		
+		JButton btnNewButton_1_2_2 = new JButton("New button");
+		btnNewButton_1_2_2.setBounds(715, 206, 101, 92);
+		pnVendas.add(btnNewButton_1_2_2);
+		
+		JButton btnNewButton_1_2_3 = new JButton("New button");
+		btnNewButton_1_2_3.setBounds(598, 309, 101, 92);
+		pnVendas.add(btnNewButton_1_2_3);
+		
+		JButton btnNewButton_1_2_4 = new JButton("New button");
+		btnNewButton_1_2_4.setBounds(715, 309, 101, 92);
+		pnVendas.add(btnNewButton_1_2_4);
+		
+		JButton btnNewButton_1_2_5 = new JButton("New button");
+		btnNewButton_1_2_5.setBounds(826, 309, 101, 92);
+		pnVendas.add(btnNewButton_1_2_5);
+		
+		JPanel panel_3_1 = new JPanel();
+		panel_3_1.setLayout(null);
+		panel_3_1.setBackground(Color.LIGHT_GRAY);
+		panel_3_1.setBounds(10, 561, 578, 70);
+		pnVendas.add(panel_3_1);
+		
+		JLabel lbCancela = new JLabel("");
+		lbCancela.setIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
+		lbCancela.setForeground(Color.WHITE);
+		lbCancela.setFont(new Font("Verdana", Font.PLAIN, 19));
+		lbCancela.setBounds(10, 11, 47, 51);
+		panel_3_1.add(lbCancela);
+		
+		JLabel lblValorTotal_1_1 = new JLabel("");
+		lblValorTotal_1_1.setForeground(Color.WHITE);
+		lblValorTotal_1_1.setFont(new Font("Verdana", Font.PLAIN, 25));
+		lblValorTotal_1_1.setBounds(52, 46, 246, 51);
+		panel_3_1.add(lblValorTotal_1_1);
 		
 		
 		JPanel pnIndex = new JPanel();
@@ -591,6 +664,11 @@ public class IndexView {
 		lblSair.setFont(new Font("Verdana", Font.PLAIN, 19));
 		lblSair.setBounds(61, 678, 99, 29);
 		pnSideBar.add(lblSair);
+		
+		JLabel lblNewLabel = new JLabel("Desenvolvido por: Mauro Degaspari");
+		lblNewLabel.setFont(new Font("Verdana", Font.PLAIN, 9));
+		lblNewLabel.setBounds(949, 732, 227, 14);
+		frmIndex.getContentPane().add(lblNewLabel);
 		frmIndex.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
