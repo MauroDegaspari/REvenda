@@ -1,8 +1,7 @@
 # REvenda
-Aplicação REvenda 
+  Aplicação Desktop de PDV integrado com banco de dados ORACLE
 # Sobre
-  API simples de uma REST API usando alguns projetos do ecossistema Spring, como Spring Boot e Spring Data JPA. Utilizando também 
-  bando de dados em memoria H2
+  Sistema de vendas com controle de estoque...
   
   
 #### Imagens
@@ -14,9 +13,9 @@ Cadastrando CLIENTE | Pesquisando CLIENTE
 
 ## Cosntruído com:
 :computer: ECLIPSE Java EE <br>
-:space_invader: Maven<br>
-:bug: Springboot<br>
-:bank: H2 <br>
+:space_invader: SQL<br>
+:bug: WindowBuild - Swing<br>
+:bank: SQL ORACLE <br>
 
 ## Contato
 
