@@ -18,7 +18,6 @@ public class ClienteModel {
 	private String uf;
 	
 	
-	
 	public int getCodigo() {
 		return codigo;
 	}
