@@ -1,26 +1,31 @@
 package br.com.mauro.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.Toolkit;
-import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.border.BevelBorder;
-import javax.swing.SwingConstants;
 import javax.swing.JEditorPane;
-import javax.swing.JTable;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
+
+import br.com.mauro.dao.FornecedoresDAO;
+import br.com.mauro.model.FornecedoresModel;
 
 public class FornecedorView {
 
@@ -33,8 +38,8 @@ public class FornecedorView {
 	private JTextField textField_1;
 	private JTextField txtEmail;
 	private JTextField txtSite;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtCelular;
+	private JTextField txtTelefone;
 	private JTextField textField_6;
 	private JTextField txtCep;
 	private JTextField txtCidade;
@@ -107,6 +112,36 @@ public class FornecedorView {
 		panelSuperior.add(btnEditar);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					FornecedoresModel fornec = new FornecedoresModel();
+					
+					fornec.setNome(txtEmpresa.getText());
+					fornec.setCnpj(txtCNPJ.getText());
+					fornec.setEmail(txtEmail.getText());
+					fornec.setTelefone(txtTelefone.getText());
+					fornec.setCelular(txtCelular.getText());
+					fornec.setCep(txtCep.getText());
+					fornec.setRua(txtRua.getText());
+					fornec.setNumero(Integer.parseInt(txtNumero.getText()));
+					fornec.setComplemento(txtComplemento.getText());
+					fornec.setBairro(txtBairro.getText());
+					fornec.setCidade(txtCidade.getText());
+					fornec.setUf("PE");
+					
+					FornecedoresDAO dao = new FornecedoresDAO();
+					
+					dao.CadastrarFornecedor(fornec);
+					
+				} catch (Exception erro) {
+					
+					JOptionPane.showMessageDialog(null," ERRO AO SALVAR FONECEDOR: "+ erro);
+				}
+				
+			}
+		});
 		btnSalvar.setBounds(505, 35, 78, 23);
 		panelSuperior.add(btnSalvar);
 		
@@ -255,15 +290,15 @@ public class FornecedorView {
 		lbTelefone.setBounds(20, 370, 47, 14);
 		pnGeral.add(lbTelefone);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(99, 345, 190, 20);
-		pnGeral.add(textField_4);
+		txtCelular = new JTextField();
+		txtCelular.setColumns(10);
+		txtCelular.setBounds(99, 345, 190, 20);
+		pnGeral.add(txtCelular);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(98, 370, 191, 20);
-		pnGeral.add(textField_5);
+		txtTelefone = new JTextField();
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(98, 370, 191, 20);
+		pnGeral.add(txtTelefone);
 		
 		JLabel lbTelefone2 = new JLabel("lbTelefone2:");
 		lbTelefone2.setFont(new Font("Verdana", Font.PLAIN, 10));

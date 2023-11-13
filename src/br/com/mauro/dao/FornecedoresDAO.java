@@ -33,32 +33,32 @@ public class FornecedoresDAO {
 															+ " bairro_fornecedor,"
 															+ " cidade_fornecedor,"
 															+ " estado_fornecedor)"
-											+ "		VALUES(seq_fornecedores.nextval,?,?,?,?,?,?,?,?,?,?,?) ";
+											+ "		VALUES(seq_fornecedores.nextval,?,?,?,?,?,?,?,?,?,?,?,?) ";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
 			acesso.setString(1,fornec.getNome());
 			acesso.setString(2,fornec.getCnpj());
 			acesso.setString(3,fornec.getEmail());
-			acesso.setString(2,fornec.getTelefone());
-			acesso.setString(2,fornec.getCelular());
-			acesso.setString(2,fornec.getCep());
-			acesso.setString(2,fornec.getRua());
-			acesso.setInt(2,fornec.getNumero());
-			acesso.setString(2,fornec.getComplemento());
-			acesso.setString(2,fornec.getBairro());
-			acesso.setString(2,fornec.getCidade());
-			acesso.setString(2,fornec.getUf());
+			acesso.setString(4,fornec.getTelefone());
+			acesso.setString(5,fornec.getCelular());
+			acesso.setString(6,fornec.getCep());
+			acesso.setString(7,fornec.getRua());
+			acesso.setInt(8,fornec.getNumero());
+			acesso.setString(9,fornec.getComplemento());
+			acesso.setString(10,fornec.getBairro());
+			acesso.setString(11,fornec.getCidade());
+			acesso.setString(12,fornec.getUf());
 			
 			acesso.execute();
 			acesso.close();
 			
-			JOptionPane.showInputDialog("Cadastro de " +fornec.getNome() +" realizado com sucesso.");
+			JOptionPane.showMessageDialog(null, "Cadastro de " +fornec.getNome() +" realizado com sucesso.", sql, 1);
 			
 		
 			
 		} catch (Exception erro) {
 			
-			JOptionPane.showMessageDialog(null," ERRO AO SALVAR FORNECEDOR: \n"+ erro);
+			JOptionPane.showMessageDialog(null," ERRO AO SALVAR FONECEDOR: "+ erro);
 			
 		}
 	}
