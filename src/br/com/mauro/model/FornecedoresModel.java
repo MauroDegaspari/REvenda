@@ -1,15 +1,11 @@
 package br.com.mauro.model;
 
-public class FuncionarioModel {
+public class FornecedoresModel {
 	
 	private int codigo;
 	private String nome;
-	private String rg;
-	private String cpf;
+	private String cnpj;
 	private String email;
-	private String senha;
-	private String cargo;
-	private String nivel;
 	private String telefone;
 	private String celular;
 	private String cep;
@@ -32,41 +28,17 @@ public class FuncionarioModel {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getRg() {
-		return rg;
+	public String getCnpj() {
+		return cnpj;
 	}
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	public String getCargo() {
-		return cargo;
-	}
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
-	}
-	public String getNivel() {
-		return nivel;
-	}
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
 	}
 	public String getTelefone() {
 		return telefone;
