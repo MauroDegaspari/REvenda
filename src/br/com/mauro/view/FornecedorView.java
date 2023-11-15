@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +26,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.FornecedoresDAO;
+import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FornecedoresModel;
 
 public class FornecedorView {
@@ -65,12 +67,40 @@ public class FornecedorView {
 			}
 		});
 	}
+	
+	public void listarFornecedores() {
+			
+			FornecedoresDAO dao = new FornecedoresDAO();
+			List<FornecedoresModel> ListaFornecedores =dao.ListarFornecedoredores();
+			
+			DefaultTableModel tbDados = (DefaultTableModel) tbFornecedores.getModel();
+			tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+			
+			for(FornecedoresModel cliente: ListaFornecedores) {
+				tbDados.addRow(new Object[]{
+					cliente.getCodigo(),
+					cliente.getNome(),
+					cliente.getCnpj(),
+					cliente.getEmail(),
+					cliente.getTelefone(),
+					cliente.getCelular(),
+					cliente.getCep(),
+					cliente.getRua(),
+					cliente.getNumero(),
+					cliente.getComplemento(),
+					cliente.getBairro(),
+					cliente.getCidade(),
+					cliente.getUf()				
+				});
+			}
+		}
 
 	/**
 	 * Create the application.
 	 */
 	public FornecedorView() {
 		initialize();
+		listarFornecedores();
 	}
 
 	/**
@@ -134,6 +164,8 @@ public class FornecedorView {
 					FornecedoresDAO dao = new FornecedoresDAO();
 					
 					dao.CadastrarFornecedor(fornec);
+					
+					listarFornecedores();
 					
 				} catch (Exception erro) {
 					

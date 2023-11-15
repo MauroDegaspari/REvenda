@@ -214,7 +214,7 @@ public class ClientesDAO{
 		
 		try {
 			
-			String sql = "UPDATE revenda.tb_clientes,"
+			String sql = "UPDATE revenda.tb_clientes"
 					+ "      SET nm_cliente = ?,"
 					+ "          rg_cliente = ?,"
 					+ "          cpf_cliente = ?,"

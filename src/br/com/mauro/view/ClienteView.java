@@ -180,6 +180,7 @@ public class ClienteView {
 					cliente.setCep(txtCep.getText());
 					cliente.setRua(txtRua.getText());
 					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
+					cliente.setComplemento(txtComplemento.getText());
 					cliente.setBairro(txtBairro.getText());
 					cliente.setCidade(txtCidade.getText());
 					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
@@ -189,6 +190,7 @@ public class ClienteView {
 					ClientesDAO editarCliente = new ClientesDAO();
 					
 					editarCliente.AlterarCliente(cliente);
+					listarClientes();
 					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnEditar,"Erro: Botão SAlvar \n" + erro );
