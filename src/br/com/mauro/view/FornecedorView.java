@@ -165,6 +165,8 @@ public class FornecedorView {
 					
 					dao.CadastrarFornecedor(fornec);
 					
+					listarFornecedores();
+					
 				} catch (Exception erro) {
 					
 					JOptionPane.showMessageDialog(null," ERRO AO SALVAR FONECEDOR: "+ erro);

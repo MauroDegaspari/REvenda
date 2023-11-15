@@ -37,7 +37,7 @@ public class FornecedoresDAO {
 															+ " bairro_fornecedor,"
 															+ " cidade_fornecedor,"
 															+ " estado_fornecedor)"
-											+ "		VALUES(seq_fornecedoredores.nextval,?,?,?,?,?,?,?,?,?,?,?,?) ";
+											+ "		VALUES(seq_fornecedores.nextval,?,?,?,?,?,?,?,?,?,?,?,?) ";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
 			acesso.setString(1,fornecedor.getNome());
