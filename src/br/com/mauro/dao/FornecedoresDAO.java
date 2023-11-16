@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import br.com.mauro.jdbc.ConnectionFactory;
+import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FornecedoresModel;
 
 
@@ -110,5 +111,24 @@ public class FornecedoresDAO {
 			JOptionPane.showMessageDialog(null," Erro em Banco de dados: \n " + erro);
 			return null;
 		}
+	}
+	
+	public void ExcluirFornecedor(FornecedoresModel fornecedor) {
+		
+		try {
+			String sql = "DELETE FROM revenda.tb_fornecedores WHERE cd_fornecedor = ?";
+			
+			PreparedStatement acesso = conn.prepareStatement(sql);
+			acesso.setInt(1,fornecedor.getCodigo());
+						
+			acesso.execute();
+			acesso.close();
+			
+		}catch(Exception erro) {
+			
+			JOptionPane.showMessageDialog(null," Erro em Banco de dados: \n " + erro);
+			
+		}
+		
 	}
 }
