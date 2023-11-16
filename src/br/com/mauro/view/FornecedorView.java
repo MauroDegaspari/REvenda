@@ -51,6 +51,7 @@ public class FornecedorView {
 	private JTextField txtComplemento;
 	private JTable tbFornecedores;
 	private JTextField txtPesquisa;
+	private JTextField txtCodigo;
 
 	/**
 	 * Launch the application.
@@ -134,6 +135,25 @@ public class FornecedorView {
 		panelSuperior.add(lblRevenda);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					FornecedoresModel fornec = new FornecedoresModel();
+					FornecedoresDAO dao = new FornecedoresDAO();
+					
+					fornec.setCodigo(Integer.parseInt(txtCodigo.getText()));
+					
+					dao.ExcluirFornecedor(fornec);
+					
+					JOptionPane.showMessageDialog(btnExcluir, "Cliente "+fornec.getNome()+" Excluido",null, 0);
+					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			
+			}
+		});
 		btnExcluir.setBounds(681, 35, 78, 23);
 		panelSuperior.add(btnExcluir);
 		
@@ -237,7 +257,7 @@ public class FornecedorView {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		panel.setBounds(10, 11, 315, 37);
+		panel.setBounds(10, 11, 243, 37);
 		pnGeral.add(panel);
 		panel.setLayout(null);
 		
@@ -416,6 +436,16 @@ public class FornecedorView {
 		lbUf.setFont(new Font("Verdana", Font.PLAIN, 10));
 		lbUf.setBounds(487, 500, 27, 21);
 		pnGeral.add(lbUf);
+		
+		txtCodigo = new JTextField();
+		txtCodigo.setBounds(258, 29, 67, 20);
+		pnGeral.add(txtCodigo);
+		txtCodigo.setColumns(10);
+		
+		JLabel lbCodigo = new JLabel("Cód.");
+		lbCodigo.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lbCodigo.setBounds(258, 11, 46, 14);
+		pnGeral.add(lbCodigo);
 		
 		JPanel pnFornecedores = new JPanel();
 		tabbedPanePrincipal.addTab("Fornecedores", null, pnFornecedores, null);
