@@ -200,8 +200,6 @@ public class ClientesDAO{
 			acesso.execute();
 			acesso.close();
 			
-			JOptionPane.showMessageDialog(null,"Cliente:  " +cliente.getNome() +" Excluido do sistema."); //TODO tratativa para mensagem exluir 
-			
 		}catch(Exception erro) {
 			
 			JOptionPane.showMessageDialog(null," Erro em Banco de dados: \n " + erro);

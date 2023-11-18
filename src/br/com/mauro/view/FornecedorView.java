@@ -28,11 +28,13 @@ import javax.swing.table.DefaultTableModel;
 import br.com.mauro.dao.FornecedoresDAO;
 import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FornecedoresModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FornecedorView {
 
 	private JFrame frmFornecedor;
-	private JTextField txtEmpresa;
+	private JTextField txtNome;
 	private JTextField txtCNPJ;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -67,6 +69,17 @@ public class FornecedorView {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * @author Mauro Degaspari
+	 * @return O Valor relacionado a linha do JTable tbClientes, caso não 
+	 * 		   tenha valor retorne uma String " ". 
+	 */
+	private String trantandoValor(JTable table, int row, int column) {
+		Object linha = table.getValueAt(row, column);
+		return linha != null ? linha.toString() : "";
+		
 	}
 	
 	public void listarFornecedores() {
@@ -168,7 +181,7 @@ public class FornecedorView {
 				try {
 					FornecedoresModel fornec = new FornecedoresModel();
 					
-					fornec.setNome(txtEmpresa.getText());
+					fornec.setNome(txtNome.getText());
 					fornec.setCnpj(txtCNPJ.getText());
 					fornec.setEmail(txtEmail.getText());
 					fornec.setTelefone(txtTelefone.getText());
@@ -215,10 +228,10 @@ public class FornecedorView {
 		tabbedPanePrincipal.addTab("Geral", null, pnGeral, null);
 		pnGeral.setLayout(null);
 		
-		txtEmpresa = new JTextField();
-		txtEmpresa.setBounds(97, 54, 228, 20);
-		pnGeral.add(txtEmpresa);
-		txtEmpresa.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(97, 54, 228, 20);
+		pnGeral.add(txtNome);
+		txtNome.setColumns(10);
 		
 		txtCNPJ = new JTextField();
 		txtCNPJ.setColumns(10);
@@ -456,6 +469,21 @@ public class FornecedorView {
 		pnFornecedores.add(scrollPane);
 		
 		tbFornecedores = new JTable();
+		tbFornecedores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				tabbedPanePrincipal.setSelectedIndex(0);
+				
+				txtCodigo.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 0));
+				txtNome.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 1));
+//				txtCNPJ.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 2));
+//				txtEmail.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 3));
+//				txtTelefone.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 4));
+//				txtCelular.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 5));
+//				txtCep.setText(trantandoValor(tbFornecedores, tbFornecedores.getSelectedRow(), 6));
+			}
+		});
 		tbFornecedores.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
