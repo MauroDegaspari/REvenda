@@ -69,9 +69,12 @@ public class FinalizarCompraView {
 		frame.getContentPane().add(lbTotal);
 		
 		txtFCTotal = new JTextField();
+		txtFCTotal.setForeground(new Color(0, 0, 0));
+		txtFCTotal.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtFCTotal.setBounds(561, 224, 86, 20);
 		frame.getContentPane().add(txtFCTotal);
 		txtFCTotal.setColumns(10);
+		
 		
 		JLabel lblTroco = new JLabel("Troco");
 		lblTroco.setBounds(487, 199, 38, 14);

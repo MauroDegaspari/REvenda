@@ -151,10 +151,15 @@ public class ClienteView {
 				
 					cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
 					
-					ClientesDAO excluirCliente = new ClientesDAO();
-					excluirCliente.ExcluirCliente(cliente);				
+					String nomeExluir = txtNome.getText();
 					
-					JOptionPane.showMessageDialog(btnExcluir, "Cliente "+cliente.getNome()+" Excluido",null, 0);
+					ClientesDAO excluirCliente = new ClientesDAO();
+					excluirCliente.ExcluirCliente(cliente);
+					
+					listarClientes();
+					
+					JOptionPane.showMessageDialog(btnExcluir, "Cliente "+ nomeExluir+" Excluido",null, 1);
+				
 					
 				} catch (Exception e2) {
 					// TODO: Criar exception
