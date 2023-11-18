@@ -19,14 +19,29 @@ public class ProdutoDAO {
 		this.conn = new ConnectionFactory().getConnection();
 	}
 	
-	
-	public void CadastrarProduto() {
+	public void CadastrarProduto(ProdutoModel produto) {
 		try {
 			
+			String sql = "INSERT INTO revenda.tb_produtos(cd_produto,ds_produto,preco_produto,qtd_estoque_produto,cd_fornecedor)"
+					   + "                         VALUES(seq_produtos.nextval,?,?,?,?)";
+			
+			PreparedStatement acesso = conn.prepareStatement(sql);
+			acesso.setString(1,produto.getNomeProduto());
+			acesso.setDouble(2,produto.getPrecoProduto());
+			acesso.setInt(3,produto.getQtdProduto());
+			
+			acesso.setInt(4,produto.getFornecedores().getCodigo());
+			
+			acesso.execute();
+			acesso.close();
+				
+			JOptionPane.showMessageDialog(null, "PRODUTO SALVO");
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showMessageDialog(null,"Erro ao salvar produto ORA -:  " + e);
 		}
 	}
+
 
 	public List<ProdutoModel> PesquisaProdutoCodigo(int cd_produto) {
 		try {
