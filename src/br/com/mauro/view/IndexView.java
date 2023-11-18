@@ -577,6 +577,12 @@ public class IndexView {
 		pnSideBarInferior.add(lbImgFornecedor);
 		
 		JLabel lbImgProduto = new JLabel("");
+		lbImgProduto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProdutoView.main(null);
+			}
+		});
 		lbImgProduto.setIcon(new ImageIcon(IndexView.class.getResource("/icons/produtos.png")));
 		lbImgProduto.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lbImgProduto.setBounds(0, 334, 50, 48);
@@ -645,6 +651,12 @@ public class IndexView {
 		pnSideBar.add(lbFornecedores);
 		
 		JLabel lbProdutos = new JLabel("Produtos");
+		lbProdutos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProdutoView.main(null);
+			}
+		});
 		lbProdutos.setFont(new Font("Verdana", Font.PLAIN, 14));
 		lbProdutos.setBounds(61, 346, 99, 29);
 		pnSideBar.add(lbProdutos);

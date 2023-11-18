@@ -3,12 +3,15 @@ package br.com.mauro.view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -17,16 +20,18 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 import br.com.mauro.dao.FornecedoresDAO;
+import br.com.mauro.dao.ProdutoDAO;
 import br.com.mauro.model.FornecedoresModel;
+import br.com.mauro.model.ProdutoModel;
 
 public class ProdutoView {
 
 	private JFrame frame;
 	private JTextField txtProduto;
 	private JTextField txtDescricao;
-	private JTextField textField_1;
+	private JTextField txtQtdProduto;
 	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtPreco;
 	private JTextField txtCusto;
 
 	/**
@@ -58,7 +63,7 @@ public class ProdutoView {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1074, 635);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -78,19 +83,8 @@ public class ProdutoView {
 		lbLogo.setBounds(10, 11, 69, 50);
 		panel.add(lbLogo);
 		
-		JLabel lbCadastroProdutos = new JLabel("Cadastro de Produtos");
-		lbCadastroProdutos.setForeground(Color.WHITE);
-		lbCadastroProdutos.setFont(new Font("Verdana", Font.BOLD, 17));
-		lbCadastroProdutos.setBounds(76, 27, 277, 34);
-		panel.add(lbCadastroProdutos);
-		
-		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
-		btnLocalizarCliente.setBounds(542, 36, 161, 23);
-		panel.add(btnLocalizarCliente);
-		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(761, 35, 78, 23);
-		panel.add(btnSalvar);
+
+	
 		
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setBounds(849, 35, 78, 23);
@@ -130,11 +124,11 @@ public class ProdutoView {
 		txtDescricao.setBounds(14, 126, 487, 21);
 		Produtos.add(txtDescricao);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_1.setColumns(10);
-		textField_1.setBounds(512, 70, 84, 34);
-		Produtos.add(textField_1);
+		txtQtdProduto = new JTextField();
+		txtQtdProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtQtdProduto.setColumns(10);
+		txtQtdProduto.setBounds(512, 70, 84, 34);
+		Produtos.add(txtQtdProduto);
 		
 		JLabel lbQunatidade = new JLabel("Qtd. Estoque:");
 		lbQunatidade.setFont(new Font("Verdana", Font.PLAIN, 11));
@@ -157,11 +151,11 @@ public class ProdutoView {
 		textField_2.setBounds(511, 126, 92, 21);
 		Produtos.add(textField_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_3.setColumns(10);
-		textField_3.setBounds(606, 70, 100, 34);
-		Produtos.add(textField_3);
+		txtPreco = new JTextField();
+		txtPreco.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtPreco.setColumns(10);
+		txtPreco.setBounds(606, 70, 100, 34);
+		Produtos.add(txtPreco);
 		
 		JLabel lblPreovenda = new JLabel("Preço Venda");
 		lblPreovenda.setFont(new Font("Verdana", Font.PLAIN, 11));
@@ -183,7 +177,7 @@ public class ProdutoView {
 		lblFornecedor.setBounds(14, 181, 137, 14);
 		Produtos.add(lblFornecedor);
 		
-		JComboBox cbFornecedor = new JComboBox();
+		JComboBox<FornecedoresModel> cbFornecedor = new JComboBox<FornecedoresModel>();
 		cbFornecedor.addAncestorListener(new AncestorListener() {
 			public void ancestorAdded(AncestorEvent event) {
 				FornecedoresDAO daoFornecedores = new FornecedoresDAO();
@@ -208,5 +202,44 @@ public class ProdutoView {
 		
 		JPanel Estoque = new JPanel();
 		tabbedPane.addTab("Estoque", null, Estoque, null);
+		
+		JLabel lbCadastroProdutos = new JLabel("Cadastro de Produtos");
+		lbCadastroProdutos.setForeground(Color.WHITE);
+		lbCadastroProdutos.setFont(new Font("Verdana", Font.BOLD, 17));
+		lbCadastroProdutos.setBounds(76, 27, 277, 34);
+		panel.add(lbCadastroProdutos);
+		
+		JButton btnLocalizarCliente = new JButton("Localizar Cliente");
+		btnLocalizarCliente.setBounds(542, 36, 161, 23);
+		panel.add(btnLocalizarCliente);
+		
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					ProdutoModel produto = new ProdutoModel();
+					
+					produto.setNomeProduto(txtDescricao.getText());
+					produto.setQtdProduto(Integer.parseInt(txtQtdProduto.getText()));
+					produto.setPrecoProduto(Double.parseDouble(txtPreco.getText()));
+					
+					FornecedoresModel fornecedor = new FornecedoresModel();
+					fornecedor = (FornecedoresModel)cbFornecedor.getSelectedItem();
+					
+					produto.setFornecedores(fornecedor);
+					
+					ProdutoDAO daoProduto = new ProdutoDAO();
+					daoProduto.CadastrarProduto(produto);
+					
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Erro no botão salvar " + e);
+				}
+			}
+		});
+		
+		btnSalvar.setBounds(761, 35, 78, 23);
+		panel.add(btnSalvar);
 	}
 }
