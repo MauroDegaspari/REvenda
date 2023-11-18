@@ -74,6 +74,7 @@ public class FinalizarCompraView {
 		txtFCTotal.setBounds(561, 224, 86, 20);
 		frame.getContentPane().add(txtFCTotal);
 		txtFCTotal.setColumns(10);
+		txtFCTotal.setText(String.valueOf(IndexView.total));
 		
 		
 		JLabel lblTroco = new JLabel("Troco");

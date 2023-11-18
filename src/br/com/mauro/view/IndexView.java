@@ -45,8 +45,8 @@ public class IndexView {
 	public static String data;
 	
 	private JTable tbCarrinho;
-	
-	double total,preco,subtotal,desconto;
+	static double  total;
+	double preco,subtotal,desconto;
 	int qtd;
 	DefaultTableModel carrinho; 
 	
@@ -361,30 +361,30 @@ public class IndexView {
 		panel_3.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_2 = new JButton("New button");
-		btnNewButton_1_2.setBounds(826, 206, 101, 92);
+		btnNewButton_1_2.setBounds(826, 243, 101, 92);
 		pnVendas.add(btnNewButton_1_2);
 		
 		JButton btnDinheiro = new JButton("DINHEIRO");
 		btnDinheiro.setBackground(new Color(102, 205, 170));
 		btnDinheiro.setFont(new Font("Verdana", Font.PLAIN, 12));
 		btnDinheiro.setSelectedIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
-		btnDinheiro.setBounds(598, 206, 101, 92);
+		btnDinheiro.setBounds(598, 243, 101, 92);
 		pnVendas.add(btnDinheiro);
 		
 		JButton btnNewButton_1_2_2 = new JButton("New button");
-		btnNewButton_1_2_2.setBounds(715, 206, 101, 92);
+		btnNewButton_1_2_2.setBounds(715, 243, 101, 92);
 		pnVendas.add(btnNewButton_1_2_2);
 		
 		JButton btnNewButton_1_2_3 = new JButton("New button");
-		btnNewButton_1_2_3.setBounds(598, 309, 101, 92);
+		btnNewButton_1_2_3.setBounds(598, 346, 101, 92);
 		pnVendas.add(btnNewButton_1_2_3);
 		
 		JButton btnNewButton_1_2_4 = new JButton("New button");
-		btnNewButton_1_2_4.setBounds(715, 309, 101, 92);
+		btnNewButton_1_2_4.setBounds(715, 346, 101, 92);
 		pnVendas.add(btnNewButton_1_2_4);
 		
 		JButton btnNewButton_1_2_5 = new JButton("New button");
-		btnNewButton_1_2_5.setBounds(826, 309, 101, 92);
+		btnNewButton_1_2_5.setBounds(826, 346, 101, 92);
 		pnVendas.add(btnNewButton_1_2_5);
 		
 		JPanel panel_3_1 = new JPanel();
@@ -405,6 +405,11 @@ public class IndexView {
 		lblValorTotal_1_1.setFont(new Font("Verdana", Font.PLAIN, 25));
 		lblValorTotal_1_1.setBounds(52, 46, 246, 51);
 		panel_3_1.add(lblValorTotal_1_1);
+		
+		JLabel lbFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
+		lbFormaPagamento.setFont(new Font("Verdana", Font.BOLD, 13));
+		lbFormaPagamento.setBounds(608, 206, 205, 26);
+		pnVendas.add(lbFormaPagamento);
 		
 		
 		JPanel pnIndex = new JPanel();

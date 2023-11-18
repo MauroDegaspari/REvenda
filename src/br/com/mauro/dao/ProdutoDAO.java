@@ -18,6 +18,15 @@ public class ProdutoDAO {
 	public ProdutoDAO() {
 		this.conn = new ConnectionFactory().getConnection();
 	}
+	
+	
+	public void CadastrarProduto() {
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 	public List<ProdutoModel> PesquisaProdutoCodigo(int cd_produto) {
 		try {
@@ -37,7 +46,7 @@ public class ProdutoDAO {
 				produto.setNomeProduto(rs.getString("ds_produto"));
 				produto.setPrecoProduto(rs.getDouble("preco_produto"));
 				produto.setQtdProduto(rs.getInt("qtd_estoque_produto"));
-				produto.setcodigoFornecedor(rs.getInt("cd_fornecedor"));
+				
 			
 				
 				listaProduto.add(produto);

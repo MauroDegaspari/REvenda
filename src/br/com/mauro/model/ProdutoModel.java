@@ -6,7 +6,7 @@ public class ProdutoModel {
 	private String nomeProduto;
 	private double precoProduto;
 	private int qtdProduto;
-	private int codigoFornecedor;
+	private FornecedoresModel fornecedores;
 	
 	
 	public int getCodigo() {
@@ -33,12 +33,13 @@ public class ProdutoModel {
 	public void setQtdProduto(int qtdProduto) {
 		this.qtdProduto = qtdProduto;
 	}
-	public int getcodigoFornecedor() {
-		return codigoFornecedor;
+	public FornecedoresModel getFornecedores() {
+		return fornecedores;
 	}
-	public void setcodigoFornecedor(int codigoFornecedor) {
-		this.codigoFornecedor = codigoFornecedor;
+	public void setFornecedores(FornecedoresModel fornecedores) {
+		this.fornecedores = fornecedores;
 	}
+	
 	
 	
 	
