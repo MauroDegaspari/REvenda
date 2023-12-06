@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import br.com.mauro.jdbc.ConnectionFactory;
+import br.com.mauro.model.FornecedoresModel;
 import br.com.mauro.model.ProdutoModel;
 
 public class ProdutoDAO {
@@ -40,6 +41,46 @@ public class ProdutoDAO {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"Erro ao salvar produto ORA -:  " + e);
 		}
+	}
+	
+	public List<ProdutoModel> ListarProdutos(){
+		try {
+			List<ProdutoModel> listaProduto = new ArrayList<>();
+			
+			String sql = "SELECT p.cd_produto, "
+					+ "       p.ds_produto, "
+					+ "       p.preco_produto, "
+					+ "       p.qtd_estoque_produto, "
+					+ "       f.nm_fornecedor "
+					+ "  FROM tb_produtos p, "
+					+ "       tb_fornecedores f"
+					+ " WHERE p.cd_fornecedor = f.cd_fornecedor";
+			
+			PreparedStatement acesso = conn.prepareStatement(sql);
+			ResultSet rs = acesso.executeQuery();
+			
+			while(rs.next()) {
+				ProdutoModel produto = new ProdutoModel();
+				FornecedoresModel fornec  = new FornecedoresModel();
+				
+				produto.setCodigo(rs.getInt("cd_produto"));
+				produto.setNomeProduto(rs.getString("ds_produto"));
+				produto.setPrecoProduto(rs.getDouble("preco_produto"));
+				produto.setQtdProduto(rs.getInt("qtd_estoque_produto"));
+				
+				fornec.setNome(rs.getString("nm_fornecedor"));
+				
+				produto.setFornecedores(fornec);
+				
+				listaProduto.add(produto);
+			}				
+			
+			return listaProduto;
+			
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null," Erro no Banco de dados: \n " + erro);
+		}
+		return null;
 	}
 
 
