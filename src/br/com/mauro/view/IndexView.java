@@ -393,18 +393,11 @@ public class IndexView {
 		panel_3_1.setBounds(10, 561, 578, 70);
 		pnVendas.add(panel_3_1);
 		
-		JLabel lbCancela = new JLabel("");
-		lbCancela.setIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
-		lbCancela.setForeground(Color.WHITE);
-		lbCancela.setFont(new Font("Verdana", Font.PLAIN, 19));
-		lbCancela.setBounds(10, 11, 47, 51);
-		panel_3_1.add(lbCancela);
-		
-		JLabel lblValorTotal_1_1 = new JLabel("");
-		lblValorTotal_1_1.setForeground(Color.WHITE);
-		lblValorTotal_1_1.setFont(new Font("Verdana", Font.PLAIN, 25));
-		lblValorTotal_1_1.setBounds(52, 46, 246, 51);
-		panel_3_1.add(lblValorTotal_1_1);
+		JButton btnCancelar = new JButton("");
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.setIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
+		btnCancelar.setBounds(10, 11, 65, 48);
+		panel_3_1.add(btnCancelar);
 		
 		JLabel lbFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
 		lbFormaPagamento.setFont(new Font("Verdana", Font.BOLD, 13));

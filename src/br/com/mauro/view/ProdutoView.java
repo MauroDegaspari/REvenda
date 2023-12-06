@@ -13,14 +13,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.FornecedoresDAO;
 import br.com.mauro.dao.ProdutoDAO;
+import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FornecedoresModel;
 import br.com.mauro.model.ProdutoModel;
 
@@ -33,6 +37,7 @@ public class ProdutoView {
 	private JTextField textField_2;
 	private JTextField txtPreco;
 	private JTextField txtCusto;
+	private JTable tbProdutos;
 
 	/**
 	 * Launch the application.
@@ -49,12 +54,34 @@ public class ProdutoView {
 			}
 		});
 	}
+	
+public void listarProdutos() {
+		
+		ProdutoDAO dao = new ProdutoDAO();
+		List<ProdutoModel> ProdutoLista =dao.ListarProdutos();
+		
+		DefaultTableModel tbDados = (DefaultTableModel) tbProdutos.getModel();
+		tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
+		
+		for(ProdutoModel produto: ProdutoLista) {
+			tbDados.addRow(new Object[]{
+					produto.getCodigo(),
+					produto.getNomeProduto(),
+					produto.getPrecoProduto(),
+					produto.getQtdProduto(),
+					produto.getFornecedores().getNome()
+				
+					
+			});
+		}
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public ProdutoView() {
 		initialize();
+		listarProdutos();
 	}
 
 	/**
@@ -199,6 +226,21 @@ public class ProdutoView {
 		
 		JPanel Pesquisar = new JPanel();
 		tabbedPane.addTab("Pesquisar Prod.", null, Pesquisar, null);
+		Pesquisar.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(170, 75, 594, 295);
+		Pesquisar.add(scrollPane);
+		
+		tbProdutos = new JTable();
+		scrollPane.setViewportView(tbProdutos);
+		tbProdutos.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00F3digo", "Produto", "Pre\u00E7o", "Qtd Estoque", "Fornecedor"
+			}
+		));
 		
 		JPanel Estoque = new JPanel();
 		tabbedPane.addTab("Estoque", null, Estoque, null);
