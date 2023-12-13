@@ -53,6 +53,7 @@ public class IndexView {
 	FuncionalidadesUtils util = new FuncionalidadesUtils();
 	private JTextField txtClienteCpf;
 	private JTextField txtCodigoProduto;
+	private JTextField txtValorDinheiro;
 	
 	
 	public static void main(String[] args) {
@@ -349,8 +350,7 @@ public class IndexView {
 			public void actionPerformed(ActionEvent e) {
 			
 				FinalizarCompraView.main(null);
-				FinalizarCompraView finalizar = new FinalizarCompraView();
-				finalizar.txtFCTotal.setText("teste");
+			
 				
 			}
 		});
@@ -364,7 +364,19 @@ public class IndexView {
 		btnNewButton_1_2.setBounds(826, 243, 101, 92);
 		pnVendas.add(btnNewButton_1_2);
 		
+		JLabel lbValorDinheiro = new JLabel("Valor Dinheiro:");
+		lbValorDinheiro.setVisible(false);
+		lbValorDinheiro.setBounds(620, 512, 89, 26);
+		pnVendas.add(lbValorDinheiro);
+		
 		JButton btnDinheiro = new JButton("DINHEIRO");
+		btnDinheiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbValorDinheiro.setVisible(true);
+				txtValorDinheiro.setVisible(true);
+
+			}
+		});
 		btnDinheiro.setBackground(new Color(102, 205, 170));
 		btnDinheiro.setFont(new Font("Verdana", Font.PLAIN, 12));
 		btnDinheiro.setSelectedIcon(new ImageIcon(IndexView.class.getResource("/icons/excluir.png")));
@@ -403,6 +415,12 @@ public class IndexView {
 		lbFormaPagamento.setFont(new Font("Verdana", Font.BOLD, 13));
 		lbFormaPagamento.setBounds(608, 206, 205, 26);
 		pnVendas.add(lbFormaPagamento);
+		
+		txtValorDinheiro = new JTextField();
+		txtValorDinheiro.setVisible(false);
+		txtValorDinheiro.setBounds(705, 515, 108, 20);
+		pnVendas.add(txtValorDinheiro);
+		txtValorDinheiro.setColumns(10);
 		
 		
 		JPanel pnIndex = new JPanel();
