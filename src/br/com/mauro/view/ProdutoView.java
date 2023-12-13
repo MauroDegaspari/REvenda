@@ -136,25 +136,25 @@ public void listarProdutos() {
 		
 		txtProduto = new JTextField();
 		txtProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
-		txtProduto.setBounds(12, 72, 488, 34);
+		txtProduto.setBounds(65, 18, 52, 21);
 		Produtos.add(txtProduto);
 		txtProduto.setColumns(10);
 		
-		JLabel lbProduto = new JLabel("Produto:");
+		JLabel lbProduto = new JLabel("Código:");
 		lbProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lbProduto.setBounds(17, 54, 66, 14);
+		lbProduto.setBounds(18, 21, 66, 14);
 		Produtos.add(lbProduto);
 		
 		txtDescricao = new JTextField();
-		txtDescricao.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtDescricao.setFont(new Font("Verdana", Font.PLAIN, 17));
 		txtDescricao.setColumns(10);
-		txtDescricao.setBounds(14, 126, 487, 21);
+		txtDescricao.setBounds(15, 70, 487, 50);
 		Produtos.add(txtDescricao);
 		
 		txtQtdProduto = new JTextField();
 		txtQtdProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtQtdProduto.setColumns(10);
-		txtQtdProduto.setBounds(512, 70, 84, 34);
+		txtQtdProduto.setBounds(512, 70, 84, 29);
 		Produtos.add(txtQtdProduto);
 		
 		JLabel lbQunatidade = new JLabel("Qtd. Estoque:");
@@ -162,26 +162,26 @@ public void listarProdutos() {
 		lbQunatidade.setBounds(512, 53, 84, 14);
 		Produtos.add(lbQunatidade);
 		
-		JLabel lblDescrico = new JLabel("Descrição:");
-		lblDescrico.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblDescrico.setBounds(16, 110, 66, 14);
-		Produtos.add(lblDescrico);
+		JLabel lblDescricoProduto = new JLabel("Porduto:");
+		lblDescricoProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
+		lblDescricoProduto.setBounds(17, 52, 66, 14);
+		Produtos.add(lblDescricoProduto);
 		
 		JLabel lblUnidade = new JLabel("Unidade:");
 		lblUnidade.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblUnidade.setBounds(512, 110, 68, 14);
+		lblUnidade.setBounds(513, 99, 68, 14);
 		Produtos.add(lblUnidade);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		textField_2.setColumns(10);
-		textField_2.setBounds(511, 126, 92, 21);
+		textField_2.setBounds(512, 115, 92, 21);
 		Produtos.add(textField_2);
 		
 		txtPreco = new JTextField();
 		txtPreco.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtPreco.setColumns(10);
-		txtPreco.setBounds(606, 70, 100, 34);
+		txtPreco.setBounds(606, 70, 100, 29);
 		Produtos.add(txtPreco);
 		
 		JLabel lblPreovenda = new JLabel("Preço Venda");
@@ -192,12 +192,12 @@ public void listarProdutos() {
 		txtCusto = new JTextField();
 		txtCusto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtCusto.setColumns(10);
-		txtCusto.setBounds(613, 125, 92, 21);
+		txtCusto.setBounds(614, 114, 92, 21);
 		Produtos.add(txtCusto);
 		
 		JLabel lblCusto = new JLabel("Custo:");
 		lblCusto.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblCusto.setBounds(614, 109, 68, 14);
+		lblCusto.setBounds(615, 98, 68, 14);
 		Produtos.add(lblCusto);
 		
 		JLabel lblFornecedor = new JLabel("FOrnecedores");
@@ -233,6 +233,7 @@ public void listarProdutos() {
 		Pesquisar.add(scrollPane);
 		
 		tbProdutos = new JTable();
+		tbProdutos.setFont(new Font("Verdana", Font.PLAIN, 11));
 		scrollPane.setViewportView(tbProdutos);
 		tbProdutos.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -274,6 +275,8 @@ public void listarProdutos() {
 					
 					ProdutoDAO daoProduto = new ProdutoDAO();
 					daoProduto.CadastrarProduto(produto);
+					
+					listarProdutos();
 					
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro no botão salvar " + e);

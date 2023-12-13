@@ -14,7 +14,7 @@ public class FinalizarCompraView {
 
 	private JFrame frame;
 	public JTextField txtFCTotal;
-	private JTextField txtFCTroco;
+	public JTextField txtFCTroco;
 
 	/**
 	 * Launch the application.
