@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JTable;
+
 import br.com.mauro.view.IndexView;
 
 public class FuncionalidadesUtils implements ActionListener{
@@ -51,6 +53,17 @@ public class FuncionalidadesUtils implements ActionListener{
 	dataHora.start();
 	
   }
+	
+	/**
+	 * @author Mauro Degaspari
+	 * @return O Valor relacionado a linha do JTable tbClientes, caso não 
+	 * 		   tenha valor retorne uma String " ". 
+	 */
+	public String trantandoValor(JTable table, int row, int column) {
+		Object linha = table.getValueAt(row, column);
+		return linha != null ? linha.toString() : "";
+		
+	}
 }
 
 

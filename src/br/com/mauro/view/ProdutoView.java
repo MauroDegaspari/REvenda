@@ -24,20 +24,24 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.FornecedoresDAO;
 import br.com.mauro.dao.ProdutoDAO;
-import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.FornecedoresModel;
 import br.com.mauro.model.ProdutoModel;
+import br.com.mauro.utils.FuncionalidadesUtils;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ProdutoView {
 
 	private JFrame frame;
-	private JTextField txtProduto;
+	private JTextField txtCodProduto;
 	private JTextField txtDescricao;
 	private JTextField txtQtdProduto;
 	private JTextField textField_2;
 	private JTextField txtPreco;
 	private JTextField txtCusto;
 	private JTable tbProdutos;
+	FuncionalidadesUtils func = new FuncionalidadesUtils();
 
 	/**
 	 * Launch the application.
@@ -121,88 +125,88 @@ public void listarProdutos() {
 		btnExcluir.setBounds(937, 35, 78, 23);
 		panel.add(btnExcluir);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 89, 1038, 496);
-		frame.getContentPane().add(tabbedPane);
+		JTabbedPane tabbedPanePrincipal = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPanePrincipal.setBounds(10, 89, 1038, 496);
+		frame.getContentPane().add(tabbedPanePrincipal);
 		
-		JPanel Produtos = new JPanel();
-		tabbedPane.addTab("Produto", null, Produtos, null);
-		Produtos.setLayout(null);
+		JPanel JPProdutos = new JPanel();
+		tabbedPanePrincipal.addTab("Produto", null, JPProdutos, null);
+		JPProdutos.setLayout(null);
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(0, 0, 0));
 		separator.setBounds(18, 203, 702, 2);
-		Produtos.add(separator);
+		JPProdutos.add(separator);
 		
-		txtProduto = new JTextField();
-		txtProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
-		txtProduto.setBounds(65, 18, 52, 21);
-		Produtos.add(txtProduto);
-		txtProduto.setColumns(10);
+		txtCodProduto = new JTextField();
+		txtCodProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
+		txtCodProduto.setBounds(65, 18, 52, 21);
+		JPProdutos.add(txtCodProduto);
+		txtCodProduto.setColumns(10);
 		
 		JLabel lbProduto = new JLabel("Código:");
 		lbProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lbProduto.setBounds(18, 21, 66, 14);
-		Produtos.add(lbProduto);
+		JPProdutos.add(lbProduto);
 		
 		txtDescricao = new JTextField();
 		txtDescricao.setFont(new Font("Verdana", Font.PLAIN, 17));
 		txtDescricao.setColumns(10);
 		txtDescricao.setBounds(15, 70, 487, 50);
-		Produtos.add(txtDescricao);
+		JPProdutos.add(txtDescricao);
 		
 		txtQtdProduto = new JTextField();
 		txtQtdProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtQtdProduto.setColumns(10);
 		txtQtdProduto.setBounds(512, 70, 84, 29);
-		Produtos.add(txtQtdProduto);
+		JPProdutos.add(txtQtdProduto);
 		
 		JLabel lbQunatidade = new JLabel("Qtd. Estoque:");
 		lbQunatidade.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lbQunatidade.setBounds(512, 53, 84, 14);
-		Produtos.add(lbQunatidade);
+		JPProdutos.add(lbQunatidade);
 		
 		JLabel lblDescricoProduto = new JLabel("Porduto:");
 		lblDescricoProduto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lblDescricoProduto.setBounds(17, 52, 66, 14);
-		Produtos.add(lblDescricoProduto);
+		JPProdutos.add(lblDescricoProduto);
 		
 		JLabel lblUnidade = new JLabel("Unidade:");
 		lblUnidade.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lblUnidade.setBounds(513, 99, 68, 14);
-		Produtos.add(lblUnidade);
+		JPProdutos.add(lblUnidade);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		textField_2.setColumns(10);
 		textField_2.setBounds(512, 115, 92, 21);
-		Produtos.add(textField_2);
+		JPProdutos.add(textField_2);
 		
 		txtPreco = new JTextField();
 		txtPreco.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtPreco.setColumns(10);
 		txtPreco.setBounds(606, 70, 100, 29);
-		Produtos.add(txtPreco);
+		JPProdutos.add(txtPreco);
 		
 		JLabel lblPreovenda = new JLabel("Preço Venda");
 		lblPreovenda.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lblPreovenda.setBounds(606, 53, 100, 14);
-		Produtos.add(lblPreovenda);
+		JPProdutos.add(lblPreovenda);
 		
 		txtCusto = new JTextField();
 		txtCusto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtCusto.setColumns(10);
 		txtCusto.setBounds(614, 114, 92, 21);
-		Produtos.add(txtCusto);
+		JPProdutos.add(txtCusto);
 		
 		JLabel lblCusto = new JLabel("Custo:");
 		lblCusto.setFont(new Font("Verdana", Font.PLAIN, 11));
 		lblCusto.setBounds(615, 98, 68, 14);
-		Produtos.add(lblCusto);
+		JPProdutos.add(lblCusto);
 		
 		JLabel lblFornecedor = new JLabel("FOrnecedores");
 		lblFornecedor.setBounds(14, 181, 137, 14);
-		Produtos.add(lblFornecedor);
+		JPProdutos.add(lblFornecedor);
 		
 		JComboBox<FornecedoresModel> cbFornecedor = new JComboBox<FornecedoresModel>();
 		cbFornecedor.addAncestorListener(new AncestorListener() {
@@ -222,10 +226,10 @@ public void listarProdutos() {
 			}
 		});
 		cbFornecedor.setBounds(18, 216, 309, 22);
-		Produtos.add(cbFornecedor);
+		JPProdutos.add(cbFornecedor);
 		
 		JPanel Pesquisar = new JPanel();
-		tabbedPane.addTab("Pesquisar Prod.", null, Pesquisar, null);
+		tabbedPanePrincipal.addTab("Pesquisar Prod.", null, Pesquisar, null);
 		Pesquisar.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -233,6 +237,17 @@ public void listarProdutos() {
 		Pesquisar.add(scrollPane);
 		
 		tbProdutos = new JTable();
+		tbProdutos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				tabbedPanePrincipal.setSelectedIndex(0);
+				
+				txtCodProduto.setText(func.trantandoValor(tbProdutos, tbProdutos.getSelectedRow(),0 ));
+				
+				
+			}
+		});
 		tbProdutos.setFont(new Font("Verdana", Font.PLAIN, 11));
 		scrollPane.setViewportView(tbProdutos);
 		tbProdutos.setModel(new DefaultTableModel(
@@ -244,7 +259,7 @@ public void listarProdutos() {
 		));
 		
 		JPanel Estoque = new JPanel();
-		tabbedPane.addTab("Estoque", null, Estoque, null);
+		tabbedPanePrincipal.addTab("Estoque", null, Estoque, null);
 		
 		JLabel lbCadastroProdutos = new JLabel("Cadastro de Produtos");
 		lbCadastroProdutos.setForeground(Color.WHITE);

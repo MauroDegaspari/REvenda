@@ -3,13 +3,18 @@ package br.com.mauro.view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,11 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
 import br.com.mauro.model.ClienteModel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Window.Type;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
+import br.com.mauro.utils.FuncionalidadesUtils;
 
 public class ClienteView {
 
@@ -49,6 +50,8 @@ public class ClienteView {
 	private JTextField txtEmail;
 	private JComboBox<?> cbUf;
 	private JTable tbClientes;
+	
+	FuncionalidadesUtils func = new FuncionalidadesUtils();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,16 +66,7 @@ public class ClienteView {
 		});
 	}
 	
-	/**
-	 * @author Mauro Degaspari
-	 * @return O Valor relacionado a linha do JTable tbClientes, caso não 
-	 * 		   tenha valor retorne uma String " ". 
-	 */
-	private String trantandoValor(JTable table, int row, int column) {
-		Object linha = table.getValueAt(row, column);
-		return linha != null ? linha.toString() : "";
-		
-	}
+	
 	
 	public void listarClientes() {
 		
@@ -527,20 +521,20 @@ public class ClienteView {
 			
 			//	txtCodigo.setText(tbClientes.getValueAt(tbClientes.getSelectedRow(), 0).toString());
 				
-				txtCodigo.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 0));
-				txtNome.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 1));
-				txtRg.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 2));
-				txtCpf.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 3));
-				txtEmail.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 4));
-				txtTelefone.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 5));
-				txtCelular.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 6));
-				txtCep.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 7));
-				txtRua.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 8));
-				txtNumero.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 9));
-				txtComplemento.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 10));
-				txtBairro.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 11));
-				txtCidade.setText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 12));
-				cbUF.setToolTipText(trantandoValor(tbClientes, tbClientes.getSelectedRow(), 13));
+				txtCodigo.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 0));
+				txtNome.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 1));
+				txtRg.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 2));
+				txtCpf.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 3));
+				txtEmail.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 4));
+				txtTelefone.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 5));
+				txtCelular.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 6));
+				txtCep.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 7));
+				txtRua.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 8));
+				txtNumero.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 9));
+				txtComplemento.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 10));
+				txtBairro.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 11));
+				txtCidade.setText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 12));
+				cbUF.setToolTipText(func.trantandoValor(tbClientes, tbClientes.getSelectedRow(), 13));
 			}
 		});
 		scrollPane.setViewportView(tbClientes);
