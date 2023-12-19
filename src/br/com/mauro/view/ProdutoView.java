@@ -47,6 +47,18 @@ public class ProdutoView {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            System.err.println(ex);
+        }
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -244,6 +256,11 @@ public void listarProdutos() {
 				tabbedPanePrincipal.setSelectedIndex(0);
 				
 				txtCodProduto.setText(func.trantandoValor(tbProdutos, tbProdutos.getSelectedRow(),0 ));
+				txtDescricao.setText(func.trantandoValor(tbProdutos, tbProdutos.getSelectedRow(),1 ));
+				txtCusto.setText(func.trantandoValor(tbProdutos, tbProdutos.getSelectedRow(),2 ));
+				txtQtdProduto.setText(func.trantandoValor(tbProdutos, tbProdutos.getSelectedRow(),3 ));
+				cbFornecedor.getAccessibleContext();
+				
 				
 				
 			}
