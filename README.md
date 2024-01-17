@@ -8,7 +8,7 @@
 
 Cadastrando CLIENTE | Pesquisando CLIENTE
 ------------ | -------------
-  ![tela1](https://github.com/MauroDegaspari/REST-API-SpringBoot/blob/master/tela1.PNG) | ![tela2](https://github.com/MauroDegaspari/REST-API-SpringBoot/blob/master/tela2.PNG)
+  ![tela1](https://github.com/MauroDegaspari/REvenda/blob/master/PrintsSistema/dashboardRevenda.png) | ![tela2](https://github.com/MauroDegaspari/REvenda/blob/master/PrintsSistema/cadastroRevenda.png)
 
 
 ## Cosntruído com:
