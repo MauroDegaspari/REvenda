@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.view.IndexView;
 
@@ -63,6 +64,20 @@ public class FuncionalidadesUtils implements ActionListener{
 		Object linha = table.getValueAt(row, column);
 		return linha != null ? linha.toString() : "";
 		
+	}
+	
+	public double TotalCompra( double preco,int qtd) {
+		
+		double  subtotal, total = 0;
+		
+				
+		subtotal = (qtd * preco);
+		
+		total += subtotal;
+		
+		
+	
+		return total;
 	}
 }
 
