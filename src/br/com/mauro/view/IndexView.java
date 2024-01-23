@@ -44,9 +44,10 @@ public class IndexView {
 	public static String cargo;
 	public static String data;
 	
+	
 	private JTable tbCarrinho;
 	static double  total;
-	double preco,subtotal,desconto;
+	double preco,subtotal,desconto, totalFinal;
 	int qtd;
 	DefaultTableModel carrinho; 
 	
@@ -182,29 +183,26 @@ public class IndexView {
 		lblAddCarrinho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				qtd = (int) spnQtd.getValue();
-				preco = Double.parseDouble(lbPreco.getText());
-				
-				subtotal = (qtd * preco);
-				
-				total += subtotal;
-				
-				lblValorTotal.setText(String.valueOf(total));
-				
-				carrinho = (DefaultTableModel)tbCarrinho.getModel();
-				carrinho.addRow(new Object[]{
-				 spnQtd.getValue(),
-				 lbProdutoDescricao.getText(),
-				 lbPreco.getText(),
-				 desconto = 0.00,
-				 subtotal,
-				 		 
-				 
-				
+								
+					qtd = (int) spnQtd.getValue();
+					preco = Double.parseDouble(lbPreco.getText());
 					
-				});
-				
+					FuncionalidadesUtils resultado = new FuncionalidadesUtils();
 			
+					carrinho = (DefaultTableModel)tbCarrinho.getModel();
+					carrinho.addRow(new Object[]{
+					 spnQtd.getValue(),
+					 lbProdutoDescricao.getText(),
+					 lbPreco.getText(),
+					 desconto = 1.00,
+					 total = resultado.TotalCompra(preco, qtd) - desconto,
+					 					
+					});
+					
+					totalFinal = totalFinal + total; 
+					
+					lblValorTotal.setText(String.valueOf(totalFinal));
+				
 			 
 			}
 		});
@@ -357,8 +355,8 @@ public class IndexView {
 		lblNewLabel_1_1.setBounds(10, 11, 122, 51);
 		panel_3.add(lblNewLabel_1_1);
 		
-		JButton btnNewButton_1 = new JButton("PAGAR");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btPagar = new JButton("PAGAR");
+		btPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
 				FinalizarCompraView.main(null);
@@ -366,11 +364,11 @@ public class IndexView {
 				
 			}
 		});
-		btnNewButton_1.setForeground(new Color(248, 248, 255));
-		btnNewButton_1.setFont(new Font("Verdana", Font.BOLD, 14));
-		btnNewButton_1.setBackground(new Color(60, 179, 113));
-		btnNewButton_1.setBounds(209, 0, 120, 70);
-		panel_3.add(btnNewButton_1);
+		btPagar.setForeground(new Color(248, 248, 255));
+		btPagar.setFont(new Font("Verdana", Font.BOLD, 14));
+		btPagar.setBackground(new Color(60, 179, 113));
+		btPagar.setBounds(209, 0, 120, 70);
+		panel_3.add(btPagar);
 		
 		JButton btnNewButton_1_2 = new JButton("New button");
 		btnNewButton_1_2.setBounds(826, 243, 101, 92);
