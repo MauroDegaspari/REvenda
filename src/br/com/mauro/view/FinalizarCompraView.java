@@ -9,12 +9,14 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.JLabel;
+import java.awt.SystemColor;
 
 public class FinalizarCompraView {
 
 	private JFrame frame;
 	public JTextField txtFCTotal;
 	public JTextField txtFCTroco;
+	
 
 	/**
 	 * Launch the application.
@@ -70,7 +72,7 @@ public class FinalizarCompraView {
 		
 		JButton btnFinalizarCompra = new JButton("Finalizar Compra");
 		btnFinalizarCompra.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 12));
-		btnFinalizarCompra.setForeground(new Color(255, 255, 255));
+		btnFinalizarCompra.setForeground(SystemColor.activeCaption);
 		btnFinalizarCompra.setIcon(new ImageIcon(FinalizarCompraView.class.getResource("/icons/cart shopping.png")));
 		btnFinalizarCompra.setBackground(new Color(51, 153, 102));
 		btnFinalizarCompra.setBounds(577, 303, 214, 57);
@@ -86,17 +88,21 @@ public class FinalizarCompraView {
 		txtFCTotal.setBounds(561, 224, 86, 20);
 		frame.getContentPane().add(txtFCTotal);
 		txtFCTotal.setColumns(10);
-		txtFCTotal.setText(String.valueOf(IndexView.total));
+		txtFCTotal.setText(String.valueOf(IndexView.totalFinal));
 		
 		
 		JLabel lblTroco = new JLabel("Troco");
-		lblTroco.setBounds(487, 199, 38, 14);
+		lblTroco.setBounds(487, 255, 38, 14);
 		frame.getContentPane().add(lblTroco);
 		
 		txtFCTroco = new JTextField();
 		txtFCTroco.setColumns(10);
-		txtFCTroco.setBounds(561, 196, 86, 20);
+		txtFCTroco.setBounds(561, 252, 86, 20);
 		frame.getContentPane().add(txtFCTroco);
+		
+		IndexView.troco = Double.parseDouble(IndexView.txtValorDinheiro.getText()) - IndexView.totalFinal;
+		String trocoFormatado = String.format("%.2f", IndexView.troco); // Arredonda o resultado para duas casas decimais
+		txtFCTroco.setText(trocoFormatado );
 		
 		JLabel lbTotal_1 = new JLabel("Total");
 		lbTotal_1.setBounds(668, 227, 38, 14);
