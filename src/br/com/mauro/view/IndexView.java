@@ -45,16 +45,17 @@ public class IndexView {
 	public static String data;
 	
 	
+	
 	private JTable tbCarrinho;
-	static double  total;
-	double preco,subtotal,desconto, totalFinal;
+	static double  totalFinal, troco;
+	double preco,subtotal,desconto, total;
 	int qtd;
 	DefaultTableModel carrinho; 
 	
 	FuncionalidadesUtils util = new FuncionalidadesUtils();
 	private JTextField txtClienteCpf;
 	private JTextField txtCodigoProduto;
-	private JTextField txtValorDinheiro;
+	static JTextField txtValorDinheiro;
 	
 	
 	public static void main(String[] args) {
@@ -199,8 +200,8 @@ public class IndexView {
 					 					
 					});
 					
-					totalFinal = totalFinal + total; 
-					
+					totalFinal = totalFinal + total;
+										
 					lblValorTotal.setText(String.valueOf(totalFinal));
 				
 			 
@@ -431,8 +432,7 @@ public class IndexView {
 		txtValorDinheiro.setBounds(705, 515, 108, 20);
 		pnVendas.add(txtValorDinheiro);
 		txtValorDinheiro.setColumns(10);
-		
-		
+			
 		JPanel pnIndex = new JPanel();
 		pnIndex.setBackground(Color.WHITE);
 		pnIndex.setBounds(220, 79, 937, 642);
