@@ -468,28 +468,28 @@ public class FuncionarioView {
 				
 				String nome = "%"+txtPesquisarNome.getText()+"%";
 				
-				ClientesDAO dao = new ClientesDAO();
-				List<ClienteModel> Lista =dao.PesquisaClienteNome(nome);
+				FuncionarioDAO daoF = new FuncionarioDAO();
+				List<FuncionarioModel> Lista =daoF.PesquisaFuncionarioNome(nome);
 				
 				DefaultTableModel tbDados = (DefaultTableModel) tbFuncionarios_1.getModel();
 				tbDados.setNumRows(0); //limpar os dados e garantir que não tenha nada.
 				
-				for(ClienteModel cliente: Lista) {
+				for(FuncionarioModel funcionarios: Lista) {
 					tbDados.addRow(new Object[]{
-						cliente.getCodigo(),
-						cliente.getNome(),
-						cliente.getRg(),
-						cliente.getCpf(),
-						cliente.getEmail(),
-						cliente.getTelefone(),
-						cliente.getCelular(),
-						cliente.getCep(),
-						cliente.getRua(),
-						cliente.getNumero(),
-						cliente.getComplemento(),
-						cliente.getBairro(),
-						cliente.getCidade(),
-						cliente.getUf()				
+						funcionarios.getCodigo(),
+						funcionarios.getNome(),
+						funcionarios.getRg(),
+						funcionarios.getCpf(),
+						funcionarios.getEmail(),
+						funcionarios.getTelefone(),
+						funcionarios.getCelular(),
+						funcionarios.getCep(),
+						funcionarios.getRua(),
+						funcionarios.getNumero(),
+						funcionarios.getComplemento(),
+						funcionarios.getBairro(),
+						funcionarios.getCidade(),
+						funcionarios.getUf()				
 					});
 				}
 				

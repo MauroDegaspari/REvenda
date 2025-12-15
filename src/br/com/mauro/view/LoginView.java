@@ -52,10 +52,10 @@ public class LoginView {
 	}
 
 	public LoginView() {
-		initialize();
+		IniciandoLogin();
 	}
 
-	private void initialize() {
+	private void IniciandoLogin() {
 		frmRevendaLogin = new JFrame();
 		frmRevendaLogin.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginView.class.getResource("/icons/r.png")));
 		frmRevendaLogin.setResizable(false);
@@ -108,6 +108,7 @@ public class LoginView {
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String email,senha;

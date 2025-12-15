@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="E:/IDE&apos;s Workspaces/Eclipse-workspace/Revenda/path/ojdbc8.jar"/>
 	<classpathentry kind="lib" path="path/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Desenvolvimento Software/REvenda/path/ojdbc8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

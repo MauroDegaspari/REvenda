@@ -167,9 +167,9 @@ public class FuncionarioDAO {
 	public void LoginFuncionario(String email, String senha ) {
 		try {
 			
-			String sql = "SELECT *                         "
-					+    "  FROM revenda.tb_funcionarios  "
-					+    " WHERE email_funcionario = ?        "
+			String sql = "SELECT nm_funcionario, cargo_funcionario                     "
+					+    "  FROM revenda.tb_funcionarios   "
+					+    " WHERE email_funcionario = ?     "
 					+    "   AND sh_funcionario = ?        ";
 			
 			PreparedStatement acesso = conn.prepareStatement(sql);
@@ -177,9 +177,8 @@ public class FuncionarioDAO {
 			acesso.setString(2, senha );
 			
 			ResultSet rs = acesso.executeQuery(); 			
-			
-			
-			if (rs.next()) { //TODO Criar validação de senha e email.
+				
+		 if	(rs.next()) {  //TODO Criar validação de senha e email.
 								
 				IndexView.logado = rs.getString("nm_funcionario");
 				IndexView.cargo = rs.getNString("cargo_funcionario"); 
@@ -193,6 +192,7 @@ public class FuncionarioDAO {
 			
 		} catch (Exception erro) {
 			JOptionPane.showMessageDialog(null, "Erro no banco de dados" + erro);
+			erro.printStackTrace(); 
 		}
 	}
 }
