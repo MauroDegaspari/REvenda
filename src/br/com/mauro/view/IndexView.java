@@ -17,7 +17,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import javax.management.StringValueExp;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,9 +24,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.mauro.dao.ClientesDAO;
@@ -35,7 +34,6 @@ import br.com.mauro.dao.ProdutoDAO;
 import br.com.mauro.model.ClienteModel;
 import br.com.mauro.model.ProdutoModel;
 import br.com.mauro.utils.FuncionalidadesUtils;
-import javax.swing.JSpinner;
 
 public class IndexView {
 
@@ -76,6 +74,7 @@ public class IndexView {
 				try {
 					IndexView window = new IndexView();
 					window.frmIndex.setVisible(true);
+					window.frmIndex.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,11 +83,12 @@ public class IndexView {
 	}
 
 	public IndexView() {
-		initialize();
+			
+		aplicacaoIndex();
 		util.DataHoraAtual();
 	}
 
-	private void initialize() {
+	private void aplicacaoIndex() {
 		frmIndex = new JFrame();
 	
 		frmIndex.setIconImage(Toolkit.getDefaultToolkit().getImage(IndexView.class.getResource("/icons/r.png")));

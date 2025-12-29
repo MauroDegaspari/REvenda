@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -216,25 +217,34 @@ public class ClienteView {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
+					ClientesDAO existeCliente = new ClientesDAO();					
 					ClienteModel cliente = new ClienteModel();
-				
-					cliente.setNome(txtNome.getText());
-					cliente.setRg(txtRg.getText());
-					cliente.setCpf(txtCpf.getText());
-					cliente.setEmail(txtEmail.getText());
-					cliente.setTelefone(txtTelefone.getText());
-					cliente.setCelular(txtCelular.getText());
-					cliente.setCep(txtCep.getText());
-					cliente.setRua(txtRua.getText());
-					cliente.setNumero(Integer.parseInt(txtNumero.getText()));
-					cliente.setBairro(txtBairro.getText());
-					cliente.setCidade(txtCidade.getText());
-					cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
 					
-					ClientesDAO salvarCliente = new ClientesDAO();
+					ArrayList<ClienteModel> resultados = (ArrayList<ClienteModel>) existeCliente.PesquisaClienteCpf(txtCpf.getText());
 					
-					salvarCliente.CadastrarCliente(cliente);
-					listarClientes();
+					if(resultados.isEmpty()) {
+										
+						cliente.setNome(txtNome.getText());
+						cliente.setRg(txtRg.getText());
+						cliente.setCpf(txtCpf.getText());
+						cliente.setEmail(txtEmail.getText());
+						cliente.setTelefone(txtTelefone.getText());
+						cliente.setCelular(txtCelular.getText());
+						cliente.setCep(txtCep.getText());
+						cliente.setRua(txtRua.getText());
+						cliente.setNumero(Integer.parseInt(txtNumero.getText()));
+						cliente.setBairro(txtBairro.getText());
+						cliente.setCidade(txtCidade.getText());
+						cliente.setUf("PE"); //TODO: valor chumbado, Pesquisar como usar ComboBox
+						
+						ClientesDAO salvarCliente = new ClientesDAO();
+						
+						salvarCliente.CadastrarCliente(cliente);
+						listarClientes();
+					}else {
+						JOptionPane.showMessageDialog(btnSalvar,"já existe um cliente com o CPF: "+txtCpf.getText() +" já cadastrado." );
+					}
 					
 				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(btnSalvar,"Erro: Botão SAlvar \n" + erro );
