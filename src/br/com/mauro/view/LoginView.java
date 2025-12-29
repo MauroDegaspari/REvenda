@@ -3,9 +3,11 @@ package br.com.mauro.view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,11 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import br.com.mauro.dao.FuncionarioDAO;
-import java.awt.Window.Type;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
 
-public class LoginView {
+public class LoginView{
 
 	private JFrame frmRevendaLogin;
 	private JTextField txtFuncionario;
